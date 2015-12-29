@@ -1,29 +1,31 @@
 var http = require('http');
 var Q = require('q');
 
-function makeRequest(options, onData, onEnd, onError) {
+function makeRequest(options) {
+	var deferred = Q.defer();
+
 	var contentBody = '';
 	var req = http.request(options, function(res) {
-		console.log(`RESPONSE STATUS: ${res.statusCode}`);
 
 		res.setEncoding('utf8');
-		res.on('data', function(chunk) {
-			if(onData) {
-				onData(chunk);
-			}
 
-			contentBody += chunk;
-			console.log('chunk received')
+		res.on('data', function(chunk) {
+			contentBody += chunk
 		})
 
 		res.on('end', function() {
-			onEnd(contentBody);
+			console.log('were done!');
+			deferred.resolve(contentBody);
 		})
 	})
 
-	req.on('error', onError)
+	req.on('error', err => {
+		deferred.reject('something fhappened!');
+	})
 
 	req.end();
+
+	return deferred.promise;
 }
 
 module.exports = {

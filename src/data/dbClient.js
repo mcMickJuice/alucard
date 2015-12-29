@@ -91,10 +91,9 @@ function insertMany(jsonToInsert, collection) {
 					//todo delete this console
 					console.log('in callback of insertMany');
 
-					return deferred.resolve(db);
+					cleanupDbConnection(db);
 				})
 		})
-		.finally(cleanupDbConnection)
 }
 
 
