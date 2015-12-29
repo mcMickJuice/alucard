@@ -35,9 +35,33 @@ function update(updateQuery) {
 
 }
 
+function getCollection(collectionName, limit = 50) {
+
+	return getDbConnection()
+		.then(db => {
+			var deferred =  Q.defer();
+
+			var cursor = db.collection(collectionName).find();
+
+			limit = Math.min(limit, 100);
+
+			cursor.limit(limit).toArray((err, items) => {
+				if(err){
+					deferred.reject(err)
+				}
+
+				cleanupDbConnection(db);
+
+				deferred.resolve(items);
+			})
+
+			return deferred.promise;
+		})
+}
+
 function insert(jsonToInsert, collectionName) {
 	return getDbConnection()
-		.then(function(db) {
+		.then(db => {
 			var deferred = Q.defer();
 			db.collection(collectionName)
 				.insertOne(jsonToInsert, function(err, result) {
@@ -56,7 +80,7 @@ function insert(jsonToInsert, collectionName) {
 
 function insertMany(jsonToInsert, collection) {
 	return getDbConnection()
-		.then(function(db) {
+		.then(db => {
 			var deferred = Q.defer();
 			db.collection(collection)
 				.insertMany(jsonToInsert, function(err, result) {
@@ -78,5 +102,6 @@ module.exports = {
 	query,
 	insert,
 	insertMany,
-	update
+	update,
+	getCollection
 }

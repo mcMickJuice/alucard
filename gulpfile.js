@@ -30,6 +30,10 @@ gulp.task('babelify', function() {
 		.pipe(gulp.dest('./dist'));
 })
 
-gulp.task('default', ['generate-todo', 'babelify', 'move-data'], function() {
-	console.log('done!')
+gulp.task('build', ['babelify', 'move-data'], function() {
+
+})
+
+gulp.task('default', ['generate-todo', 'build'], function() {
+	gulp.watch(jsSourceGlob, ['build'])
 })
