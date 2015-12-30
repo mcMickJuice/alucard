@@ -5,8 +5,9 @@ function parseHtmlAndMap(htmlText, selector, mapper) {
 	var items = $(selector);
 
 	var mappedItems= [];
+	//cheerio map returns index as keys...
 	items.each((idx, item) => {
-		var $item = $(item); //might not work...
+		var $item = $(item);
 		var mapped = mapper($item);
 		mappedItems.push(mapped)
 	})

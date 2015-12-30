@@ -4,6 +4,7 @@ var Q = require('q');
 //todo move into config file
 var url = "mongodb://localhost:27017/videogames_roms";
 
+//todo refactor so that db is injected into this module
 //private functions
 function getDbConnection() {
 	var deferred = Q.defer();

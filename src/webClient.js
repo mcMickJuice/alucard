@@ -14,7 +14,6 @@ function makeRequest(options) {
 		})
 
 		res.on('end', function() {
-			console.log('were done!');
 			deferred.resolve(contentBody);
 		})
 	})
