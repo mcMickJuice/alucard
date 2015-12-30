@@ -1,27 +1,21 @@
 var fs = require('fs')
 var parser = require('./htmlParse/htmlParser').parseHtmlAndMap
-var dbClient = require('./data/dbClient')
 var webClient = require('./webClient')
 
 
 var selector = 'a.index.gamelist';
 var collectionName = 'roms';
-var host = "http://www.emuparadise.me"
 
 function getLinksForConsole(consoleObj) {
 	var consoleName = consoleObj.console;
 
 	var requestObj = {
-		host: host,
-		path: consoleObj.allGamesUrl.replace(host,'')
+		url: consoleObj.allGamesUrl
 	}
 	
-	var debug = require('debug')('main')
-
 	//fetchHtml
 	return webClient.makeRequest(requestObj )
 		.then(html => {
-			debug('we got html!')
 	//parseHtml into objects
 		function mapLink($wrapped) {
 			return {
@@ -33,19 +27,30 @@ function getLinksForConsole(consoleObj) {
 
 		return parser(html, selector, mapLink);
 		})
-		.then(results => {
-			fs.writeFile('C:/temp/resultFile.txt', results.toString(), function(err) {
+}
 
-			})
+var cookieString = 'downloadcaptcha= 1; refexception= 1';
+var downloadLinkId = '';
+var userAgent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36';
 
-			console.log('we got results')
-		//insert into mongo as console collection
-			return dbClient.insertMany(results, collectionName)
-		})
-		.catch(err => console.error(err)) ;
+function getDownloadString(gameUrl) {
+	var requestObj = {
+		url: `${gameUrl}-download`,
+		headers: {
+			"Cookie" : cookieString,
+			"User-Agent": userAgent
+		}
+	}
+
+	return webClient.makeRequest(requestObj);
+
+	//add cookies for captcha and referrer
+	//
+	//get download html, scrape page for downloadlink, return downloadLink
 }
 
 
 module.exports = {
-	getLinksForConsole
+	getLinksForConsole,
+	getDownloadString
 }

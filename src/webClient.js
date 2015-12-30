@@ -1,28 +1,19 @@
-var http = require('http');
+var request = require('request')
 var Q = require('q');
 
 function makeRequest(options) {
+
+	options.proxy = 'http://127.0.0.1:8888';
+
 	var deferred = Q.defer();
 
 	var contentBody = '';
-	var req = http.request(options, function(res) {
-
-		res.setEncoding('utf8');
-
-		res.on('data', function(chunk) {
-			contentBody += chunk
-		})
-
-		res.on('end', function() {
-			deferred.resolve(contentBody);
-		})
+	request(options, function(err, res, body) {
+		if(err) {
+			deferred.reject(err);
+		}
+		deferred.resolve(body);
 	})
-
-	req.on('error', err => {
-		deferred.reject('something fhappened!');
-	})
-
-	req.end();
 
 	return deferred.promise;
 }
