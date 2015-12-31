@@ -42,6 +42,8 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+.vscode/
+
 # DNX
 project.lock.json
 artifacts/
