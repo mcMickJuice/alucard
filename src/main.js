@@ -1,7 +1,8 @@
-var seedGameLinks = require('./seedRomInfo/seedGameLinks')
+var insertGameLinks = require('./seedRomInfo/insertGameLinks')
+var dbName = require('./config.js').dbName
 
-seedGameLinks.run('video_games')
-    .then(_ => console.log('done!'))
+insertGameLinks(dbName)
+    .then(_ => console.log('Finished inserting roms'))
     .catch(err => {
         console.log(err.stack);
     })
