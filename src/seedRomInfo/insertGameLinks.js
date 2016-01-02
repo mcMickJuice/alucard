@@ -1,4 +1,4 @@
-var getLinksForConsole = require('./webDataProvider').getLinksForConsole;
+var getLinksForConsole = require('../webDataProvider').getLinksForConsole;
 var Q = require('q');
 var dbClient = require('../data/dbClient');
 var dbRepo = require('../data/dbRepository');

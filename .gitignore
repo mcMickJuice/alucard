@@ -43,6 +43,7 @@ TestResult.xml
 dlldata.c
 
 .vscode/
+.idea/
 
 # DNX
 project.lock.json

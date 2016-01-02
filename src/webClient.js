@@ -20,11 +20,15 @@ function getRequestBody(options) {
 }
 
 
-function streamRequest(options, streamWriter) {
+function streamRequest(options, writeStream) {
     options.proxy = proxyAddress;
     
     return request(options)
-        .pipe(streamWriter);
+        .pipe(writeStream)
+        .on('error', function(err) {
+            console.log('error in request stream')
+            console.log(err.stack);
+        });
 }
 
 module.exports = {
