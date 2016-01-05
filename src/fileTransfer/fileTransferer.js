@@ -97,41 +97,41 @@ function createClient() {
     return c;
 }
 
-var sourceDir = 'C:/temp/sample-files';
-//var destination = '/home/pi/RetroPie/roms/dreamcast';
-var destination = '/home/pi/RetroPie/roms/dreamcast/';
+//var sourceDir = 'C:/temp/sample-files';
+////var destination = '/home/pi/RetroPie/roms/dreamcast';
+//var destination = '/home/pi/RetroPie/roms/dreamcast/';
 
-function onProgress(progress) {
-    console.log('progress', progress);
-}
-
-function onCompletion(err, something) {
-    if(err) {
-        console.log(err.stack);
-        console.log(err);
-        return
-    }
-
-    console.log('file transfer complete')
-}
-
-fs.readdir(sourceDir, function(err, fileNames) {
-    if(err){
-        console.log(err);
-        console.log(err.stack);
-    }
-
-    fileNames.forEach(function(fileName) {
-        var sourcePath = path.resolve(sourceDir,fileName);
-        var destinationPath = destination + fileName;
-        moveFile(sourcePath, destinationPath
-            , function(){}, onCompletion);
-    })
-})
+//function onProgress(progress) {
+//    console.log('progress', progress);
+//}
+//
+//function onCompletion(err, something) {
+//    if(err) {
+//        console.log(err.stack);
+//        console.log(err);
+//        return
+//    }
+//
+//    console.log('file transfer complete')
+//}
+//
+//fs.readdir(sourceDir, function(err, fileNames) {
+//    if(err){
+//        console.log(err);
+//        console.log(err.stack);
+//    }
+//
+//    fileNames.forEach(function(fileName) {
+//        var sourcePath = path.resolve(sourceDir,fileName);
+//        var destinationPath = destination + fileName;
+//        moveFile(sourcePath, destinationPath
+//            , function(){}, onCompletion);
+//    })
+//})
 
 //moveFile(sourceFile, destination, onProgress, onCompletion);
 
 
-//module.exports = {
-//    moveFile: moveFile
-//}
+module.exports = {
+    moveFile: moveFile
+}
