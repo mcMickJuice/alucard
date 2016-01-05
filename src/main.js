@@ -9,13 +9,8 @@ var getDownloadLink = require('./webDataProvider').getDownloadLink
 
 var {dbName, outputFilePath} = config;
 
-var consolesToPull = [
-    'snes',
-    'nes'
-]
-
 //grab n number of links
-function getLinks(dbName, count){
+function getLinks(dbName, count, query){
     var dbConnection;
     
     var dbConnectionPromise = dbClient.getDbConnection(dbName)
@@ -23,13 +18,13 @@ function getLinks(dbName, count){
            return dbConnection = db;
         });
         
-    return Q.all([dbConnectionPromise, Q.when('roms'), Q.when(count)])
-        .spread(dbRepo.getCollection)
+    return Q.all([dbConnectionPromise, Q.when('roms'), Q.when(query) ,Q.when(count) ])
+        .spread(dbRepo.query)
         .finally(_ => dbConnection.close())
 }
 
 function createWriteableStream(romInfo) {
-    var filePath = path.resolve(outputFilePath, `${romInfo.title}.zip`)
+    var filePath = path.resolve(outputFilePath, romInfo.consoleName ,`${romInfo.title}.zip`)
     
     var fileWriteStream = fs.createWriteStream(filePath);
     
@@ -45,24 +40,70 @@ function createWriteableStream(romInfo) {
     return fileWriteStream;
 }
 
-function run() {
-    var romsToDownload = 1;
-    
-    getLinks(dbName, romsToDownload)
+function createDirectory(consoleName) {
+    var directoryPath = path.resolve(outputFilePath, consoleName)
+    fs.existsSync(directoryPath) || fs.mkdirSync(directoryPath);
+}
+
+function downloadForConsole(consoleName, numberOfRoms) {
+    createDirectory((consoleName));
+
+    var query = {
+        consoleName: consoleName,
+        $or: [{title: /(USA)/}, {title: /(U)/}]
+    }
+
+
+    return getLinks(dbName, numberOfRoms, query)
         .then(romLinks => {
-            var promises = romLinks.map(rom => {
+
+            var promises = romLinks.reduce((promiseChain, rom) => {
                 var stream = createWriteableStream(rom);
                 var getDownloadLinkPromise = getDownloadLink(`http://www.emuparadise.me${rom.url}`);
-                
-                return Q.all([getDownloadLinkPromise, Q.when(stream)])
-                           .spread(downloadGame)
-                           .catch(err => console.log('err in downloading process'))
-            })
-            
+
+                var nextDownload = Q.all([getDownloadLinkPromise, Q.when(stream)])
+                    .spread(downloadGame)
+                    .catch(err => console.log('err in downloading process'))
+
+                promiseChain.then(_ => {
+                    return nextDownload;
+                })
+
+                return promiseChain;
+            }, Q());
+
+            //var promises = romLinks.map(rom => {
+            //    var stream = createWriteableStream(rom);
+            //    var getDownloadLinkPromise = getDownloadLink(`http://www.emuparadise.me${rom.url}`);
+            //
+            //    return Q.all([getDownloadLinkPromise, Q.when(stream)])
+            //        .spread(downloadGame)
+            //        .catch(err => console.log('err in downloading process'))
+            //})
+
             return Q.all(promises);
         })
         .then(_ => console.log('finished downloading roms'))
-        .catch(err => console.log(err.stack))
+}
+
+function run() {
+    var numberOfRoms = 5;
+
+    var consolesToPull = [
+        'SNES',
+        'NES'
+    ]
+
+    var tasks = consolesToPull.reduce((promiseChain, consoleName) => {
+
+        promiseChain.then(_ => {
+            return downloadForConsole(consoleName, numberOfRoms);
+        })
+
+        return promiseChain;
+    }, Q());
+
+    return Q.all(tasks).catch(err => console.log(err.stack));
 }
 
 run();

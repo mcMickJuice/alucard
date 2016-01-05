@@ -63,7 +63,7 @@ function downloadGame(downloadUrl, writeStream) {
         headers: requiredHeaders
     }
     
-    webClient.streamRequest(requestObj, writeStream)
+    return webClient.streamRequest(requestObj, writeStream)
 }
 
 

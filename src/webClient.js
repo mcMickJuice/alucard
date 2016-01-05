@@ -21,14 +21,20 @@ function getRequestBody(options) {
 
 
 function streamRequest(options, writeStream) {
+    var deferred = Q.defer();
     options.proxy = proxyAddress;
     
-    return request(options)
+    request(options)
         .pipe(writeStream)
         .on('error', function(err) {
-            console.log('error in request stream')
-            console.log(err.stack);
+            console.log('error in request stream');
+            deferred.reject(err);
+        })
+        .on('done', function() {
+            deferred.resolve();
         });
+
+    return deferred.promise;
 }
 
 module.exports = {

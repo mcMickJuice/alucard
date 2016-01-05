@@ -1,8 +1,24 @@
 var Q = require('q');
 
 //public api
-function query(db, queryObject) {
+function query(db, collectionName,queryObject, limit = 50) {
+	var deferred = Q.defer();
 
+	var options = {
+		limit: Math.min(limit, 100)
+	}
+
+	db.collection(collectionName).find(queryObject, options, function queryCallback(err, result) {
+		if(err) {
+			deferred.reject(err);
+		}
+
+		result.toArray(function(err, items) {
+			deferred.resolve(items);
+		})
+	})
+
+	return deferred.promise;
 }
 
 function update(db, updateQuery) {
