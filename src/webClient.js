@@ -1,10 +1,10 @@
 var request = require('request')
 var Q = require('q');
-var proxyAddress = require('./secrets/config').proxyAddress;
+//var proxyAddress = require('./secrets/config').proxyAddress;
 
 function getRequestBody(options) {
 
-	options.proxy = proxyAddress;
+	//options.proxy = proxyAddress;
 
 	var deferred = Q.defer();
 
@@ -21,8 +21,8 @@ function getRequestBody(options) {
 
 function streamRequest(options, writeStream) {
     var deferred = Q.defer();
-    //TODO if ENV == dev then...
-    options.proxy = proxyAddress;
+    ////TODO if ENV == dev then...
+    //options.proxy = proxyAddress;
     
     request(options)
         .pipe(writeStream)

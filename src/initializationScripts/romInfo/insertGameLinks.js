@@ -1,9 +1,11 @@
-var getLinksForConsole = require('../../webDataProvider').getLinksForConsole;
+//var getLinksForConsole = require('../../webDataProvider').getLinksForConsole;
 var Q = require('q');
 var dbClient = require('../../data/dbClient');
 var dbRepo = require('../../data/dbRepository');
-var webDataProvider = require('./webDataProvider');
-var consoleCollectionKey = require('../../secrets/config').consoleCollectionKey;
+var webDataProvider = require('../../webDataProvider');
+var consoleCollectionKey = 'console';
+var databaseName = require('../../secrets/dbConfig').dbName;
+
 
 function insertAllGameLinksForConsoles(dbName) {
     var dbConnection;
@@ -40,4 +42,7 @@ function insertLinksForConsole(db, consoleObj) {
 		})
 }
 
-module.exports = insertAllGameLinksForConsoles
+insertAllGameLinksForConsoles(databaseName)
+    .then(_ => console.log('done inserting game links'))
+    .catch(err => console.log(err.stack));
+//module.exports = insertAllGameLinksForConsoles
