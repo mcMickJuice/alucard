@@ -1,8 +1,8 @@
 {
-  "name": "video_game_roms",
+  "name": "alucard",
   "version": "1.0.0",
-  "description": "",
-  "main": "./dist/main.js",
+  "description": "Video game rom mover and web app",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=spec0/jasmine.json",
     "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
