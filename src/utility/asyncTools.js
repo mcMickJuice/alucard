@@ -1,7 +1,7 @@
 var Q = require('q');
 
 
-
+//FIXME This can't be tested so I'm not sure if it works
 function asyncToolBuilder(setTimeoutFunc) {
     var setTimeoutFunc = setTimeoutFunc;
 

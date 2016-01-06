@@ -5,7 +5,9 @@
   "main": "./dist/main.js",
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=spec0/jasmine.json",
-    "seedDatabase": "gulp clean && gulp build && node ./dist/data/seedConsoleInfo"
+    "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
+    "seedRomInfo": "gulp clean && gulp build && node ./dist/initializationScripts/romInfo/insertGameLinks",
+    "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo"
   },
   "author": "mcMickJuice",
   "license": "ISC",

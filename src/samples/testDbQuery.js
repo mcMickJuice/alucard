@@ -1,5 +1,5 @@
-var dbClient = require('./data/dbClient');
-var dbRepo = require('./data/dbRepository');
+var dbClient = require('./../data/dbClient');
+var dbRepo = require('./../data/dbRepository');
 var Q = require('q');
 
 function queryRoms(queryObj) {

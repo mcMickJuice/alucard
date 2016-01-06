@@ -1,11 +1,11 @@
-var dbClient = require('./data/dbClient')
-var dbRepo = require('./data/dbRepository')
-var config = require('./config')
+var dbClient = require('./../data/dbClient')
+var dbRepo = require('./../data/dbRepository')
+var config = require('./../secrets/config')
 var Q = require('q')
 var path = require('path')
 var fs = require('fs')
-var downloadGame = require('./webDataProvider').downloadGame
-var getDownloadLink = require('./webDataProvider').getDownloadLink
+var downloadGame = require('./../webDataProvider').downloadGame
+var getDownloadLink = require('./../webDataProvider').getDownloadLink
 
 var {dbName, outputFilePath} = config;
 

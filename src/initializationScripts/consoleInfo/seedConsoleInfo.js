@@ -1,15 +1,13 @@
-var dbClient = require('./dbClient');
-var dbRepo = require('./dbRepository');
+var dbClient = require('./../../data/dbClient');
+var dbRepo = require('./../../data/dbRepository');
 var fs = require('fs');
-var dbName = require('../config.js').dbName;
-var consoleKey = require('../config.js').consoleCollectionKey;
+var dbName = require('../../secrets/dbConfig.js').dbName;
+var consoleKey = 'console';
+var consoleData = require('./seedConsoleData.js');
 var Q = require('q');
 
-function seedConsoleInfo() {
-	var databaseName = dbName;
-	var consoleData = 
-        JSON.parse(fs.readFileSync('./dist/data/seedConsoleData.json', 'utf8'))
-        .consoleData;
+function seedConsoleInfo(databaseName) {
+	var {consoleData} = consoleData;
 
     var dbConnection;
     var connectionPromise = (dbClient.getDbConnection(databaseName))
@@ -22,7 +20,7 @@ function seedConsoleInfo() {
         .then(_ => dbConnection.close());
 }
 
-seedConsoleInfo()
+seedConsoleInfo(dbName)
 .catch(err => console.log(err.stack))
 .finally(function() {
 	console.log('exiting!')

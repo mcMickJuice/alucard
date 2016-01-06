@@ -1,7 +1,6 @@
 var request = require('request')
 var Q = require('q');
-
-var proxyAddress = 'http://127.0.0.1:8888';
+var proxyAddress = require('./secrets/config').proxyAddress;
 
 function getRequestBody(options) {
 
@@ -22,6 +21,7 @@ function getRequestBody(options) {
 
 function streamRequest(options, writeStream) {
     var deferred = Q.defer();
+    //TODO if ENV == dev then...
     options.proxy = proxyAddress;
     
     request(options)

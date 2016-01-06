@@ -1,9 +1,10 @@
 var MongoClient = require('mongodb').MongoClient;
 var Q = require('q');
+var dbAddress = require('../secrets/dbConfig').dbAddress;
 
 function getDbConnection(databaseName) {
 	var deferred = Q.defer();
-	var url = `mongodb://localhost:27017/${databaseName}`;
+	var url = `${dbAddress}${databaseName}`;
 
 	MongoClient.connect(url, function(err, db) {
 		if(err) {
