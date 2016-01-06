@@ -1,7 +1,9 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| webClient.js | 24 | if ENV == dev then...
+| index.js | 10 | PHASE DOWNLOAD
+| index.js | 13 | PHASE TRANSFER
+| index.js | 15 | PHASE POSTTRANSFER
 
 ### FIXMEs
 | Filename | line # | FIXME

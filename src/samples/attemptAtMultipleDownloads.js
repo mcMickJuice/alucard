@@ -4,8 +4,8 @@ var config = require('./../secrets/config')
 var Q = require('q')
 var path = require('path')
 var fs = require('fs')
-var downloadGame = require('./../webDataProvider').downloadGame
-var getDownloadLink = require('./../webDataProvider').getDownloadLink
+var downloadGame = require('./../web/webDataProvider').downloadGame
+var getDownloadLink = require('./../web/webDataProvider').getDownloadLink
 
 var {dbName, outputFilePath} = config;
 

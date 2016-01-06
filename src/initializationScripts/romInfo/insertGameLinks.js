@@ -2,7 +2,7 @@
 var Q = require('q');
 var dbClient = require('../../data/dbClient');
 var dbRepo = require('../../data/dbRepository');
-var webDataProvider = require('../../webDataProvider');
+var webDataProvider = require('../../web/webDataProvider');
 var consoleCollectionKey = 'console';
 var databaseName = require('../../secrets/dbConfig').dbName;
 

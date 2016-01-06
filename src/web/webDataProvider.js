@@ -1,6 +1,6 @@
-var parser = require('./htmlParse/htmlParser').parseHtmlAndMap;
+var parser = require('./../htmlParse/htmlParser').parseHtmlAndMap;
 var webClient = require('./webClient');
-var romRequestConfig = require('./secrets/romRequestConfig');
+var romRequestConfig = require('./../secrets/romRequestConfig');
 
 var {romHost, cookieString, downloadLinkSelector, gameListLinkSelector, userAgent} = romRequestConfig;
 

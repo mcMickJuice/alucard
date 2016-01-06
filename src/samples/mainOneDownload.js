@@ -1,4 +1,4 @@
-var downloadGame = require('./../webDataProvider').downloadGame;
+var downloadGame = require('./../web/webDataProvider').downloadGame;
 var fs = require('fs');
 var path = require('path')
 
