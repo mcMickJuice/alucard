@@ -1,6 +1,5 @@
 var dbClient = require('./../../data/dbClient');
 var dbRepo = require('./../../data/dbRepository');
-var fs = require('fs');
 var dbName = require('../../secrets/dbConfig.js').dbName;
 var consoleKey = 'console';
 var consoleInfo = require('./seedConsoleData.js').consoleData;
@@ -15,7 +14,7 @@ function seedConsoleInfo(databaseName) {
     
     return Q.all([connectionPromise, Q.when(consoleInfo), Q.when(consoleKey)])
         .spread(dbRepo.insertMany)
-        .then(_ => dbConnection.close());
+        .then(() => dbConnection.close());
 }
 
 seedConsoleInfo(dbName)

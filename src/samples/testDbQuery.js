@@ -3,6 +3,7 @@ var dbRepo = require('./../data/dbRepository');
 var Q = require('q');
 
 function queryRoms(queryObj) {
+    /*  */
     var dbConnection;
 
     var dbConnectionPromise = dbClient.getDbConnection('videogame_roms')
@@ -16,6 +17,9 @@ function queryRoms(queryObj) {
             console.log(items)
         })
         .catch(err => console.log(err.stack))
+    .finally(() => {
+        dbConnection.close();
+    })
 }
 
 module.exports = queryRoms;

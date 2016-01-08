@@ -21,9 +21,9 @@ function query(db, collectionName,queryObject, limit = 50) {
 	return deferred.promise;
 }
 
-function update(db, updateQuery) {
-
-}
+//function update(db, updateQuery) {
+//
+//}
 
 function getCollection(db, collectionName, limit = 50) {
 	var deferred =  Q.defer();
@@ -78,6 +78,6 @@ module.exports = {
 	query,
 	insert,
 	insertMany,
-	update,
+	//update,
 	getCollection
 }

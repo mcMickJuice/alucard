@@ -3,11 +3,11 @@ var logger = require('../logging/alucardLogger');
 var Q = require('q');
 
 var phase = {
-    downloading: "DOWNLOADING",
-    fileProcessing: "FILE_PROCESSING",
-    transfer: "FILE_TRANSER",
-    complete: "COMPLETE",
-    error: "ERROR"
+    downloading: 'DOWNLOADING',
+    fileProcessing: 'FILE_PROCESSING',
+    transfer: 'FILE_TRANSER',
+    complete: 'COMPLETE',
+    error: 'ERROR'
 };
 
 function updateJob(uuid, updateObj) {
@@ -56,7 +56,7 @@ function fileProcessing(uuid) {
 
             return updateJob(uuid,updateObj);
         })
-        .then(result => {
+        .then(() => {
             logger.info(`Job ${uuid} set to fileProcessing`)
         });
 }
@@ -70,7 +70,7 @@ function transfer(uuid) {
 
             return updateJob(uuid, updateObj);
         })
-        .then(result => {
+        .then(() => {
             logger.info(`Job ${uuid} set to file transfer`);
         });
 }
@@ -85,7 +85,7 @@ function complete(uuid) {
 
             return updateJob(uuid, updateObj);
         })
-        .then(result => {
+        .then(() => {
             logger.info(`Job ${uuid} has completed!`);
         })
 }

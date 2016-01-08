@@ -15,7 +15,7 @@ function insertAllGameLinksForConsoles(dbName) {
     //save off dbConnection for disposal        
 		return dbConnection = db;
 	})
-    .then(_ => {
+    .then(() => {
         return dbRepo.getCollection(dbConnection, consoleCollectionKey)
            .then(consoles => {
                return Q.all(consoles.map(c => {
@@ -26,7 +26,7 @@ function insertAllGameLinksForConsoles(dbName) {
                console.log(err.stack)
            })
     })
-    .finally(_ => {
+    .finally(() => {
         dbConnection.close()
     })
 }
@@ -37,12 +37,12 @@ function insertLinksForConsole(db, consoleObj) {
 	return Q.all([Q.when(db), linksPromise, Q.when('roms')])
 	//spread array of values as arguments to given function
 		.spread(dbRepo.insertMany)
-		.then(results => {
+		.then(() => {
 			console.log(`items inserted into database for ${consoleObj.console}`);
 		})
 }
 
 insertAllGameLinksForConsoles(databaseName)
-    .then(_ => console.log('done inserting game links'))
+    .then(() => console.log('done inserting game links'))
     .catch(err => console.log(err.stack));
 //module.exports = insertAllGameLinksForConsoles

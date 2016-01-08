@@ -3,14 +3,12 @@ var Q = require('q');
 
 //FIXME This can't be tested so I'm not sure if it works
 function asyncToolBuilder(setTimeoutFunc) {
-    var setTimeoutFunc = setTimeoutFunc;
-
     function delayPromiseAction(millisecondsToDelay, action) {
         var deferred = Q.defer();
 
-        setTimeoutFunc(_ => {
-            action().then(_ => deferred.resolve(arguments));
-        }, millisecondsToDelay)
+        setTimeoutFunc(() => {
+            action().then(() => deferred.resolve(arguments));
+        }, millisecondsToDelay);
 
         return deferred.promise;
     }
@@ -18,7 +16,7 @@ function asyncToolBuilder(setTimeoutFunc) {
     function delay(millisecondsToDelay) {
         var deferred = Q.defer();
 
-        setTimeoutFunc(_ => {
+        setTimeoutFunc(() => {
             deferred.resolve();
         }, millisecondsToDelay);
 

@@ -27,8 +27,8 @@ function getLinksForConsole(consoleObj) {
 		})
 }
 var requiredHeaders = {
-			"Cookie" : cookieString,
-			"User-Agent": userAgent
+			'Cookie' : cookieString,
+			'User-Agent': userAgent
 		};
 
 function getDownloadLink(gameUrl) {
