@@ -29,13 +29,15 @@ function guardUuid(uuid) {
 
 
 //while processing file, update status of job
-function initializeJob(uuid) {
+function initializeJob(uuid, gameTitle, gameId) {
 
     return guardUuid(uuid)
     .then(() => {
         var job = new JobState({
-            uuid: uuid,
-            phase: phase.downloading
+            uuid,
+            phase: phase.downloading,
+            gameTitle,
+            gameId
         });
 
         return job.save();

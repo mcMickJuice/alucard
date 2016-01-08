@@ -53,7 +53,7 @@ function insert(db, jsonToInsert, collectionName) {
 			}
 
 			return deferred.resolve(result);
-		})
+		});
 
 	return deferred.promise;
 }

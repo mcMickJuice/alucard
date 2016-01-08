@@ -12,7 +12,7 @@ function getDbConnection(databaseName) {
 		}
 
 		deferred.resolve(db);
-	})
+	});
 
 	return deferred.promise;
 }
