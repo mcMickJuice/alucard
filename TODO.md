@@ -1,9 +1,9 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| index.js | 10 | PHASE DOWNLOAD
-| index.js | 13 | PHASE TRANSFER
-| index.js | 15 | PHASE POSTTRANSFER
+| index.js | 11 | PHASE DOWNLOAD
+| index.js | 14 | PHASE TRANSFER
+| index.js | 16 | PHASE POSTTRANSFER
 
 ### FIXMEs
 | Filename | line # | FIXME

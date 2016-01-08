@@ -1,7 +1,8 @@
-
+var keyGen = require('keyGenerator');
 
 
 function queueDownload(romId) {
+    var uuid = keyGen();
     ////TODO PHASE INITIAL PHASE
     //get rom information
 
