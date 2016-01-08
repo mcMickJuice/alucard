@@ -1,20 +1,15 @@
 var fs = require('fs');
 var logFileDir = require('../secrets/config').logFileDir;
-var path = require('path')
+var path = require('path');
 var mkdir = require('mkdirp');
+var levels = require('./logConfig').levels;
 
 function verifyOrCreateLogDir(directory,cb) {
     mkdir(directory, cb);
 }
 
-var levels = {
-    "error": "ERROR",
-    "info": "INFO",
-    "debug": "DEBUG"
-}
-
 function errLog(err) {
-    console.log(err)
+    console.log(err);
     console.log(err.stack)
 }
 

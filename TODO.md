@@ -4,7 +4,6 @@
 | index.js | 10 | PHASE DOWNLOAD
 | index.js | 13 | PHASE TRANSFER
 | index.js | 15 | PHASE POSTTRANSFER
-| logging\dbLogger.js | 1 | implement db logger
 
 ### FIXMEs
 | Filename | line # | FIXME
