@@ -3,7 +3,7 @@ var Q = require('q');
 var dbClient = require('../../data/dbClient');
 var dbRepo = require('../../data/dbRepository');
 var webDataProvider = require('../../web/webDataProvider');
-var consoleCollectionKey = 'console';
+var consoleCollectionKey = 'consoles';
 var databaseName = require('../../secrets/dbConfig').dbName;
 
 
@@ -33,7 +33,7 @@ function insertAllGameLinksForConsoles(dbName) {
 
 function insertLinksForConsole(db, consoleObj) {
     var linksPromise = webDataProvider.getLinksForConsole(consoleObj);
-
+//TODO update initialize Script with Rom model
 	return Q.all([Q.when(db), linksPromise, Q.when('roms')])
 	//spread array of values as arguments to given function
 		.spread(dbRepo.insertMany)

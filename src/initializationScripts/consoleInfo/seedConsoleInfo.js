@@ -1,7 +1,7 @@
 var dbClient = require('./../../data/dbClient');
 var dbRepo = require('./../../data/dbRepository');
 var dbName = require('../../secrets/dbConfig.js').dbName;
-var consoleKey = 'console';
+var consoleKey = 'consoles';
 var consoleInfo = require('./seedConsoleData.js').consoleData;
 var Q = require('q');
 

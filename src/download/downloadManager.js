@@ -1,21 +1,11 @@
 var config = require('../secrets/config');
-var consoleDirMapping = require('./consoleDirMapping').directoryMapping;
 var download = require('../web/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
-var _ = require('lodash');
 
 function downloadGame(downloadUrl, romInfo) {
-    //determine download path
-    var consolePathName = _.find(consoleDirMapping, dirInfo => {
-       return dirInfo.consoleName === romInfo.consoleName;
-    }).directoryName;
-
-    if(!consolePathName) {
-        throw new Error(`console Path Name not found for ${romInfo.console}`);
-    }
     //TODO determine file extensions ahead of time?
-    var romDir = `${config.baseOutputDir}/${config.romFileDir}/${consolePathName}`;
+    var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
     var outputPath = `${romDir}/${romInfo.title}.zip`;
 
     //TODO define reporter
@@ -38,4 +28,4 @@ function createWriteStream(directory,filePath, reporter) {
         });
 }
 
-module.exports = downloadGame;
+module.exports.downloadGame = downloadGame;

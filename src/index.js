@@ -3,7 +3,7 @@ var Rom = require('./models/Rom');
 var jobStateManager = require('./logging/jobStateManager');
 //var logger = require('./logging/alucardLogger');
 var webDataProvider = require('./web/webDataProvider');
-var downloadManager = require('./download/manager');
+var downloadGame = require('./download/downloadManager').downloadGame;
 var romHost = require('./secrets/romRequestConfig').romHost;
 var Q = require('q');
 
@@ -21,7 +21,7 @@ function queueDownload(romId) {
         .spread((dlLink, romInfo) => {
             //TODO move into service
             var fullDlLink = `${romHost}${dlLink}`;
-            return downloadManager(fullDlLink, romInfo);
+            return downloadGame(fullDlLink, romInfo);
         })
         .then(() => {
             jobStateManager.fileProcessing(uuid);
@@ -44,7 +44,7 @@ function queueDownload(romId) {
     //TODO PHASE POSTTRANSFER
 }
 
-queueDownload('568c8f95f17d46a8178ac0a6')
+queueDownload('569154f49978460839311f5f')
 .then(() => console.log('download complete'));
 
 //module.exports = {

@@ -1,12 +1,13 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| index.js | 28 | PHASE DOWNLOAD
-| index.js | 30 | PHASE TRANSFER
-| index.js | 32 | PHASE POSTTRANSFER
-| download\manager.js | 17 | path not exist....check to make sure first...
-| download\manager.js | 18 | determine file extensions ahead of time?
-| download\manager.js | 22 | define reporter
+| index.js | 22 | move into service
+| index.js | 40 | PHASE DOWNLOAD
+| index.js | 42 | PHASE TRANSFER
+| index.js | 44 | PHASE POSTTRANSFER
+| download\downloadManager.js | 8 | determine file extensions ahead of time?
+| download\downloadManager.js | 12 | define reporter
+| initializationScripts\romInfo\insertGameLinks.js | 36 | update initialize Script with Rom model
 
 ### FIXMEs
 | Filename | line # | FIXME
