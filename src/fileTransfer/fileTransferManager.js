@@ -1,9 +1,10 @@
 var moveFile = require('./fileTransfer').moveFile;
 var piDestinationRoot = require('../secrets/fileProcessingConfig').basePiPath;
 var Q = require('q');
+var path = require('path');
 
-function stdout(str) {
-    console.log(str);
+function stdout() {
+    console.log(arguments);
 }
 
 function moveFileToPi(localPath, consolePath, reporter) {
@@ -18,8 +19,7 @@ function moveFileToPi(localPath, consolePath, reporter) {
         deferred.resolve();
     }
 
-    //get file Name
-    var fileName = localPath.split('/').reverse()[0];
+    var fileName = path.parse(localPath).base;
     var defaultReporter = reporter || stdout;
     var destinationPath = `${piDestinationRoot}${consolePath}/${fileName}`;
     moveFile(localPath, destinationPath, defaultReporter, onCompletion);

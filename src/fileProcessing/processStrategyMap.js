@@ -1,6 +1,6 @@
 var noop = require('./noopProcessing');
 var unzip = require('./unzipProcessing');
-var rar = require('./rarProcessing');
+//var rar = require('./rarProcessing');
 
 /*
 Strategy Contract:
@@ -15,5 +15,5 @@ module.exports = {
     'snes': noop,
     'genesis': noop,
     'n64': unzip,
-    'psx': rar
+    'psx': noop
 }

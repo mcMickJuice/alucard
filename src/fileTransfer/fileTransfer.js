@@ -14,7 +14,11 @@ function moveFile(localFilePath, remoteFilePath, onProgress, cb) {
                 cb(err);
             }
 
-            sftp.fastPut(localFilePath, remoteFilePath, {}, function(err) {
+            function stepFunction(totalTransferred, chunk, totalFile) {
+                onProgress(totalTransferred, totalFile);
+            }
+
+            sftp.fastPut(localFilePath, remoteFilePath, {step:stepFunction}, function(err) {
                 if(err) {
                     cb(err);
                 }
@@ -24,14 +28,6 @@ function moveFile(localFilePath, remoteFilePath, onProgress, cb) {
                 client.end()
             });
         })
-    })
-    .on('data', function(err, data) {
-        if(err){
-            return;
-        }
-
-        onProgress('progress made')
-        console.log(data);
     })
     .on('end', function() {
         client.end();
