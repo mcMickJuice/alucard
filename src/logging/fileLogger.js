@@ -1,12 +1,8 @@
 var fs = require('fs');
 var config = require('../secrets/config');
 var path = require('path');
-var mkdir = require('mkdirp');
 var levels = require('./logConfig').levels;
-
-function verifyOrCreateLogDir(directory,cb) {
-    mkdir(directory, cb);
-}
+var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectory;
 
 function errLog(err) {
     console.log(err);
@@ -15,7 +11,7 @@ function errLog(err) {
 
 function log(message, level){
     var logPath = `${config.baseOutputDir}/${config.logFileDir}`;
-    verifyOrCreateLogDir(logPath, err => {
+    ensureDirectory(logPath, err => {
         if(err) {
             errLog(err);
         }
@@ -26,7 +22,6 @@ function log(message, level){
         fs.appendFile(filePath,message, 'utf8', function(err) {
             if(err) {
                 errLog(err);
-                return;
             }
         });
     })
