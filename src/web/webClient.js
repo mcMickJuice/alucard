@@ -30,7 +30,7 @@ function streamRequest(options, writeStream) {
             console.log('error in request stream');
             deferred.reject(err);
         })
-        .on('done', function() {
+        .on('finish', function() {
             deferred.resolve();
         });
 

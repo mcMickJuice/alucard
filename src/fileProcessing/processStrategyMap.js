@@ -4,6 +4,7 @@ var rar = require('./rarProcessing');
 
 /*
 Strategy Contract:
+-method name process
 -params - filepath to the raw downloaded file, optional reporter to report progress
 -return a promise<T>
 -T is array of filePaths that can be moved

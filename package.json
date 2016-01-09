@@ -22,6 +22,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
+    "gulp-plumber": "^1.0.1",
     "gulp-todo": "^4.0.0",
     "jasmine": "^2.4.1",
     "mocha": "^2.3.4",

@@ -2,4 +2,6 @@ function unzip(){
     throw new Error('Unzip is not yet implemented');
 }
 
-module.exports = unzip;
+module.exports = {
+    process: unzip
+};

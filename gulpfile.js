@@ -3,6 +3,7 @@ var babel = require('gulp-babel');
 var todo = require('gulp-todo');
 var del = require('del');
 var eslint = require('gulp-eslint');
+var plumber = require('gulp-plumber');
 
 var jsSourceGlob = './src/**/*.js';
 
@@ -31,10 +32,18 @@ gulp.task('build', ['babelify'], function() {
 
 gulp.task('lint', function() {
     console.log('lint being looked at');
+
+    //TODO this needs to be improved. subsequent tasks still execute
+    function errorHandler(err) {
+        console.log('failure in pipe', err);
+        this.emit('end');
+    }
+
 	return gulp.src(jsSourceGlob)
+        .pipe(plumber(errorHandler))
 		.pipe(eslint())
 		.pipe(eslint.format())
-		//.pipe(eslint.failAfterError());
+		.pipe(eslint.failAfterError());
 });
 
 gulp.task('watch-lint', ['lint'], function() {

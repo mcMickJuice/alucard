@@ -5,4 +5,6 @@ function noopStrategy(filePath){
     return Q.when(outputFilePaths);
 }
 
-module.exports = noopStrategy;
+module.exports = {
+    process: noopStrategy
+};

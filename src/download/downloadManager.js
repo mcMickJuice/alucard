@@ -12,7 +12,13 @@ function downloadGame(downloadUrl, romInfo) {
     return createWriteStream(romDir, outputPath,(str, chunk) => {
         console.log(str, chunk);
     } )
-    .then((stream) => download(downloadUrl, stream));
+    .then((stream) => download(downloadUrl, stream))
+        .then(() => {
+            return {
+                rom: romInfo,
+                filePath: outputPath
+            }
+        });
 }
 
 function createWriteStream(directory,filePath, reporter) {
