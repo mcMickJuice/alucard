@@ -1,4 +1,4 @@
 module.exports = function keyGenerator() {
-    return Date.now();
+    return Date.now().toString();
 }
 

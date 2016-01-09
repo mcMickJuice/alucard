@@ -2,8 +2,8 @@
 | Filename | line # | TODO
 |:------|:------:|:------
 | index.js | 25 | move into service
-| index.js | 38 | PHASE TRANSFER
-| index.js | 48 | POSTPROCESS
+| index.js | 39 | PHASE TRANSFER
+| index.js | 51 | POSTPROCESS
 | download\downloadManager.js | 7 | determine file extensions ahead of time?
 | download\downloadManager.js | 11 | define reporter
 | initializationScripts\romInfo\insertGameLinks.js | 36 | update initialize Script with Rom model

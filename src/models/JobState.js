@@ -3,7 +3,7 @@ var mongoose = require('./mongoosePromisified');
 var Schema = mongoose.Schema;
 
 var jobStateSchema = new Schema({
-    uuid: {type: Number, required: true},
+    uuid: {type: String, required: true},
     phase: {type: String, required: true},
     gameTitle: {type: String, required: true},
     gameId: {type: Schema.Types.ObjectId, required:true},
