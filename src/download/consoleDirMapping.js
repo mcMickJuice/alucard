@@ -4,7 +4,7 @@ module.exports = {
         new ConsoleMapping('SNES','snes'),
         new ConsoleMapping('Genesis-Megadrive','genesis'),
         new ConsoleMapping('N64','n64'),
-        new ConsoleMapping('PSX','psx'),
+        new ConsoleMapping('PSX','psx')
     ]
 };
 

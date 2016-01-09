@@ -14,14 +14,13 @@ function errLog(err) {
 }
 
 function log(message, level){
-    //var dirPath = path.resolve(logFileDir);
-    var logPath = `${config.baseOutputDir}/${logFileDir}`;
+    var logPath = `${config.baseOutputDir}/${config.logFileDir}`;
     verifyOrCreateLogDir(logPath, err => {
         if(err) {
             errLog(err);
         }
         var env = process.env.NODE_ENV;
-        var filePath = path.resolve(logFileDir, `log-${env}.txt`);
+        var filePath = path.resolve(logPath, `log-${env}.txt`);
 
         message = `${level} - ${Date()}: ${message}\r\n`;
         fs.appendFile(filePath,message, 'utf8', function(err) {

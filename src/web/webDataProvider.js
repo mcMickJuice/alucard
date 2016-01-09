@@ -2,7 +2,7 @@ var parser = require('./../htmlParse/htmlParser').parseHtmlAndMap;
 var webClient = require('./webClient');
 var romRequestConfig = require('./../secrets/romRequestConfig');
 
-var {romHost, cookieString, downloadLinkSelector, gameListLinkSelector, userAgent} = romRequestConfig;
+var {cookieString, downloadLinkSelector, gameListLinkSelector, userAgent} = romRequestConfig;
 
 function getLinksForConsole(consoleObj) {
 	var consoleName = consoleObj.console;
@@ -50,7 +50,7 @@ function getDownloadLink(gameUrl) {
 
 function downloadGame(downloadUrl, writeStream) {
     var requestObj = {
-        url: `${romHost}${downloadUrl}`,
+        url: downloadUrl,
         headers: requiredHeaders
     };
     
