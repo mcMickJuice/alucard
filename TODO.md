@@ -1,9 +1,12 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| index.js | 11 | PHASE DOWNLOAD
-| index.js | 14 | PHASE TRANSFER
-| index.js | 16 | PHASE POSTTRANSFER
+| index.js | 28 | PHASE DOWNLOAD
+| index.js | 30 | PHASE TRANSFER
+| index.js | 32 | PHASE POSTTRANSFER
+| download\manager.js | 17 | path not exist....check to make sure first...
+| download\manager.js | 18 | determine file extensions ahead of time?
+| download\manager.js | 22 | define reporter
 
 ### FIXMEs
 | Filename | line # | FIXME

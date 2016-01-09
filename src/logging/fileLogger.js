@@ -1,5 +1,5 @@
 var fs = require('fs');
-var logFileDir = require('../secrets/config').logFileDir;
+var config = require('../secrets/config');
 var path = require('path');
 var mkdir = require('mkdirp');
 var levels = require('./logConfig').levels;
@@ -15,8 +15,8 @@ function errLog(err) {
 
 function log(message, level){
     //var dirPath = path.resolve(logFileDir);
-
-    verifyOrCreateLogDir(logFileDir, err => {
+    var logPath = `${config.baseOutputDir}/${logFileDir}`;
+    verifyOrCreateLogDir(logPath, err => {
         if(err) {
             errLog(err);
         }

@@ -1,7 +1,24 @@
-//var keyGen = require('keyGenerator');
+var keyGen = require('./utility/keyGenerator');
+var Rom = require('./models/Rom');
+var jobStateManager = require('./logging/jobStateManager');
+var logger = require('./logging/alucardLogger');
+var webDataProvider = require('./web/webDataProvider');
+var Q = require('q');
 
+function queueDownload(romId) {
+    var uuid = keyGen();
+    Rom.findById(romId)
+        .then(rom => {
+            console.log('romFound',rom);
+            var downloadPromise = webDataProvider.getDownloadLink(rom.url);
+            var statePromise = jobStateManager.initializeJob(uuid,rom.title,rom._id);
 
-function queueDownload(/*romId */) {
+            return Q.all([downloadPromise, statePromise]);
+        })
+        .then((dlLink) => {
+            var writeStream
+        })
+        .then()
     //var uuid = keyGen();
     ////TODO PHASE INITIAL PHASE
     //get rom information
@@ -9,7 +26,6 @@ function queueDownload(/*romId */) {
     //get downloadLink
 
     //TODO PHASE DOWNLOAD
-
 
     //TODO PHASE TRANSFER
 
@@ -19,4 +35,4 @@ function queueDownload(/*romId */) {
 
 module.exports = {
     queueDownload
-}
+};

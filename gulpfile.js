@@ -30,11 +30,16 @@ gulp.task('build', ['babelify'], function() {
 });
 
 gulp.task('lint', function() {
+    console.log('lint being looked at');
 	return gulp.src(jsSourceGlob)
 		.pipe(eslint())
 		.pipe(eslint.format())
-		.pipe(eslint.failAfterError());
-})
+		//.pipe(eslint.failAfterError());
+});
+
+gulp.task('watch-lint', ['lint'], function() {
+	gulp.watch(jsSourceGlob, ['lint']);
+});
 
 gulp.task('default', ['generate-todo', 'build'], function() {
 	gulp.watch(jsSourceGlob, ['build']);
