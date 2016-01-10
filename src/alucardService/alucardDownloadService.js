@@ -1,7 +1,7 @@
 var keyGen = require('./../utility/keyGenerator');
 var Rom = require('./../models/Rom');
 var jobStateManager = require('./../logging/jobStateManager');
-var webDataProvider = require('./../web/webDataProvider');
+var webDataProvider = require('../webService/webDataProvider');
 var downloadGame = require('./../download/downloadManager').downloadGame;
 var romHost = require('./../secrets/romRequestConfig').romHost;
 var Q = require('q');
@@ -30,7 +30,7 @@ function queueDownload(romId, onRetrieval, onError) {
         })
         .spread((dlLink, romInfo) => {
             //download game
-            //TODO move into service
+            //TODO move into alucardService
             var fullDlLink = `${romHost}${dlLink}`;
             return downloadGame(fullDlLink, romInfo);
         })

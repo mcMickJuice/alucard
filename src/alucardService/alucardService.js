@@ -36,3 +36,5 @@ app.post('/download', function(req, res) {
 });
 
 app.listen(port);
+
+console.log(`Alucard Service listening at port ${port}`);

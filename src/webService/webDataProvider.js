@@ -1,4 +1,4 @@
-var parser = require('./../htmlParse/htmlParser').parseHtmlAndMap;
+var parser = require('./../utility/htmlParser').parseHtmlAndMap;
 var webClient = require('./webClient');
 var romRequestConfig = require('./../secrets/romRequestConfig');
 

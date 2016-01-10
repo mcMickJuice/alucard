@@ -8,7 +8,7 @@
     "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
     "seedRomInfo": "gulp clean && gulp build && node ./dist/initializationScripts/romInfo/insertGameLinks",
     "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo",
-    "alucard-service": "set PORT=666&&node ./dist/service/alucardService.js"
+    "alucard-service": "set PORT=666&&node ./dist/alucardService/alucardService.js"
   },
   "author": "mcMickJuice",
   "license": "ISC",

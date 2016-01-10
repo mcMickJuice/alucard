@@ -1,5 +1,5 @@
 var config = require('../secrets/config');
-var download = require('../web/webDataProvider').downloadGame;
+var download = require('../webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
 
