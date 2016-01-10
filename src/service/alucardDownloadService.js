@@ -1,17 +1,23 @@
-var keyGen = require('./utility/keyGenerator');
-var Rom = require('./models/Rom');
-var jobStateManager = require('./logging/jobStateManager');
-var webDataProvider = require('./web/webDataProvider');
-var downloadGame = require('./download/downloadManager').downloadGame;
-var romHost = require('./secrets/romRequestConfig').romHost;
+var keyGen = require('./../utility/keyGenerator');
+var Rom = require('./../models/Rom');
+var jobStateManager = require('./../logging/jobStateManager');
+var webDataProvider = require('./../web/webDataProvider');
+var downloadGame = require('./../download/downloadManager').downloadGame;
+var romHost = require('./../secrets/romRequestConfig').romHost;
 var Q = require('q');
-var fileProcessor = require('./fileProcessing/fileProcessManager');
-var fileTransferManager = require('./fileTransfer/fileTransferManager');
+var fileProcessor = require('./../fileProcessing/fileProcessManager');
+var fileTransferManager = require('./../fileTransfer/fileTransferManager');
 
-function queueDownload(romId) {
+function queueDownload(romId, onRetrieval, onError) {
     var uuid = keyGen();
     return Rom.findById(romId)
         .then(rom => {
+
+            if(!rom){
+                onError('rom not found');
+            } else {
+                onRetrieval(rom._doc);
+            }
             //Get download link for game
             var fullDlLink = `${romHost}${rom.url}`;
 
@@ -56,14 +62,13 @@ function queueDownload(romId) {
         })
         .catch(err => {
             jobStateManager.error(err, uuid);
-            console.log(err);
-            console.log(err.stack);
+            throw err;
         });
 }
 
-queueDownload('569154f399784608393116fe')
-.then(() => console.log('download complete'));
+//queueDownload('569154f399784608393116fe')
+//.then(() => console.log('download complete'));
 
-//module.exports = {
-//    queueDownload
-//};
+module.exports = {
+    queueDownload
+};

@@ -1,11 +1,11 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| index.js | 25 | move into service
-| index.js | 39 | PHASE TRANSFER
-| index.js | 51 | POSTPROCESS
 | download\downloadManager.js | 7 | determine file extensions ahead of time?
 | download\downloadManager.js | 11 | define reporter
+| service\alucardDownloadService.js | 25 | move into service
+| service\alucardDownloadService.js | 39 | PHASE TRANSFER
+| service\alucardDownloadService.js | 51 | POSTPROCESS
 | initializationScripts\romInfo\insertGameLinks.js | 36 | update initialize Script with Rom model
 
 ### FIXMEs

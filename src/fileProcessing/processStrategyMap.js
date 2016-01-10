@@ -13,7 +13,7 @@ Strategy Contract:
 module.exports = {
     'nes': noop,
     'snes': noop,
-    'genesis': noop,
+    'megadrive': noop,
     'n64': unzip,
     'psx': noop
 }
