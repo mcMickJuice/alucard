@@ -7,7 +7,8 @@
     "test": "jasmine JASMINE_CONFIG_PATH=spec0/jasmine.json",
     "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
     "seedRomInfo": "gulp clean && gulp build && node ./dist/initializationScripts/romInfo/insertGameLinks",
-    "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo"
+    "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo",
+    "alucard-service": "set PORT=666&&node ./dist/service/alucardService.js"
   },
   "author": "mcMickJuice",
   "license": "ISC",

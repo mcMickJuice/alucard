@@ -98,7 +98,7 @@ function error(err, uuid) {
             return JobState.findOne({uuid: uuid});
         })
         .then(job => {
-            var oldPhase = job.phase.toString();
+            var oldPhase = job.phase ? job.phase.toString() : '';
 
             job.time = Date.now();
             job.phase = phase.error;

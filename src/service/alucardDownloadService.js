@@ -14,9 +14,11 @@ function queueDownload(romId, onRetrieval, onError) {
         .then(rom => {
 
             if(!rom){
-                onError('rom not found');
+                var reason = `Rom not found for id ${romId}`
+                onError(reason);
+                return Q.reject(reason);
             } else {
-                onRetrieval(rom._doc);
+                onRetrieval(uuid);
             }
             //Get download link for game
             var fullDlLink = `${romHost}${rom.url}`;

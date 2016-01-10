@@ -3,9 +3,9 @@
 |:------|:------:|:------
 | download\downloadManager.js | 7 | determine file extensions ahead of time?
 | download\downloadManager.js | 11 | define reporter
-| service\alucardDownloadService.js | 25 | move into service
-| service\alucardDownloadService.js | 39 | PHASE TRANSFER
-| service\alucardDownloadService.js | 51 | POSTPROCESS
+| service\alucardDownloadService.js | 33 | move into service
+| service\alucardDownloadService.js | 47 | PHASE TRANSFER
+| service\alucardDownloadService.js | 59 | POSTPROCESS
 | initializationScripts\romInfo\insertGameLinks.js | 36 | update initialize Script with Rom model
 
 ### FIXMEs
