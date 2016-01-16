@@ -11,18 +11,18 @@ app.use(bodyParser.json());
 app.use(express.static('../public'));
 //'authentication' step required
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.send();
 });
 
-app.get('/health', function(req,res) {
+app.get('/health', function (req, res) {
     var obj = {
-        status: 'Healthy',
+        status: 'Healthy'
     };
     res.status(200).send(obj);
 })
 
-app.post('/search', function(req, res) {
+app.post('/search', function (req, res) {
     var {searchCriteria} = req.body;
     console.log(searchCriteria);
     romSearchService.searchRoms(searchCriteria)
@@ -31,17 +31,19 @@ app.post('/search', function(req, res) {
         })
 });
 
-app.get('/currentJobs', function(req, res) {
+app.get('/currentJobs', function (req, res) {
     jobService.getCurrentJobStates()
         .then(jobs => {
             res.status(200).send({jobs})
         })
 });
 
-app.get('/allJobs', function(req, res) {
-    var jobStream = jobService.getAllJobStatesStream();
+app.get('/allJobs', function (req, res) {
+    jobService.getAllJobStates()
+        .then(jobs => {
+            res.status(200).send({jobs});
+        })
 
-    jobStream.pipe(res);
 });
 
 //socket io endpoint
@@ -55,7 +57,7 @@ app.get('/allJobs', function(req, res) {
 //    res.status(202).send();
 //})
 
-app.listen(port, function() {
+app.listen(port, function () {
     var message = `alucard web app launched and listening on port ${port}`
     console.log(message);
     alucardLogger.info(message)

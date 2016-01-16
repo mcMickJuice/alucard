@@ -2,7 +2,7 @@ var Job = require('../models/JobState');
 var moment = require('moment');
 
 var timeWindow = moment().startOf('day').add(-1, 'days');
-var StringifyStream = require('../utility/stringifyStream');
+//var StringifyStream = require('../utility/stringifyStream');
 
 
 var jobStateProjection = {
@@ -22,15 +22,23 @@ function getCurrentJobStates() {
         .select(jobStateProjection)
         .exec();
 }
+//
+//function getAllJobStatesStream() {
+//TODO find out how to do this...or if I need to
+//    return Job.find()
+//        .select(jobStateProjection)
+//        .stream()
+//        //.pipe(StringifyStream()); //include here or in calling code?
+//}
 
-function getAllJobStatesStream() {
+
+function getAllJobStates() {
     return Job.find()
         .select(jobStateProjection)
-        .stream()
-        .pipe(StringifyStream()); //include here or in calling code?
+        .exec()
 }
 
 module.exports = {
     getCurrentJobStates,
-    getAllJobStatesStream
+    getAllJobStates
 };

@@ -7,6 +7,7 @@
 | download\downloadManager.js | 7 | determine file extensions ahead of time?
 | download\downloadManager.js | 11 | define reporter
 | models\mongoosePromisified.js | 7 | only connect on construction of model
+| webAppServices\jobService.js | 27 | find out how to do this...or if I need to
 
 ### FIXMEs
 | Filename | line # | FIXME
@@ -14,3 +15,4 @@
 | logging\alucardLogger.js | 6 | none of these log methods have a callback and therefore they are fire and forget?
 | models\mongoosePromisified.js | 8 | this opens up a connection immediately when imported.
 | utility\asyncTools.js | 4 | This can't be tested so I'm not sure if it works
+| utility\stringifyStream.js | 22 | this doesnt work. It needs to break it up into an array of objects

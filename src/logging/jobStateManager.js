@@ -11,7 +11,7 @@ var phase = {
 };
 
 function updateJob(uuid, updateObj) {
-    updateObj.time = Date.now();
+    updateObj.lastUpdated = Date.now();
     return JobState.update({uuid: uuid}, updateObj);
 }
 
@@ -104,7 +104,8 @@ function error(err, uuid) {
             job.phase = phase.error;
             job.errorDetail = {
                 lastPhase: oldPhase,
-                reason: err.stack
+                callStack: err.stack,
+                errorMessage: err
             };
 
             return job.save();

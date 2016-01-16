@@ -7,11 +7,13 @@ var jobStateSchema = new Schema({
     phase: {type: String, required: true},
     gameTitle: {type: String, required: true},
     gameId: {type: Schema.Types.ObjectId, required:true},
-    time: {type: Date, default: Date.now()},
+    createdTime: {type: Date, default: Date.now()},
+    lastUpdated: {type: Date, default:Date.now()},
     isCompleted: {type: Boolean, default: false},
     errorDetail: {
         lastPhase: String,
-        reason: String
+        callStack: String,
+        errorMessage: String
     }
 });
 
