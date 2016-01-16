@@ -1,6 +1,6 @@
 var _ = require('lodash')
 
-function searchCtrl(searchService) {
+function searchCtrl(romService) {
     var vm = this;
     vm.onTextChange = function () {
         console.log('text change called')
@@ -19,7 +19,7 @@ function searchCtrl(searchService) {
             return;
         }
 
-        searchService.searchGame({text, console, country})
+        romService.searchGame({text, console, country})
             .then(results => {
                 if (!results.length) {
                     //TODO if results is empty...just set it and handle this situation in template?
@@ -29,9 +29,13 @@ function searchCtrl(searchService) {
                 }
             })
     }
+    //
+    //vm.resultsFound = function () {
+    //    return vm.results.length;
+    //}
 
-    vm.resultsFound = function () {
-        return vm.results.length;
+    vm.downloadGame = function(rom) {
+        romService.downloadGame(rom);
     }
 }
 

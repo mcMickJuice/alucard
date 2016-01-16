@@ -6,6 +6,26 @@ var alucardLogger = require('../logging/alucardLogger');
 
 app.use(bodyParser.json());
 
+function allowCrossDomain (req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3333');
+    res.header('Access-Control-Allow-Methods', 'GET PUT POST');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+app.use(allowCrossDomain);
+
+app.use(function(err,req,res,next) {
+    console.log(err.stack);
+
+    next();
+})
+
+app.get('/health', function(req, res) {
+    res.status(200).send({status: 'everything Ok!'});
+})
+
 app.post('/download', function(req, res) {
     var body = req.body;
     var romId = body.romId;
@@ -35,6 +55,5 @@ app.post('/download', function(req, res) {
     downloadService.queueDownload(romId, onSuccess, onError);
 });
 
-app.listen(port);
+app.listen(port, () => console.log(`Alucard Service listening at port ${port}`));
 
-console.log(`Alucard Service listening at port ${port}`);

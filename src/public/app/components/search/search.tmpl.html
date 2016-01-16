@@ -5,11 +5,13 @@
         <input type="text" ng-change="vm.onTextChange()" ng-model="vm.text" />
     </div>
     <div class="results">
-        <div ng-if="vm.results.length === 0">
+        <div ng-if="!vm.results || vm.results.length === 0">
             No Results
         </div>
-        <!--<div ng-repeat="game in vm.results">-->
-            <!--<div>{{game.title}}</div>-->
-        <!--</div>-->
+        <div ng-repeat="game in vm.results">
+            <div class="rom" ng-click="vm.downloadGame(game)">
+                {{game.title}} - {{game.consoleName}}
+            </div>
+        </div>
     </div>
 </div>
