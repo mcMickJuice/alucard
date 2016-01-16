@@ -1,5 +1,6 @@
 function romService($http) {
     function searchGame(searchCriteria) {
+        //TODO put endpoint in configuration
         return $http.post('http://localhost:3333/search', {searchCriteria})
             .then(({data}) => {
                 return data.results || [];

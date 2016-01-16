@@ -1,3 +1,21 @@
 <div class="jobs">
-    <h1>This is a placeholder for jobs</h1>
+    <p>Recent Jobs</p>
+    <div class="job-states">
+        <table>
+            <thead>
+            <tr>
+                <th>Stage</th>
+                <th>Game Title</th>
+                <th>Is Transferred</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="job in vm.jobs">
+                <td>{{job.phase}}</td>
+                <td>{{job.gameTitle}}}</td>
+                <td>{{job.isCompleted}}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

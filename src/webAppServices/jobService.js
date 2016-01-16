@@ -14,7 +14,7 @@ var jobStateProjection = {
 
 function getCurrentJobStates() {
     return Job.find({
-            time: {
+            createdTime: {
                 $gte: timeWindow.toDate()
             }
         })

@@ -31,14 +31,14 @@ app.post('/search', function (req, res) {
         })
 });
 
-app.get('/currentJobs', function (req, res) {
+app.get('/jobs/current', function (req, res) {
     jobService.getCurrentJobStates()
         .then(jobs => {
             res.status(200).send({jobs})
         })
 });
 
-app.get('/allJobs', function (req, res) {
+app.get('/jobs', function (req, res) {
     jobService.getAllJobStates()
         .then(jobs => {
             res.status(200).send({jobs});
