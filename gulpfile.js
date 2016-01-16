@@ -4,12 +4,29 @@ var todo = require('gulp-todo');
 var del = require('del');
 var eslint = require('gulp-eslint');
 var plumber = require('gulp-plumber');
+var shell = require('gulp-shell');
 
-var jsSourceGlob = './src/**/*.js';
+var jsSourceGlob = './src/!(public)/*.js';
+var staticGlob = './src/public/**';
+var destination = './dist';
+var public = '/public';
 
 gulp.task('clean', function() {
 	//clear out all distribution folder
-	return del('./dist');
+	return del(destination);
+});
+
+gulp.task('clean-static', function() {
+	return del(destination + public);
+});
+
+gulp.task('webpack', shell.task([
+	'webpack'
+]))
+
+gulp.task('move-static',['clean-static', 'webpack'], function() {
+	return gulp.src(staticGlob)
+		.pipe(gulp.dest(destination + '/public'))
 });
 
 gulp.task('generate-todo', function() {
@@ -23,10 +40,10 @@ gulp.task('babelify', ['lint'] , function() {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest(destination));
 });
 
-gulp.task('build', ['babelify'], function() {
+gulp.task('build', ['babelify', 'move-static'], function() {
 
 });
 
@@ -40,7 +57,7 @@ gulp.task('lint', function() {
     }
 
 	return gulp.src(jsSourceGlob)
-        .pipe(plumber(errorHandler))
+		.pipe(plumber(errorHandler))
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError());
@@ -50,6 +67,7 @@ gulp.task('watch-lint', ['lint'], function() {
 	gulp.watch(jsSourceGlob, ['lint']);
 });
 
-gulp.task('default', ['generate-todo', 'build'], function() {
+gulp.task('default', ['generate-todo','build'], function() {
 	gulp.watch(jsSourceGlob, ['build']);
+	gulp.watch(staticGlob, ['move-static']);
 });
