@@ -2,13 +2,17 @@
  * Created by MJ on 1/15/2016.
  */
 var angular = require('angular');
-var uiRouter = require('angular-ui-router');
 var searchComponent = require('./components/search/search.component.js');
 var jobsComponent = require('./components/jobs/jobs.component.js')
 var statusComponent = require('./components/status/status.component.js');
 
+//service and 3rd party
+var uiRouter = require('angular-ui-router');
+var services = require('./service/service.module.js');
+
 var deps = [
-    'ui.router'
+    'ui.router',
+    services.name
 ];
 
 angular

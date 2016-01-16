@@ -2,9 +2,14 @@
     <div class="highlight">Search For a Game</div>
     <div class="search-form">
         <span>Enter Text</span>
-        <input type="text" />
+        <input type="text" ng-change="vm.onTextChange()" ng-model="vm.text" />
     </div>
     <div class="results">
-
+        <div ng-if="vm.results.length === 0">
+            No Results
+        </div>
+        <!--<div ng-repeat="game in vm.results">-->
+            <!--<div>{{game.title}}</div>-->
+        <!--</div>-->
     </div>
 </div>
