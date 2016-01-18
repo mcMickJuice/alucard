@@ -48,13 +48,13 @@ function getDownloadLink(gameUrl) {
     });
 }
 
-function downloadGame(downloadUrl, writeStream) {
+function downloadGame(downloadUrl, writeStream, reporter) {
     var requestObj = {
         url: downloadUrl,
         headers: requiredHeaders
     };
     
-    return webClient.streamRequest(requestObj, writeStream)
+    return webClient.streamRequest(requestObj, writeStream, reporter)
 }
 
 

@@ -3,8 +3,8 @@ var fs = require('fs');
 var path = require('path');
 var Q = require('q');
 
-function unzipFile(filePath){
-    return unzipFileContentsToTemp(filePath)
+function unzipFile(filePath, reporter){
+    return unzipFileContentsToTemp(filePath, reporter)
         .then(listCreatedFiles)
 }
 
@@ -16,6 +16,10 @@ function unzipFileContentsToTemp(filePath) {
     var destinationFolder = path.resolve(currentDirectory, 'temp', Date.now().toString());
     //unzip contents
     readStream
+        //TODO does this work?
+        //.on('data', function(data) {
+        //    reporter(data);
+        //})
         .pipe(unzip.Extract({path: destinationFolder}))
         .on('close', function() {
             readStream.close();

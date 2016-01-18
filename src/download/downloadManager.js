@@ -2,6 +2,7 @@ var config = require('../secrets/config');
 var download = require('../webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
+var onProgress = require('../alucardService/serviceActivityReporter').onProgress;
 
 function downloadGame(downloadUrl, romInfo) {
     //TODO determine file extensions ahead of time?
@@ -9,10 +10,8 @@ function downloadGame(downloadUrl, romInfo) {
     var outputPath = `${romDir}/${romInfo.title}.zip`;
 
     //TODO define reporter
-    return createWriteStream(romDir, outputPath,(str, chunk) => {
-        console.log(str, chunk);
-    } )
-    .then((stream) => download(downloadUrl, stream))
+    return createWriteStream(romDir, outputPath)
+    .then((stream) => download(downloadUrl, stream, onProgress))
         .then(() => {
             return {
                 rom: romInfo,
@@ -21,15 +20,11 @@ function downloadGame(downloadUrl, romInfo) {
         });
 }
 
-function createWriteStream(directory,filePath, reporter) {
+function createWriteStream(directory,filePath) {
     return ensureDirectory(directory)
         .then(() => {
             var writeStream = fs.createWriteStream(filePath);
-            writeStream.on('data', function(chunk) {
-                if(reporter) {
-                    reporter('On Download Data',chunk);
-                }
-            });
+
             return writeStream;
         });
 }

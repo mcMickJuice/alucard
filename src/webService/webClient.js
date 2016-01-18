@@ -4,18 +4,18 @@ var Q = require('q');
 
 function getRequestBody(options) {
 
-	//options.proxy = proxyAddress;
+    //options.proxy = proxyAddress;
 
-	var deferred = Q.defer();
+    var deferred = Q.defer();
 
-	request(options, function(err, res, body) {
-		if(err) {
-			deferred.reject(err);
-		}
-		deferred.resolve(body);
-	})
+    request(options, function (err, res, body) {
+        if (err) {
+            deferred.reject(err);
+        }
+        deferred.resolve(body);
+    })
 
-	return deferred.promise;
+    return deferred.promise;
 }
 
 function postRequest(options) {
@@ -23,8 +23,8 @@ function postRequest(options) {
     options.method = 'POST';
     options.json = true;
 
-    request(options, function(err, res) {
-        if(err) {
+    request(options, function (err, res) {
+        if (err) {
             deferred.reject(err);
         }
         deferred.resolve(res);
@@ -34,26 +34,52 @@ function postRequest(options) {
 }
 
 
-function streamRequest(options, writeStream) {
+function streamRequest(options, writeStream, reporter) {
     var deferred = Q.defer();
     ////TODO if ENV == dev then...
     //options.proxy = proxyAddress;
-    
-    request(options)
+    var requestStream = request(options);
+
+
+    if (reporter) {
+        var fileSize = 0;
+        var progress = 0;
+        requestStream
+            .on('response', resp => {
+                var length = resp.headers['content-length'];
+                fileSize = parseInt(length);
+            })
+
+            .on('data', function (chunk) {
+                progress += chunk.length;
+                reporter({
+                    progress,
+                    fileSize
+                })
+            })
+    }
+
+    requestStream.on('error', function (err) {
+        console.log('error in request stream');
+        deferred.reject(err);
+    })
+
+    requestStream
         .pipe(writeStream)
-        .on('error', function(err) {
+        .on('error', function (err) {
             console.log('error in request stream');
             deferred.reject(err);
         })
-        .on('finish', function() {
+        .on('finish', function () {
             deferred.resolve();
         });
+
 
     return deferred.promise;
 }
 
 module.exports = {
-	getRequestBody,
+    getRequestBody,
     postRequest,
     streamRequest
 }

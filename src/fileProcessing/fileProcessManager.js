@@ -8,7 +8,7 @@ function processFile(filePath, consoleName, processReporting) {
 }
 
 function stdout(message) {
-    console.log(message);
+    console.log('file processor',message);
 }
 
 module.exports = processFile;

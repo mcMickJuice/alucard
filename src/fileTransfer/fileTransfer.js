@@ -15,7 +15,10 @@ function moveFile(localFilePath, remoteFilePath, onProgress, cb) {
                 }
 
                 function stepFunction(totalTransferred, chunk, totalFile) {
-                    onProgress(totalTransferred, totalFile);
+                    onProgress({
+                        fileSize: totalFile,
+                        progress: totalTransferred
+                    });
                 }
 
                 sftp.fastPut(localFilePath, remoteFilePath, {step: stepFunction}, function (err) {
