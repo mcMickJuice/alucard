@@ -10,6 +10,10 @@ function appInit(toastr, socketService) {
     socketService.on(messageTypes.COMPLETE, downloadInfo => {
         toastr.success(downloadInfo.title,'Download Complete');
     })
+
+    socketService.on(messageTypes.PROGRESS, progressInfo => {
+        console.log(progressInfo);
+    })
 }
 
 module.exports = appInit;

@@ -1,14 +1,7 @@
 var JobState = require('../models/JobState');
 var logger = require('../logging/alucardLogger');
 var Q = require('q');
-
-var phase = {
-    downloading: 'DOWNLOADING',
-    fileProcessing: 'FILE_PROCESSING',
-    transfer: 'FILE_TRANSER',
-    complete: 'COMPLETE',
-    error: 'ERROR'
-};
+var phase = require('../enums/filePhaseType');
 
 function updateJob(uuid, updateObj) {
     updateObj.lastUpdated = Date.now();

@@ -7,6 +7,8 @@ var romHost = require('./../secrets/romRequestConfig').romHost;
 var Q = require('q');
 var fileProcessor = require('./../fileProcessing/fileProcessManager');
 var fileTransferManager = require('./../fileTransfer/fileTransferManager');
+var stateChange = require('../enums/progressType').stageChange;
+var phase = require('../enums/filePhaseType');
 
 function queueDownload(romId, onFinish, onProgress, onError) {
     var uuid = keyGen();
@@ -28,8 +30,9 @@ function queueDownload(romId, onFinish, onProgress, onError) {
 
             var downloadPromise = webDataProvider.getDownloadLink(fullDlLink);
             var statePromise = jobStateManager.initializeJob(uuid,rom.title,rom._id);
+            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.downloading}});
 
-            return Q.all([downloadPromise, Q.when(rom._doc) ,statePromise]);
+            return Q.all([downloadPromise, Q.when(rom._doc) ,statePromise, progressPromise]);
         })
         .spread((dlLink, romInfo) => {
             //download game
@@ -43,29 +46,30 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             var filePath = downloadedFileInfo.filePath;
             var consoleName = downloadedFileInfo.rom.consoleName;
             var processFilePromise = fileProcessor(filePath, consoleName);
+            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.fileProcessing}});
 
-            return Q.all([Q.when(consoleName), processFilePromise, jobStatePromise]);
+            return Q.all([Q.when(consoleName), processFilePromise, jobStatePromise, progressPromise]);
         })
         .spread((consoleName, processedFilePaths)=> {
             //TODO PHASE TRANSFER
             var jobStatePromise = jobStateManager.transfer(uuid);
+            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.transfer}});
+
             //perform in parallel
             var tasks = processedFilePaths.map(p => {
                 return fileTransferManager.moveFileToPi(p, consoleName);
             });
 
             tasks.push(jobStatePromise);
-
+            tasks.push(progressPromise);
             return Q.all(tasks);
         })
         .then(() => {
-            //TODO POSTPROCESS
-        })
-        .then(() => {
-            return jobStateManager.complete(uuid);
-        })
-        .then(() => {
-            return onFinish(downloadInfo);
+            var jobStatePromise = jobStateManager.complete(uuid);
+            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.complete}});
+            var finishPromise = onFinish(downloadInfo);
+
+            return Q.all([jobStatePromise, progressPromise, finishPromise]);
         })
         .catch(err => {
             jobStateManager.error(err, uuid);
