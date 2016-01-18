@@ -1,6 +1,7 @@
 var app = require('express')();
 var bodyParser = require('body-parser');
 var downloadService = require('./../alucardService/alucardDownloadService');
+var reporter = require('../alucardService/serviceActivityReporter');
 var port = require('../secrets/config').servicePort;
 var alucardLogger = require('../logging/alucardLogger');
 
@@ -27,32 +28,25 @@ app.get('/health', function(req, res) {
 })
 
 app.post('/download', function(req, res) {
-    var body = req.body;
-    var romId = body.romId;
+    var romId = req.body.romId;
 
     if(!romId){
         var resp = {
             message: 'No RomId included in request'
-        }
-        res.status(400).send(resp)
+        };
+        res.status(400).send(resp);
         return;
     }
 
-    function onSuccess(uuid){
-        var resp = {
-            uuid: uuid,
-            message: `download started for uuid ${uuid}`
-        }
-        res.status(202).send(resp);
-    }
+    process.nextTick(() => {
+        downloadService.queueDownload(romId
+        , reporter.onDownloadFinish
+        , reporter.onProgress
+        , reporter.onError)
+    });
 
-    function onError(msg){
-        var error = new Error(`Error queueing download: ${msg}`);
-        alucardLogger.error(error);
-        res.send(msg);
-    }
+    res.status(202).send(resp);
 
-    downloadService.queueDownload(romId, onSuccess, onError);
 });
 
 app.listen(port, () => console.log(`Alucard Service listening at port ${port}`));

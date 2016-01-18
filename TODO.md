@@ -1,9 +1,9 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| alucardService\alucardDownloadService.js | 33 | move into alucardService
-| alucardService\alucardDownloadService.js | 47 | PHASE TRANSFER
-| alucardService\alucardDownloadService.js | 59 | POSTPROCESS
+| alucardService\alucardDownloadService.js | 31 | move into alucardService
+| alucardService\alucardDownloadService.js | 45 | PHASE TRANSFER
+| alucardService\alucardDownloadService.js | 57 | POSTPROCESS
 | download\downloadManager.js | 7 | determine file extensions ahead of time?
 | download\downloadManager.js | 11 | define reporter
 | models\mongoosePromisified.js | 7 | only connect on construction of model

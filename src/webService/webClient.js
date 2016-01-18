@@ -18,6 +18,21 @@ function getRequestBody(options) {
 	return deferred.promise;
 }
 
+function postRequest(options) {
+    var deferred = Q.defer();
+    options.method = 'POST';
+    options.json = true;
+
+    request(options, function(err, res) {
+        if(err) {
+            deferred.reject(err);
+        }
+        deferred.resolve(res);
+    });
+
+    return deferred.promise;
+}
+
 
 function streamRequest(options, writeStream) {
     var deferred = Q.defer();
@@ -39,5 +54,6 @@ function streamRequest(options, writeStream) {
 
 module.exports = {
 	getRequestBody,
+    postRequest,
     streamRequest
 }

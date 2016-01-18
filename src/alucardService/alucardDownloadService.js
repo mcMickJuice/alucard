@@ -8,18 +8,21 @@ var Q = require('q');
 var fileProcessor = require('./../fileProcessing/fileProcessManager');
 var fileTransferManager = require('./../fileTransfer/fileTransferManager');
 
-function queueDownload(romId, onRetrieval, onError) {
+function queueDownload(romId, onFinish, onProgress, onError) {
     var uuid = keyGen();
+    var downloadInfo = {
+        uuid: uuid
+    };
     return Rom.findById(romId)
         .then(rom => {
 
             if(!rom){
-                var reason = `Rom not found for id ${romId}`
+                var reason = `Rom not found for id ${romId}`;
                 onError(reason);
                 return Q.reject(reason);
-            } else {
-                onRetrieval(uuid);
             }
+            downloadInfo.title = rom.title;
+            downloadInfo.consoleName = rom.consoleName;
             //Get download link for game
             var fullDlLink = `${romHost}${rom.url}`;
 
@@ -57,14 +60,18 @@ function queueDownload(romId, onRetrieval, onError) {
         })
         .then(() => {
             //TODO POSTPROCESS
-            return;
         })
         .then(() => {
             return jobStateManager.complete(uuid);
         })
+        .then(() => {
+            return onFinish(downloadInfo);
+        })
         .catch(err => {
             jobStateManager.error(err, uuid);
-            throw err;
+            //FIXME clone this?
+            downloadInfo.error = err;
+            return onError(downloadInfo);
         });
 }
 

@@ -43,19 +43,26 @@ app.get('/jobs', function (req, res) {
         .then(jobs => {
             res.status(200).send({jobs});
         })
-
 });
 
-//socket io endpoint
-//app.post('/progress', function(req, res) {
-//    var body = req.body;
-//    res.status(202).send();
-//});
-//
-//app.post('/complete', function(req, res) {
-//    var body = req.body;
-//    res.status(202).send();
-//})
+//service update endpoint
+app.post('/download/progress', function(req, res) {
+    var progressInfo = req.body.progressInfo;
+    //jobId/uuid, progressType (phase Change, download Update, transfer Update)
+    res.status(202).send({progressInfo});
+});
+
+app.post('/download/complete', function(req, res) {
+    var downloadInfo = req.body.downloadInfo;
+    //uuid, gameTitle, consoleName
+    res.status(202).send({downloadInfo});
+});
+
+app.post('/download/error', function(req, res) {
+    var error = req.body.error;
+
+    res.status(202).send({error});
+})
 
 app.listen(port, function () {
     var message = `alucard web app launched and listening on port ${port}`
