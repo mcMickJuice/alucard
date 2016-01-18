@@ -7,6 +7,7 @@ function romService($http) {
             })
             .catch(err => {
                 console.log('error fetching rom');
+                console.log(err);
             })
     }
 

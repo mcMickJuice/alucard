@@ -33,9 +33,9 @@ function searchCtrl(romService, notificationService) {
         romService.downloadGame(rom)
             .then(status => {
                 if(status.isSuccessful){
-                    notificationService.success(rom.title, "Download Started");
+                    notificationService.success(rom.title, 'Download Started');
                 } else {
-                    notificationService.error(status.error, 'Download Error');
+                    notificationService.error(status.error, 'Error Queueing Download');
                 }
             });
     }

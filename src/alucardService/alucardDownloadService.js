@@ -70,7 +70,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
         .catch(err => {
             jobStateManager.error(err, uuid);
             //FIXME clone this?
-            downloadInfo.error = err;
+            downloadInfo.error = err.message;
             return onError(downloadInfo);
         });
 }

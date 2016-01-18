@@ -34,14 +34,14 @@ app.get('/health', function (req, res) {
 
 app.post('/download', function(req, res) {
     var address = `${hostAddress}:${servicePort}/download`;
-    var romId = req.body.romId
+    var romId = req.body.romId;
     var options = {
         url: address,
         body: {romId}
     };
 
     postRequest(options)
-        .then(response => res.status(202).send())
+        .then(() => res.status(202).send())
         .catch(response => {
             res.status(500).send(response)
         })
@@ -49,7 +49,6 @@ app.post('/download', function(req, res) {
 
 app.post('/search', function (req, res) {
     var {searchCriteria} = req.body;
-    console.log(searchCriteria);
     romSearchService.searchRoms(searchCriteria)
         .then(roms => {
             res.send({results: roms});

@@ -5,6 +5,7 @@ var angular = require('angular');
 var searchComponent = require('./components/search/search.component.js');
 var jobsComponent = require('./components/jobs/jobs.component.js')
 var statusComponent = require('./components/status/status.component.js');
+var appInit = require('./appInit.js');
 
 //service and 3rd party
 /*eslint-disable */
@@ -44,4 +45,5 @@ angular
             url: '/status',
             template: '<alucard-status></alucard-status>'
         })
-    });
+    })
+    .run(appInit);
