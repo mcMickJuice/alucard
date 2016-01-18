@@ -29,10 +29,6 @@ function searchCtrl(romService, socketService) {
                 }
             })
     }
-    //
-    //vm.resultsFound = function () {
-    //    return vm.results.length;
-    //}
 
     vm.downloadGame = function(rom) {
         romService.downloadGame(rom);

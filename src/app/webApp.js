@@ -7,6 +7,7 @@ var port = require('../secrets/config').webPort;
 var alucardLogger = require('../logging/alucardLogger');
 var romSearchService = require('../webAppServices/romSearchService');
 var jobService = require('../webAppServices/jobService');
+var serviceMessageTypes = require('../enums/serviceMessageTypes');
 
 app.use(bodyParser.json());
 
@@ -58,18 +59,21 @@ app.post('/download/progress', function(req, res) {
     var progressInfo = req.body.progressInfo;
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
     res.status(202).send({progressInfo});
+    io.emit(serviceMessageTypes.PROGRESS, progressInfo);
 });
 
 app.post('/download/complete', function(req, res) {
     var downloadInfo = req.body.downloadInfo;
     //uuid, gameTitle, consoleName
     res.status(202).send({downloadInfo});
+    io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
 });
 
 app.post('/download/error', function(req, res) {
     var error = req.body.error;
 
     res.status(202).send({error});
+    io.emit(serviceMessageTypes.ERROR, error)
 })
 
 server.listen(port, function () {

@@ -31,6 +31,7 @@ dist/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
+src/public/bundle.js
 [Bb]uild[Ll]og.*
 
 # NUNIT
