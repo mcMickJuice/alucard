@@ -3,10 +3,11 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
-var port = require('../secrets/config').webPort;
+var {webPort, servicePort, hostAddress} = require('../secrets/config');
 var alucardLogger = require('../logging/alucardLogger');
 var romSearchService = require('../webAppServices/romSearchService');
 var jobService = require('../webAppServices/jobService');
+var postRequest = require('../webService/webClient').postRequest;
 var serviceMessageTypes = require('../enums/serviceMessageTypes');
 
 app.use(bodyParser.json());
@@ -29,6 +30,21 @@ app.get('/health', function (req, res) {
         status: 'Healthy'
     };
     res.status(200).send(obj);
+});
+
+app.post('/download', function(req, res) {
+    var address = `${hostAddress}:${servicePort}/download`;
+    var romId = req.body.romId
+    var options = {
+        url: address,
+        body: {romId}
+    };
+
+    postRequest(options)
+        .then(response => res.status(202).send())
+        .catch(response => {
+            res.status(500).send(response)
+        })
 })
 
 app.post('/search', function (req, res) {
@@ -76,8 +92,8 @@ app.post('/download/error', function(req, res) {
     io.emit(serviceMessageTypes.ERROR, error)
 })
 
-server.listen(port, function () {
-    var message = `alucard web app launched and listening on port ${port}`
+server.listen(webPort, function () {
+    var message = `alucard web app launched and listening on port ${webPort}`
     console.log(message);
     alucardLogger.info(message)
 });

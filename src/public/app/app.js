@@ -7,14 +7,16 @@ var jobsComponent = require('./components/jobs/jobs.component.js')
 var statusComponent = require('./components/status/status.component.js');
 
 //service and 3rd party
+/*eslint-disable */
 var uiRouter = require('angular-ui-router');
+/*eslint-enable */
+
 var services = require('./service/service.module.js');
 
 var deps = [
     'ui.router',
     services.name
 ];
-
 angular
     .module('alucardApp', deps)
     .directive('alucardSearch', function(){

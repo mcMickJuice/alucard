@@ -1,9 +1,8 @@
 var _ = require('lodash')
 
-function searchCtrl(romService, socketService) {
+function searchCtrl(romService, notificationService) {
     var vm = this;
     vm.onTextChange = function () {
-        console.log('text change called')
         debouncedSearchGames();
     };
 
@@ -31,7 +30,14 @@ function searchCtrl(romService, socketService) {
     }
 
     vm.downloadGame = function(rom) {
-        romService.downloadGame(rom);
+        romService.downloadGame(rom)
+            .then(status => {
+                if(status.isSuccessful){
+                    notificationService.success(rom.title, "Download Started");
+                } else {
+                    notificationService.error(status.error, 'Download Error');
+                }
+            });
     }
 }
 

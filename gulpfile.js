@@ -8,6 +8,7 @@ var shell = require('gulp-shell');
 
 var jsSourceGlob = './src/!(public)/*.js';
 var staticGlob = './src/public/**';
+var allJs = './src/**/*.js';
 var destination = './dist';
 var public = '/public';
 
@@ -56,7 +57,7 @@ gulp.task('lint', function() {
         this.emit('end');
     }
 
-	return gulp.src(jsSourceGlob)
+	return gulp.src(allJs)
 		.pipe(plumber(errorHandler))
 		.pipe(eslint())
 		.pipe(eslint.format())
@@ -64,7 +65,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watch-lint', ['lint'], function() {
-	gulp.watch(jsSourceGlob, ['lint']);
+	gulp.watch(allJs, ['lint']);
 });
 
 gulp.task('default', ['generate-todo','build'], function() {

@@ -14,6 +14,11 @@ module.exports = {
         publicPath: '/src/public/',
         filename: 'bundle.js'
     },
+    resolve: {
+        alias: {
+            toastr_css: __dirname + "/node_modules/angular-toastr/dist/angular-toastr.min.css"
+        }
+    },
     module: {
         loaders: [
             {test: /\.css$/, exclude: thirdParty,loader: 'style!css'},

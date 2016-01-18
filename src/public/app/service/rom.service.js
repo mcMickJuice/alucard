@@ -13,16 +13,15 @@ function romService($http) {
     function downloadGame(rom) {
         var romId = rom._id;
 
-        return $http.post('http://localhost:666/download', {romId})
-            .then(resp => {
-                console.log(resp);
+        return $http.post('http://localhost:3333/download', {romId})
+            .then(() => {
                 //TODO notify
+                return {isSuccessful: true};
             })
             //TODO better error handling in service
-            .catch(err => {
-                console.log('error downloading rom')
-                //TODO notify
-            })
+            .catch(({data}) => {
+                return {error: data};
+            });
     }
 
     return {
