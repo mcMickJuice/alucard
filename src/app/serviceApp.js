@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var downloadService = require('./../alucardService/alucardDownloadService');
 var reporter = require('../alucardService/serviceActivityReporter');
 var port = require('../secrets/config').servicePort;
-var alucardLogger = require('../logging/alucardLogger');
 
 app.use(bodyParser.json());
 

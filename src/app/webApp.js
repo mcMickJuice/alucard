@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
 var port = require('../secrets/config').webPort;
 var alucardLogger = require('../logging/alucardLogger');
@@ -10,6 +12,12 @@ app.use(bodyParser.json());
 
 app.use(express.static('../public'));
 //'authentication' step required
+
+io.on('connection', function(socket) {
+    console.log('socket connection made');
+
+    socket.emit('server ready');
+})
 
 app.get('/', function (req, res) {
     res.send();
@@ -64,7 +72,7 @@ app.post('/download/error', function(req, res) {
     res.status(202).send({error});
 })
 
-app.listen(port, function () {
+server.listen(port, function () {
     var message = `alucard web app launched and listening on port ${port}`
     console.log(message);
     alucardLogger.info(message)

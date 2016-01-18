@@ -1,6 +1,6 @@
 var _ = require('lodash')
 
-function searchCtrl(romService) {
+function searchCtrl(romService, socketService) {
     var vm = this;
     vm.onTextChange = function () {
         console.log('text change called')
