@@ -5,7 +5,7 @@ require('./search.less')
 var searchComponent = {
     template,
     controller,
-    controllerAs: 'vm'
+    controllerAs: 'vm',
 };
 
 

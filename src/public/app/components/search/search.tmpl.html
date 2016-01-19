@@ -4,9 +4,7 @@
             No Results
         </div>
         <div ng-repeat="game in vm.results">
-            <div class="rom" ng-click="vm.downloadGame(game)">
-                {{game.title}} - {{game.consoleName}}
-            </div>
+            <alucard-rom-result click="vm.downloadGame(item)" item="game" />
         </div>
     </div>
     <div class="search-container">
