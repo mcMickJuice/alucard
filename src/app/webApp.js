@@ -9,6 +9,7 @@ var romSearchService = require('../webAppServices/romSearchService');
 var jobService = require('../webAppServices/jobService');
 var postRequest = require('../webService/webClient').postRequest;
 var serviceMessageTypes = require('../enums/serviceMessageTypes');
+var progressType = require('../enums/progressTypes');
 
 app.use(bodyParser.json());
 
@@ -73,8 +74,19 @@ app.get('/jobs', function (req, res) {
 app.post('/download/progress', function(req, res) {
     var progressInfo = req.body.progressInfo;
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
+
+    if(progressType.STATE_CHANGE){
+        io.emit(serviceMessageTypes.STATE_CHANGE, progressInfo);
+    } else if(progressType.TRANSFER_PROGRESS){
+        io.emit(serviceMessageTypes.FILE_PROGRESS)
+    }else {
+        //unknown progress type, bad service!
+        res.status(400).send({error: 'unknown progress type!'});
+        return;
+    }
+
     res.status(202).send({progressInfo});
-    io.emit(serviceMessageTypes.PROGRESS, progressInfo);
+
 });
 
 app.post('/download/complete', function(req, res) {

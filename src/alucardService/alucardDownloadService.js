@@ -7,7 +7,7 @@ var romHost = require('./../secrets/romRequestConfig').romHost;
 var Q = require('q');
 var fileProcessor = require('./../fileProcessing/fileProcessManager');
 var fileTransferManager = require('./../fileTransfer/fileTransferManager');
-var stateChange = require('../enums/progressType').STAGE_CHANGE;
+var stateChange = require('../enums/progressTypes').STAGE_CHANGE;
 var phase = require('../enums/filePhaseType');
 
 function queueDownload(romId, onFinish, onProgress, onError) {
@@ -51,7 +51,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             return Q.all([Q.when(consoleName), processFilePromise, jobStatePromise, progressPromise]);
         })
         .spread((consoleName, processedFilePaths)=> {
-            var jobStatePromise = jobStateManager.TRANSFER(uuid);
+            var jobStatePromise = jobStateManager.transfer(uuid);
             var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.TRANSFER}});
 
             //perform in parallel

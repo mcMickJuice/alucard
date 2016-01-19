@@ -49,8 +49,6 @@ gulp.task('build', ['babelify', 'move-static'], function() {
 });
 
 gulp.task('lint', function() {
-    console.log('lint being looked at');
-
     //TODO this needs to be improved. subsequent tasks still execute
     function errorHandler(err) {
         console.log('failure in pipe', err);
