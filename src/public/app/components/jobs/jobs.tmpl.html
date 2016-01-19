@@ -6,14 +6,15 @@
             <tr>
                 <th>Stage</th>
                 <th>Game Title</th>
-                <th>Is Transferred</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="job in vm.jobs">
                 <td>{{job.phase}}</td>
                 <td>{{job.gameTitle}}</td>
-                <td>{{job.isCompleted}}</td>
+                <td ng-show="job.progress">
+                    <div>{{job.progress.progress}} / {{job.progress.fileSize}}</div>
+                </td>
             </tr>
             </tbody>
         </table>
