@@ -3,8 +3,10 @@ var fs = require('fs');
 var path = require('path');
 var Q = require('q');
 
-function unzipFile(filePath, reporter){
-    return unzipFileContentsToTemp(filePath, reporter)
+//unzip Process reporting isn't working. Can't get full file size...also it might not matter. Might only need this for
+//psx processing
+function unzipFile(filePath){
+    return unzipFileContentsToTemp(filePath)
         .then(listCreatedFiles)
 }
 
@@ -16,9 +18,9 @@ function unzipFileContentsToTemp(filePath) {
     var destinationFolder = path.resolve(currentDirectory, 'temp', Date.now().toString());
     //unzip contents
     readStream
-        //TODO does this work?
+        ////TODO does this work?
         //.on('data', function(data) {
-        //    reporter(data);
+        //    reporter(data.length);
         //})
         .pipe(unzip.Extract({path: destinationFolder}))
         .on('close', function() {

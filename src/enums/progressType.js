@@ -1,4 +1,4 @@
 module.exports = {
-    stageChange: 'STATE CHANGE',
-    transferProgress: 'TRANSFER PROGRESS'
+    STAGE_CHANGE: 'STATE CHANGE',
+    TRANSFER_PROGRESS: 'TRANSFER PROGRESS'
 }

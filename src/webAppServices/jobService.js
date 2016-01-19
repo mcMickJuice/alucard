@@ -18,18 +18,9 @@ function getCurrentJobStates() {
                 $gte: timeWindow.toDate()
             }
         })
-        //.where('time').gt()
         .select(jobStateProjection)
         .exec();
 }
-//
-//function getAllJobStatesStream() {
-//TODO find out how to do this...or if I need to
-//    return Job.find()
-//        .select(jobStateProjection)
-//        .stream()
-//        //.pipe(StringifyStream()); //include here or in calling code?
-//}
 
 
 function getAllJobStates() {

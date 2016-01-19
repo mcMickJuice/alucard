@@ -1,7 +1,7 @@
 module.exports = {
-    downloading: 'DOWNLOADING',
-    fileProcessing: 'FILE_PROCESSING',
-    transfer: 'FILE_TRANSER',
-    complete: 'COMPLETE',
-    error: 'ERROR'
+    DOWNLOADING: 'DOWNLOADING',
+    FILE_PROCESSING: 'FILE_PROCESSING',
+    TRANSFER: 'FILE_TRANSER',
+    COMPLETE: 'COMPLETE',
+    ERROR: 'ERROR'
 };

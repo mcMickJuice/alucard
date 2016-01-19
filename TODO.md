@@ -2,16 +2,13 @@
 | Filename | line # | TODO
 |:------|:------:|:------
 | alucardService\alucardDownloadService.js | 39 | move into alucardService
-| alucardService\alucardDownloadService.js | 54 | PHASE TRANSFER
-| download\downloadManager.js | 11 | determine file extensions ahead of time?
-| download\downloadManager.js | 15 | define reporter
+| download\downloadManager.js | 8 | determine file extensions ahead of time?
 | models\mongoosePromisified.js | 7 | only connect on construction of model
-| webAppServices\jobService.js | 27 | find out how to do this...or if I need to
 
 ### FIXMEs
 | Filename | line # | FIXME
 |:------|:------:|:------
-| alucardService\alucardDownloadService.js | 76 | clone this?
+| alucardService\alucardDownloadService.js | 75 | clone this?
 | logging\alucardLogger.js | 6 | none of these log methods have a callback and therefore they are fire and forget?
 | models\mongoosePromisified.js | 8 | this opens up a connection immediately when imported.
 | utility\asyncTools.js | 4 | This can't be tested so I'm not sure if it works

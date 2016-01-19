@@ -1,3 +1,6 @@
+var serviceMessageTypes = require('../../../../enums/serviceMessageTypes');
+var _ = require('lodash');
+
 function JobsController(jobService) {
     var vm = this;
     vm.jobs = [];
@@ -11,7 +14,15 @@ function JobsController(jobService) {
         .catch(err => {
             console.log(err);
             vm.jobRequestInFlight = false;
-        })
+        });
+
+    //socketService.on(serviceMessageTypes.PROGRESS, function(progressInfo) {
+    //    var job = _.find(vm.jobs, job => {
+    //        return job.uuid === progressInfo.uuid;
+    //    });
+    //
+    //    console.log(job);
+    //});
 }
 
 module.exports = JobsController;

@@ -9,7 +9,6 @@ function downloadGame(downloadUrl, romInfo) {
     var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
     var outputPath = `${romDir}/${romInfo.title}.zip`;
 
-    //TODO define reporter
     return createWriteStream(romDir, outputPath)
     .then((stream) => download(downloadUrl, stream, onProgress))
         .then(() => {

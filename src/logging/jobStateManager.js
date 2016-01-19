@@ -28,7 +28,7 @@ function initializeJob(uuid, gameTitle, gameId) {
     .then(() => {
         var job = new JobState({
             uuid,
-            phase: phase.downloading,
+            phase: phase.DOWNLOADING,
             gameTitle,
             gameId
         });
@@ -44,7 +44,7 @@ function fileProcessing(uuid) {
     return guardUuid(uuid)
         .then(() => {
             var updateObj = {
-                phase: phase.fileProcessing
+                phase: phase.FILE_PROCESSING
             };
 
             return updateJob(uuid,updateObj);
@@ -58,7 +58,7 @@ function transfer(uuid) {
     return guardUuid(uuid)
         .then(() => {
             var updateObj = {
-                phase: phase.transfer
+                phase: phase.TRANSFER
             };
 
             return updateJob(uuid, updateObj);
@@ -72,7 +72,7 @@ function complete(uuid) {
     return guardUuid(uuid)
         .then(() => {
             var updateObj = {
-                phase: phase.complete,
+                phase: phase.COMPLETE,
                 isCompleted: true
             };
 
@@ -94,7 +94,7 @@ function error(err, uuid) {
             var oldPhase = job.phase ? job.phase.toString() : '';
 
             job.time = Date.now();
-            job.phase = phase.error;
+            job.phase = phase.ERROR;
             job.errorDetail = {
                 lastPhase: oldPhase,
                 callStack: err.stack,
