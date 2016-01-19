@@ -2,9 +2,8 @@ var config = require('../secrets/config');
 var download = require('../webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
-var onProgress = require('../alucardService/serviceActivityReporter').onProgress;
 
-function downloadGame(downloadUrl, romInfo) {
+function downloadGame(downloadUrl, romInfo, onProgress) {
     //TODO determine file extensions ahead of time?
     var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
     var outputPath = `${romDir}/${romInfo.title}.zip`;

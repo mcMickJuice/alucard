@@ -20,30 +20,35 @@ var deps = [
 ];
 angular
     .module('alucardApp', deps)
-    .directive('alucardSearch', function(){
+    .directive('alucardSearch', function () {
         return searchComponent
     })
-    .directive('alucardJobs', function(){
+    .directive('alucardJobs', function () {
         return jobsComponent
     })
-    .directive('alucardStatus', function() {
+    .directive('alucardStatus', function () {
         return statusComponent
     })
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
 
         $stateProvider.state('search', {
-            url: '/',
-            template: '<alucard-search></alucard-search>'
-        })
-        .state('jobs', {
-            url: '/jobs',
-            template: '<alucard-jobs></alucard-jobs>'
-        })
-        .state('status', {
-            url: '/status',
-            template: '<alucard-status></alucard-status>'
-        })
+                url: '/',
+                template: '<alucard-search></alucard-search>'
+            })
+            .state('jobs', {
+                url: '/jobs',
+                template: '<alucard-jobs></alucard-jobs>',
+                resolve: {
+                    fetchJobsTask: function (jobStoreService) {
+                        return jobStoreService.fetchJobs();
+                    }
+                }
+            })
+            .state('status', {
+                url: '/status',
+                template: '<alucard-status></alucard-status>'
+            })
     })
     .run(appInit);

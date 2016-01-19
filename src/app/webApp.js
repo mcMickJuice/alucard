@@ -75,10 +75,10 @@ app.post('/download/progress', function(req, res) {
     var progressInfo = req.body.progressInfo;
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
 
-    if(progressType.STATE_CHANGE){
+    if(progressInfo.progressType === progressType.STATE_CHANGE){
         io.emit(serviceMessageTypes.STATE_CHANGE, progressInfo);
-    } else if(progressType.TRANSFER_PROGRESS){
-        io.emit(serviceMessageTypes.FILE_PROGRESS)
+    } else if(progressInfo.progressType === progressType.TRANSFER_PROGRESS){
+        io.emit(serviceMessageTypes.FILE_PROGRESS, progressInfo)
     }else {
         //unknown progress type, bad service!
         res.status(400).send({error: 'unknown progress type!'});

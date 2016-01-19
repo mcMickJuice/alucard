@@ -1,14 +1,14 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| alucardService\alucardDownloadService.js | 39 | move into alucardService
-| download\downloadManager.js | 8 | determine file extensions ahead of time?
+| alucardService\alucardDownloadService.js | 47 | move into alucardService
+| download\downloadManager.js | 7 | determine file extensions ahead of time?
 | models\mongoosePromisified.js | 7 | only connect on construction of model
 
 ### FIXMEs
 | Filename | line # | FIXME
 |:------|:------:|:------
-| alucardService\alucardDownloadService.js | 75 | clone this?
+| alucardService\alucardDownloadService.js | 83 | clone this?
 | logging\alucardLogger.js | 6 | none of these log methods have a callback and therefore they are fire and forget?
 | models\mongoosePromisified.js | 8 | this opens up a connection immediately when imported.
 | utility\asyncTools.js | 4 | This can't be tested so I'm not sure if it works

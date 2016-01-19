@@ -2,7 +2,6 @@ var moveFile = require('./fileTransfer').moveFile;
 var piDestinationRoot = require('../secrets/fileProcessingConfig').basePiPath;
 var Q = require('q');
 var path = require('path');
-var onProgress = require('../alucardService/serviceActivityReporter').onProgress;
 
 function moveFileToPi(localPath, consolePath, reporter) {
     var deferred = Q.defer();
@@ -17,9 +16,8 @@ function moveFileToPi(localPath, consolePath, reporter) {
     }
 
     var fileName = path.parse(localPath).base;
-    var defaultReporter = reporter || onProgress;
     var destinationPath = `${piDestinationRoot}${consolePath}/${fileName}`;
-    moveFile(localPath, destinationPath, defaultReporter, onCompletion);
+    moveFile(localPath, destinationPath, reporter, onCompletion);
 
     return deferred.promise;
 }

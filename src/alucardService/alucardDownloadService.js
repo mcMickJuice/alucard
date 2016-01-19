@@ -7,14 +7,22 @@ var romHost = require('./../secrets/romRequestConfig').romHost;
 var Q = require('q');
 var fileProcessor = require('./../fileProcessing/fileProcessManager');
 var fileTransferManager = require('./../fileTransfer/fileTransferManager');
-var stateChange = require('../enums/progressTypes').STAGE_CHANGE;
+var progressTypes  = require('../enums/progressTypes');
 var phase = require('../enums/filePhaseType');
+
+var stateChange = progressTypes.STATE_CHANGE;
+var fileProcess = progressTypes.TRANSFER_PROGRESS;
 
 function queueDownload(romId, onFinish, onProgress, onError) {
     var uuid = keyGen();
     var downloadInfo = {
         uuid: uuid
     };
+
+    var fileProgressReporter = function(progressObj) {
+        onProgress({uuid, progressType: fileProcess, progress: progressObj});
+    }
+
     return Rom.findById(romId)
         .then(rom => {
 
@@ -30,7 +38,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
 
             var downloadPromise = webDataProvider.getDownloadLink(fullDlLink);
             var statePromise = jobStateManager.initializeJob(uuid,rom.title,rom._id);
-            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.DOWNLOADING}});
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.DOWNLOADING});
 
             return Q.all([downloadPromise, Q.when(rom._doc) ,statePromise, progressPromise]);
         })
@@ -38,7 +46,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             //download game
             //TODO move into alucardService
             var fullDlLink = `${romHost}${dlLink}`;
-            return downloadGame(fullDlLink, romInfo);
+            return downloadGame(fullDlLink, romInfo, fileProgressReporter);
         })
         .then(downloadedFileInfo => {
             //process file
@@ -46,17 +54,17 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             var filePath = downloadedFileInfo.filePath;
             var consoleName = downloadedFileInfo.rom.consoleName;
             var processFilePromise = fileProcessor(filePath, consoleName);
-            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.FILE_PROCESSING}});
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.FILE_PROCESSING});
 
             return Q.all([Q.when(consoleName), processFilePromise, jobStatePromise, progressPromise]);
         })
         .spread((consoleName, processedFilePaths)=> {
             var jobStatePromise = jobStateManager.transfer(uuid);
-            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.TRANSFER}});
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.TRANSFER});
 
             //perform in parallel
             var tasks = processedFilePaths.map(p => {
-                return fileTransferManager.moveFileToPi(p, consoleName);
+                return fileTransferManager.moveFileToPi(p, consoleName, fileProgressReporter);
             });
 
             tasks.push(jobStatePromise);
@@ -65,7 +73,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
         })
         .then(() => {
             var jobStatePromise = jobStateManager.complete(uuid);
-            var progressPromise = onProgress({uuid, progressType: stateChange, changeInfo: {newState: phase.COMPLETE}});
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.COMPLETE});
             var finishPromise = onFinish(downloadInfo);
 
             return Q.all([jobStatePromise, progressPromise, finishPromise]);
