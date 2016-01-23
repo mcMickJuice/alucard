@@ -1,21 +1,30 @@
 @smallFont: .8em;
 
-.search-container {
-  position:fixed;
-  bottom: 1px;
-}
-
-.highlight {
-  font-size: @smallFont;
-
-}
-
-.search-form {
-  input {
-    height: 30px;
-    border-radius: 4px;
-    width: 93%;
-    display: block;
-    font-size: 1.8em;
+.results {
+  .none {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 3em;
   }
 }
+
+.search-container {
+  background-color: white;
+  position: fixed;
+  bottom: 0px;
+  padding: 6px 2px;
+  box-shadow: lightgrey 0px -1px 14px;
+
+  .search-form {
+
+    input {
+      margin: auto;
+      height: 30px;
+      border-radius: 4px;
+      width: 93%;
+      display: block;
+      font-size: 1.8em;
+    }
+  }
+}
+

@@ -1,13 +1,12 @@
 .main {
     max-width: 700px;
-    width: 90%;
     margin: auto;
-    border: 1px solid black;
 }
 
 .nav {
     height: 15%;
-    border-bottom: 1px solid black;
+    box-shadow: lightgrey 1px 1px 10px;
+    /*position: fixed; need to adjust body and links if we wanna do this*/
 }
 
 .image-title {
@@ -36,4 +35,8 @@
     display: block;
     width: 75%;
     margin: auto;
+}
+
+.content {
+    width: 90%;
 }
