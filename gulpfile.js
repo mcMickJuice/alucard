@@ -26,7 +26,7 @@ gulp.task('webpack', shell.task([
 ]))
 
 gulp.task('move-static',['clean-static', 'webpack'], function() {
-	return gulp.src(staticGlob)
+	return gulp.src([staticGlob, '!./src/public/**/*.js'])
 		.pipe(gulp.dest(destination + '/public'))
 });
 
