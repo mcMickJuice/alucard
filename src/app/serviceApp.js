@@ -6,15 +6,14 @@ var port = require('../secrets/config').servicePort;
 
 app.use(bodyParser.json());
 
-function allowCrossDomain (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3333');
-    res.header('Access-Control-Allow-Methods', 'GET PUT POST');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+function authorizeServiceRequest(req, res, next) {
+
+
 
     next();
 }
 
-app.use(allowCrossDomain);
+app.use(authorizeServiceRequest);
 
 app.use(function(err,req,res,next) {
     console.log(err.stack);

@@ -82,7 +82,11 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             jobStateManager.error(err, uuid);
             //FIXME clone this?
             downloadInfo.error = err.message;
-            return onError(downloadInfo);
+
+            var errorPromise = onError(downloadInfo);
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.ERROR});
+
+            return Q.all([errorPromise, progressPromise]);
         });
 }
 
