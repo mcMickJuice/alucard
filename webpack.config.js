@@ -10,8 +10,8 @@ var babelSettings = {
 module.exports = {
     entry: './src/public/app/app.js',
     output: {
-        path: path.resolve(__dirname, 'src/public'),
-        publicPath: '/src/public/',
+        path: path.resolve(__dirname, 'dist/public'),
+        publicPath: '/dist/public/',
         filename: 'bundle.js'
     },
     resolve: {
