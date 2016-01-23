@@ -1,0 +1,55 @@
+@sprite-height: 48px;
+
+
+.sprite-position (@index) {
+  @sprite-position: @sprite-height * @index * -1;
+  background-image: url('/images/dorksprite.png');
+  background-position-x: @sprite-position;
+  background-position-y: 0px;
+  background-repeat: no-repeat;
+}
+
+.rom-result {
+  cursor: pointer;
+  min-height: @sprite-height;
+  line-height: @sprite-height;
+  font-size: 0.7em;
+  display: flex;
+
+  > div{
+    padding: 4px;
+    &.title {
+      flex-grow: 1;
+    }
+
+    &.console {
+      flex-grow: 0;
+
+      > div {
+        height: @sprite-height;
+        width: @sprite-height;
+        margin:auto;
+      }
+      > .n64 {
+        .sprite-position(0)
+      }
+
+      > .nes {
+        .sprite-position(1)
+      }
+
+      > .psx {
+        .sprite-position(2)
+      }
+
+      > .megadrive {
+        .sprite-position(3)
+      }
+
+      > .snes {
+        .sprite-position(4)
+      }
+    }
+  }
+
+}

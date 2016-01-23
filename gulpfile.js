@@ -1,10 +1,13 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var babel = require('gulp-babel');
 var todo = require('gulp-todo');
 var del = require('del');
 var eslint = require('gulp-eslint');
 var plumber = require('gulp-plumber');
 var shell = require('gulp-shell');
+var webpack = require('webpack');
+var WebPackDevServer = require('webpack-dev-server');
 
 var jsSourceGlob = './src/!(public)/*.js';
 var staticGlob = './src/public/**';
@@ -23,10 +26,23 @@ gulp.task('clean-static', function() {
 
 gulp.task('webpack', shell.task([
 	'webpack'
-]))
+]));
+
+//gulp.task('webpack-dev-server', function(cb) {
+//    var config = require('./webpack.config.js');
+//    var devConfig = Object.create(config);
+//
+//    new WebPackDevServer(webpack(devConfig), {})
+//        .listen(8080, 'localhost', function(err) {
+//            if(err) throw new gutil.PluginError('webpack-dev-server', err);
+//
+//            gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+//            cb();
+//        })
+//})
 
 gulp.task('move-static',['clean-static', 'webpack'], function() {
-	return gulp.src([staticGlob, '!./src/public/**/*.js'])
+	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])
 		.pipe(gulp.dest(destination + '/public'))
 });
 
