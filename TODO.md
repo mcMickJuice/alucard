@@ -2,8 +2,8 @@
 | Filename | line # | TODO
 |:------|:------:|:------
 | alucardService\alucardDownloadService.js | 47 | move into alucardService
-| download\downloadManager.js | 7 | determine file extensions ahead of time?
 | models\mongoosePromisified.js | 7 | only connect on construction of model
+| download\downloadManager.js | 7 | determine file extensions ahead of time?
 
 ### FIXMEs
 | Filename | line # | FIXME

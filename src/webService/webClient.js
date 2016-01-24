@@ -78,8 +78,18 @@ function streamRequest(options, writeStream, reporter) {
     return deferred.promise;
 }
 
+function getRequestStream(options) {
+    return request(options);
+}
+
+function getRequest(options, callback) {
+    request(options, callback);
+}
+
 module.exports = {
     getRequestBody,
     postRequest,
-    streamRequest
+    streamRequest,
+    getRequestStream,
+    getRequest
 }
