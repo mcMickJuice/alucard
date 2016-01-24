@@ -5,20 +5,9 @@ http://www.emuparadise.me/roms/get-download.php?gid=35787&token=648fa7938968d8f6
 
 Cookie: downloadcaptcha= 1; refexception= 1
 
+file processing strategy for PSX
+-download file - get file name so that we can extension??
+-unzip using 7zip
 
-cheerio.js - jquery like library, wraps over html string, is then queryable
-
-web scraping
--get list of all games per system.  System list will already be in mongo system collection
--access each link for each game, -download link and scrap download link from this page
-
-file download
--directory per system
--take 10 games at a time
-
-Phase 1
--get urls for every title of consoles that i want
-
-Phase 2
--download roms for each title
--id - download-link lol
+detect if pi is up
+get pi status check
