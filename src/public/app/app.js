@@ -7,6 +7,7 @@ var jobsComponent = require('./components/jobs/jobs.component.js')
 var statusComponent = require('./components/status/status.component.js');
 var romResultDirective = require('./components/search/romResult/romResult.directive.js');
 var jobStateDirective = require('./components/jobs/jobStateItem/jobStateItem.directive.js');
+var jobProgressDirective = require('./components/jobs/progressBar/jobProgress.directive.js');
 var appInit = require('./appInit.js');
 
 //service and 3rd party
@@ -33,6 +34,7 @@ angular
     })
     .directive('alucardRomResult', romResultDirective)
     .directive('alucardJobState', jobStateDirective)
+    .directive('alucardProgressBar', jobProgressDirective)
     .config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');

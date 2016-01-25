@@ -5,4 +5,7 @@
     <div class="title">
         {{vm.item.gameTitle}}
     </div>
+    <div ng-if="vm.item.progress" class="progress-bar">
+        <alucard-progress-bar progress="vm.item.progress"></alucard-progress-bar>
+    </div>
 </div>
