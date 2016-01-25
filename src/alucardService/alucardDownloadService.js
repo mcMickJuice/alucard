@@ -60,7 +60,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
         })
         .spread((consoleName, processedFilePaths)=> {
             var jobStatePromise = jobStateManager.transfer(uuid);
-            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.TRANSFER});
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.FILE_TRANSFER});
 
             //perform in parallel
             var tasks = processedFilePaths.map(p => {
