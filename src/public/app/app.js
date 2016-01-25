@@ -6,6 +6,7 @@ var searchComponent = require('./components/search/search.component.js');
 var jobsComponent = require('./components/jobs/jobs.component.js')
 var statusComponent = require('./components/status/status.component.js');
 var romResultDirective = require('./components/search/romResult/romResult.directive.js');
+var jobStateDirective = require('./components/jobs/jobStateItem/jobStateItem.directive.js');
 var appInit = require('./appInit.js');
 
 //service and 3rd party
@@ -31,6 +32,7 @@ angular
         return statusComponent
     })
     .directive('alucardRomResult', romResultDirective)
+    .directive('alucardJobState', jobStateDirective)
     .config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');

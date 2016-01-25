@@ -1,22 +1,7 @@
 <div class="jobs">
-    <p>Recent Jobs</p>
     <div class="job-states">
-        <table>
-            <thead>
-            <tr>
-                <th>Stage</th>
-                <th>Game Title</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="job in vm.jobs">
-                <td>{{job.phase}}</td>
-                <td>{{job.gameTitle}}</td>
-                <td ng-show="job.progress">
-                    <div>{{job.progress.progress}} / {{job.progress.fileSize}}</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div ng-repeat="job in vm.jobs">
+            <alucard-job-state item="job"></alucard-job-state>
+        </div>
     </div>
 </div>

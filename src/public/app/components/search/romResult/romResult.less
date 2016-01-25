@@ -1,21 +1,8 @@
-@sprite-height: 48px;
-
-
-.sprite-position (@index) {
-  @sprite-position: @sprite-height * @index * -1;
-  background-image: url('/images/dorksprite.png');
-  background-position-x: @sprite-position;
-  background-position-y: 0px;
-  background-repeat: no-repeat;
-}
+@import "../../component.less";
+@dorksprite: '/images/dorksprite.png';
 
 .rom-result {
-  cursor: pointer;
-  min-height: @sprite-height;
-  font-size: 0.9em;
-  display: flex;
-  margin-bottom: 15px;
-  box-shadow: lightgrey 0px 3px 12px;
+  .result;
 
   > div{
     padding: 4px;
@@ -28,28 +15,26 @@
       flex-grow: 0;
 
       > div {
-        height: @sprite-height;
-        width: @sprite-height;
-        margin:auto;
+        .icon-div;
       }
       > .n64 {
-        .sprite-position(0)
+        .sprite-position(0; @spriteUrl: @dorksprite)
       }
 
       > .nes {
-        .sprite-position(1)
+        .sprite-position(1; @spriteUrl: @dorksprite)
       }
 
       > .psx {
-        .sprite-position(2)
+        .sprite-position(2; @spriteUrl: @dorksprite)
       }
 
       > .megadrive {
-        .sprite-position(3)
+        .sprite-position(3; @spriteUrl: @dorksprite)
       }
 
       > .snes {
-        .sprite-position(4)
+        .sprite-position(4; @spriteUrl: @dorksprite)
       }
     }
   }
