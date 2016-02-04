@@ -59,42 +59,13 @@ function downloadGame(downloadUrl, writeStream, reporter) {
 }
 
 //registers reporter with data events, returns initialized writeStream
-function initializeWriteStreamAndReporter(request,streamFactory, reporter) {
-    var deferred = Q.defer();
-
-    var fileSize = 0;
-    var progress = 0;
-
-    request
-        .on('response', resp => {
-            var length = resp.headers['content-length'];
-            fileSize = parseInt(length);
-
-            //grab vgame name out of url
-            var path = resp.req.path;
-            var encodedGameName = path.split('/').reverse()[0];
-            var fileName = decodeURI(encodedGameName);
-            var writeStream = streamFactory(fileName);
-            deferred.resolve(writeStream);
-        })
-        .on('error', err => {
-            console.log('error in request stream');
-            deferred.reject(err);
-        });
-
-    if(reporter) {
-        request
-            .on('data', chunk => {
-                progress += chunk.length;
-                reporter({
-                    progress,
-                    fileSize
-                });
-            })
-    }
-
-    return deferred.promise;
-}
+//function initializeWriteStreamAndReporter(requestPromise,streamFactory, reporter) {
+//    var deferred = Q.defer();
+//
+//
+//
+//    return deferred.promise;
+//}
 
 function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 	var deferred = Q.defer();
@@ -103,22 +74,47 @@ function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 		headers: requiredHeaders
 	};
 
-	var requestStream = webClient.getRequestStream(requestObj);
+	var requestPromise = webClient.getRequestStreamBhttp(downloadUrl, requestObj);
 
     //attach on events to request Stream.
-    initializeWriteStreamAndReporter(requestStream, writeStreamFactory, reporter)
-        .then(writeStream => {
-            requestStream
-                .pipe(writeStream)
-                .on('error', err => {
-                    console.log('error in request stream');
-                    deferred.reject(err);
-                })
-                .on('finish', () => deferred.resolve());
-        });
+    //initializeWriteStreamAndReporter(requestPromise, writeStreamFactory, reporter)
+    //    .then(writeStream => {
+    //        requestPromise
+    //            .pipe(writeStream)
+    //            .on('error', err => {
+    //                console.log('error in request stream');
+    //                deferred.reject(err);
+    //            })
+    //            .on('finish', () => deferred.resolve());
+    //    });
     //on response, create writeStream
 
-    //pipe requestStream to writeStream
+    requestPromise.then(resp => {
+        //grab vgame name out of url
+        var path = resp.req.path;
+        var encodedGameName = path.split('/').reverse()[0];
+        var fileName = decodeURI(encodedGameName);
+        var writeStream = writeStreamFactory(fileName);
+
+		resp.on('finish', () => deferred.resolve())
+
+        if(reporter) {
+            resp
+                .on('progress', (completed, total) => {
+                    reporter({
+                        completed,
+                        total
+                    });
+                })
+
+
+        }
+
+		resp.pipe(writeStream);
+    });
+
+
+    //pipe requestPromise to writeStream
 	return deferred.promise;
 }
 

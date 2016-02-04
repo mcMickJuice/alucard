@@ -1,5 +1,6 @@
 var request = require('request')
 var Q = require('q');
+var bhttp = require('bhttp');
 //var proxyAddress = require('./secrets/config').proxyAddress;
 
 function getRequestBody(options) {
@@ -82,6 +83,11 @@ function getRequestStream(options) {
     return request(options);
 }
 
+function getRequestStreamBhttp(url, options) {
+    options.stream = true;
+    return bhttp.request(url, options);
+}
+
 function getRequest(options, callback) {
     request(options, callback);
 }
@@ -91,5 +97,6 @@ module.exports = {
     postRequest,
     streamRequest,
     getRequestStream,
-    getRequest
+    getRequest,
+    getRequestStreamBhttp
 }
