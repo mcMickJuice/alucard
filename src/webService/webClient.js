@@ -34,69 +34,13 @@ function postRequest(options) {
     return deferred.promise;
 }
 
-
-function streamRequest(options, writeStream, reporter) {
-    var deferred = Q.defer();
-    ////TODO if ENV == dev then...
-    //options.proxy = proxyAddress;
-    var requestStream = request(options);
-
-
-    if (reporter) {
-        var fileSize = 0;
-        var progress = 0;
-        requestStream
-            .on('response', resp => {
-                var length = resp.headers['content-length'];
-                fileSize = parseInt(length);
-            })
-
-            .on('data', function (chunk) {
-                progress += chunk.length;
-                reporter({
-                    progress,
-                    fileSize
-                })
-            })
-    }
-
-    requestStream.on('error', function (err) {
-        console.log('error in request stream');
-        deferred.reject(err);
-    })
-
-    requestStream
-        .pipe(writeStream)
-        .on('error', function (err) {
-            console.log('error in request stream');
-            deferred.reject(err);
-        })
-        .on('finish', function () {
-            deferred.resolve();
-        });
-
-
-    return deferred.promise;
-}
-
-function getRequestStream(options) {
-    return request(options);
-}
-
-function getRequestStreamBhttp(url, options) {
+function getRequestStreamPromise(url, options) {
     options.stream = true;
     return bhttp.request(url, options);
-}
-
-function getRequest(options, callback) {
-    request(options, callback);
 }
 
 module.exports = {
     getRequestBody,
     postRequest,
-    streamRequest,
-    getRequestStream,
-    getRequest,
-    getRequestStreamBhttp
+    getRequestStreamPromise
 }

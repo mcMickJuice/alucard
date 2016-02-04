@@ -49,7 +49,7 @@ function getDownloadLink(gameUrl) {
     });
 }
 
-function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
+function downloadGame(downloadUrl, writeStreamFactory, reporter) {
 	var deferred = Q.defer();
 	var requestObj = {
 		url: downloadUrl,
@@ -57,7 +57,7 @@ function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 		method: 'GET'
 	};
 
-    webClient.getRequestStreamBhttp(downloadUrl, requestObj).then(resp => {
+    webClient.getRequestStreamPromise(downloadUrl, requestObj).then(resp => {
 		//grab vgame name out of url
 		var path = resp.req.path;
 		var encodedGameName = path.split('/').reverse()[0];
@@ -89,5 +89,5 @@ function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 module.exports = {
 	getLinksForConsole,
 	getDownloadLink,
-    downloadGameBetter
+    downloadGame
 };

@@ -1,11 +1,9 @@
 var config = require('../secrets/config');
-//var download = require('../webService/webDataProvider').downloadGame;
-var download = require('../webService/webDataProvider').downloadGameBetter;
+var download = require('../webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
 
 function downloadGame(downloadUrl, romInfo, onProgress) {
-
     //bad dirty bad!
     var outputPath;
     function writeStreamFactory(fileName) {
@@ -14,14 +12,8 @@ function downloadGame(downloadUrl, romInfo, onProgress) {
 
         return createWriteStream(romDir, outputPath);
     }
-    ////TODO determine file extensions ahead of time?
-    //var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
-    //var outputPath = `${romDir}/${romInfo.title}.zip`;
 
     return download(downloadUrl, writeStreamFactory, onProgress)
-    //
-    //return createWriteStream(romDir, outputPath)
-    //.then((stream) => download(downloadUrl, stream, onProgress))
         .then(() => {
             return {
                 rom: romInfo,
@@ -29,8 +21,6 @@ function downloadGame(downloadUrl, romInfo, onProgress) {
             }
         });
 }
-
-
 
 function createWriteStream(directory,filePath) {
     return ensureDirectory(directory)
