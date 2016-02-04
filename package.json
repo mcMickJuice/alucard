@@ -29,6 +29,7 @@
     "gulp-plumber": "^1.0.1",
     "gulp-shell": "^0.5.1",
     "gulp-todo": "^4.0.0",
+    "gulp-util": "^3.0.7",
     "jasmine": "^2.4.1",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
@@ -36,7 +37,8 @@
     "rewire": "^2.5.1",
     "style-loader": "^0.13.0",
     "text-loader": "0.0.1",
-    "webpack": "^1.12.11"
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "angular": "^1.4.8",

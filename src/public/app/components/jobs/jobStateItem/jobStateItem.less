@@ -1,0 +1,43 @@
+@import "../../component.less";
+@stateSprite: '/images/phasesprite.png';
+
+.job-state {
+  position: relative;
+  .result;
+
+  > div{
+    padding: 4px;
+    margin-bottom: 8px;
+    &.title {
+      flex-grow: 1;
+    }
+
+    &.state-icon {
+      flex-grow: 0;
+
+      > div {
+        .icon-div;
+      }
+      > .downloading {
+        .sprite-position(0; @spriteUrl: @stateSprite)
+      }
+
+      > .transfer {
+        .sprite-position(1; @spriteUrl: @stateSprite)
+      }
+
+      > .file-processing {
+        .sprite-position(2; @spriteUrl: @stateSprite)
+      }
+
+      > .complete {
+        .sprite-position(3; @spriteUrl: @stateSprite)
+      }
+
+      > .error {
+        .sprite-position(4; @spriteUrl: @stateSprite)
+      }
+    }
+  }
+
+}

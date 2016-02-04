@@ -58,7 +58,7 @@ function transfer(uuid) {
     return guardUuid(uuid)
         .then(() => {
             var updateObj = {
-                phase: phase.TRANSFER
+                phase: phase.FILE_TRANSFER
             };
 
             return updateJob(uuid, updateObj);

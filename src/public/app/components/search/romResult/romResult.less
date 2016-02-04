@@ -1,0 +1,42 @@
+@import "../../component.less";
+@dorksprite: '/images/dorksprite.png';
+
+.rom-result {
+  .result;
+
+  > div{
+    padding: 4px;
+    margin-bottom: 8px;
+    &.title {
+      flex-grow: 1;
+    }
+
+    &.console {
+      flex-grow: 0;
+
+      > div {
+        .icon-div;
+      }
+      > .n64 {
+        .sprite-position(0; @spriteUrl: @dorksprite)
+      }
+
+      > .nes {
+        .sprite-position(1; @spriteUrl: @dorksprite)
+      }
+
+      > .psx {
+        .sprite-position(2; @spriteUrl: @dorksprite)
+      }
+
+      > .megadrive {
+        .sprite-position(3; @spriteUrl: @dorksprite)
+      }
+
+      > .snes {
+        .sprite-position(4; @spriteUrl: @dorksprite)
+      }
+    }
+  }
+
+}

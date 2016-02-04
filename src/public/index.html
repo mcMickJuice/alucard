@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1.0">
     <title>Alucard App</title>
     <link rel="stylesheet" href="./style/site.css"/>
+    <link rel="stylesheet" href="./style/reset.css">
     <script src="./bundle.js"></script>
 </head>
 <body>
@@ -13,17 +15,15 @@
                 <img src="./images/Alucard-med.png" alt="Alucard">
             </div>
             <div class="links">
-                <ul>
-                    <li>
-                        <a ui-sref="search">Search</a>
-                    </li>
-                    <li>
-                        <a ui-sref="jobs">Current Jobs</a>
-                    </li>
-                    <li>
-                        <a ui-sref="status">Pi Status</a>
-                    </li>
-                </ul>
+                <div>
+                    <a ui-sref="search">Search</a>
+                </div>
+                <div>
+                    <a ui-sref="jobs">Current Jobs</a>
+                </div>
+                <div>
+                    <a ui-sref="status">Pi Status</a>
+                </div>
             </div>
         </div>
         <div class="content">

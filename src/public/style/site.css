@@ -1,4 +1,52 @@
-li {
-    text-decoration: underline;
-    color:red;
+.main {
+    max-width: 700px;
+    margin: auto;
+}
+
+.nav {
+    height: 15%;
+    box-shadow: lightgrey 1px 1px 10px;
+    /*position: fixed; need to adjust body and links if we wanna do this*/
+}
+
+.image-title {
+    width: 50%;
+    margin: auto;
+}
+
+.image-title > img {
+    display: block;
+    margin:auto;
+    height: 100px
+}
+
+.links {
+    display: flex;
+    height: 50px;
+}
+
+.links > div {
+    flex-grow: 1;
+    line-height: 50px;
+}
+
+.links a {
+    text-decoration: none;
+    display: block;
+    width: 75%;
+    margin: auto;
+}
+
+/*toastr overrides*/
+.toast-success {
+    background-color: #42E55A !important;
+}
+.toast-error {
+    background-color: #fd1744 !important;
+}
+.toast-info {
+    background-color: #28c8df !important;
+}
+.toast-warning {
+    background-color: #F89406 !important;
 }
