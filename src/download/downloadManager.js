@@ -6,9 +6,11 @@ var fs = require('fs');
 
 function downloadGame(downloadUrl, romInfo, onProgress) {
 
+    //bad dirty bad!
+    var outputPath;
     function writeStreamFactory(fileName) {
         var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
-        var outputPath = `${romDir}/${fileName}`;
+        outputPath = `${romDir}/${fileName}`;
 
         return createWriteStream(romDir, outputPath);
     }
