@@ -57,10 +57,15 @@ function jobStore(socketService, $rootScope, jobService) {
         return currentJobs;
     }
 
+    function getJobStateDetail(id) {
+        return jobService.getJobStateDetail(id);
+    }
+
 
     return {
         fetchJobs,
-        getJobs
+        getJobs,
+        getJobStateDetail
     }
 }
 

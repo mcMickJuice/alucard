@@ -29,7 +29,15 @@ function getAllJobStates() {
         .exec()
 }
 
+function getJobDetail(id) {
+    return Job.findOne({
+        uuid: id
+    })
+    .exec();
+}
+
 module.exports = {
     getCurrentJobStates,
-    getAllJobStates
+    getAllJobStates,
+    getJobDetail
 };

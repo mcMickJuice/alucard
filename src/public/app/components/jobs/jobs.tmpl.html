@@ -1,7 +1,17 @@
 <div class="jobs">
     <div class="job-states">
         <div ng-repeat="job in vm.jobs">
-            <alucard-job-state item="job"></alucard-job-state>
+            <alucard-job-state item="job" ></alucard-job-state>
         </div>
+        <div class="detail" ng-show="vm.detail">
+            {{vm.detail | json}}
+        </div>
+    </div>
+
+    <div ng-click="vm.getDetail('1454553883222')">
+        Click to get detail
+    </div>
+    <div ng-click="vm.dismissDetail()">
+        Click here to dismiss
     </div>
 </div>

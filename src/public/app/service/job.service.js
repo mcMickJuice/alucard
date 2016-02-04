@@ -1,8 +1,16 @@
 function jobService($http) {
     var routes = {
         recentJobs: 'jobs/current',
-        allJobs: 'jobs'
+        allJobs: 'jobs',
+        jobStateDetail: 'jobs/detail'
     };
+
+    function getJobStateDetail(id) {
+        return $http.get(`http://localhost:3333/${routes.jobStateDetail}/${id}`)
+            .then(({data}) => {
+                return data.detail;
+            })
+    }
 
     function getRecentJobs(){
         return $http.get(`http://localhost:3333/${routes.recentJobs}`)
@@ -17,7 +25,8 @@ function jobService($http) {
 
     return {
         getRecentJobs,
-        getAllJobs
+        getAllJobs,
+        getJobStateDetail
     }
 }
 

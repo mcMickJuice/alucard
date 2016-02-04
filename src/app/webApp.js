@@ -70,6 +70,15 @@ app.get('/jobs', function (req, res) {
         })
 });
 
+app.get('/jobs/detail/:id', function(req, res) {
+    var id = req.params.id;
+
+    jobService.getJobDetail(id)
+        .then(detail => {
+            res.status(200).send({detail});
+        })
+})
+
 //service update endpoint
 app.post('/download/progress', function(req, res) {
     var progressInfo = req.body.progressInfo;
