@@ -3,12 +3,15 @@
         <div ng-repeat="job in vm.jobs">
             <alucard-job-state item="job" show-detail="vm.getDetail(id)"></alucard-job-state>
         </div>
-        <div class="detail" ng-if="vm.detail">
-            {{vm.detail | json}}
-        </div>
+        <alucard-job-detail detail="vm.detail"
+                            dismiss="vm.dismissDetail()"
+                            ng-show="vm.detail"></alucard-job-detail>
+        <!--<div class="detail" ng-if="vm.detail">-->
+            <!--{{vm.detail | json}}-->
+        <!--</div>-->
     </div>
 
-    <div ng-click="vm.dismissDetail()">
-        Click here to dismiss
-    </div>
+    <!--<div ng-click="vm.dismissDetail()">-->
+        <!--Click here to dismiss-->
+    <!--</div>-->
 </div>

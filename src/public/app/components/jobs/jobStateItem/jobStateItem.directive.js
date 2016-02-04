@@ -16,7 +16,6 @@ function jobState() {
             var vm = this;
 
             vm.getDetail = function() {
-                console.log(vm.item);
                 vm.showDetail({id: vm.item.uuid});
             }
 
