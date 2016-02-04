@@ -1,4 +1,6 @@
-<div class="job-state" ng-class="{complete: vm.item.isCompleted}">
+<div class="job-state"
+     ng-class="{complete: vm.item.isCompleted}"
+     ng-click="vm.getDetail()">
     <div class="state-icon">
         <div class="{{vm.className}}"></div>
     </div>

@@ -7,12 +7,18 @@ function jobState() {
         replace: true,
         restrict: 'E',
         scope: {
-            item: '='
+            item: '=',
+            showDetail: '&' //param name id
         },
         bindToController: true,
         controllerAs: 'vm',
         controller: function ($scope) {
             var vm = this;
+
+            vm.getDetail = function() {
+                console.log(vm.item);
+                vm.showDetail({id: vm.item.uuid});
+            }
 
             function mapState(rawPhaseName) {
                 var stateMap = {
