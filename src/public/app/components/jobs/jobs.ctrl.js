@@ -9,6 +9,10 @@ function JobsController(jobStoreService) {
             })
     };
 
+    vm.hasDetail = function() {
+        return !!vm.detail;
+    }
+
     vm.dismissDetail = function() {
         vm.detail = null;
     }

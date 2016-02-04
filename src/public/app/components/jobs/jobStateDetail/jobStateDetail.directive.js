@@ -11,8 +11,10 @@ function jobStateDetailDirective() {
         restrict: 'E',
         bindToController: true,
         controllerAs: 'vm',
-        controller: function() {
+        controller: function(jobStateIconMapper) {
+            var vm = this;
 
+            vm.className = jobStateIconMapper.map(vm.detail.phase);
         }
     }
 }

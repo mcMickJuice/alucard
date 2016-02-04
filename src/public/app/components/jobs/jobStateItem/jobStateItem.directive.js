@@ -12,32 +12,32 @@ function jobState() {
         },
         bindToController: true,
         controllerAs: 'vm',
-        controller: function ($scope) {
+        controller: function ($scope, jobStateIconMapper) {
             var vm = this;
 
             vm.getDetail = function() {
                 vm.showDetail({id: vm.item.uuid});
             }
 
-            function mapState(rawPhaseName) {
-                var stateMap = {
-                    COMPLETE: 'complete',
-                    ERROR: 'error',
-                    DOWNLOADING: 'downloading',
-                    'FILE_PROCESSING': 'file-processing',
-                    'FILE_TRANSFER': 'transfer'
-                };
-
-                return stateMap[rawPhaseName];
-            }
+            //function mapState(rawPhaseName) {
+            //    var stateMap = {
+            //        COMPLETE: 'complete',
+            //        ERROR: 'error',
+            //        DOWNLOADING: 'downloading',
+            //        'FILE_PROCESSING': 'file-processing',
+            //        'FILE_TRANSFER': 'transfer'
+            //    };
+            //
+            //    return stateMap[rawPhaseName];
+            //}
 
             $scope.$watch(() => vm.item.phase, function(newValue,oldValue) {
                 if(newValue === oldValue) return;
 
-                vm.className = mapState(newValue);
+                vm.className = jobStateIconMapper.map(newValue);
             })
 
-            vm.className = mapState(vm.item.phase);
+            vm.className = jobStateIconMapper.map(vm.item.phase);
         }
     }
 }
