@@ -58,19 +58,19 @@ function queueDownload(romId, onFinish, onProgress, onError) {
 
             return Q.all([Q.when(consoleName), processFilePromise, jobStatePromise, progressPromise]);
         })
-        //.spread((consoleName, processedFilePaths)=> {
-        //    var jobStatePromise = jobStateManager.transfer(uuid);
-        //    var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.FILE_TRANSFER});
-        //
-        //    //perform in parallel
-        //    var tasks = processedFilePaths.map(p => {
-        //        return fileTransferManager.moveFileToPi(p, consoleName, fileProgressReporter);
-        //    });
-        //
-        //    tasks.push(jobStatePromise);
-        //    tasks.push(progressPromise);
-        //    return Q.all(tasks);
-        //})
+        .spread((consoleName, processedFilePaths)=> {
+            var jobStatePromise = jobStateManager.transfer(uuid);
+            var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.FILE_TRANSFER});
+
+            //perform in parallel
+            var tasks = processedFilePaths.map(p => {
+                return fileTransferManager.moveFileToPi(p, consoleName, fileProgressReporter);
+            });
+
+            tasks.push(jobStatePromise);
+            tasks.push(progressPromise);
+            return Q.all(tasks);
+        })
         .then(() => {
             var jobStatePromise = jobStateManager.complete(uuid);
             var progressPromise = onProgress({uuid, progressType: stateChange, newState: phase.COMPLETE});
