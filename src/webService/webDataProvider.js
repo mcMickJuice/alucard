@@ -49,24 +49,6 @@ function getDownloadLink(gameUrl) {
     });
 }
 
-function downloadGame(downloadUrl, writeStream, reporter) {
-    var requestObj = {
-        url: downloadUrl,
-        headers: requiredHeaders
-    };
-    
-    return webClient.streamRequest(requestObj, writeStream, reporter)
-}
-
-//registers reporter with data events, returns initialized writeStream
-//function initializeWriteStreamAndReporter(requestPromise,streamFactory, reporter) {
-//    var deferred = Q.defer();
-//
-//
-//
-//    return deferred.promise;
-//}
-
 function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 	var deferred = Q.defer();
 	var requestObj = {
@@ -90,8 +72,8 @@ function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 			resp
 				.on('progress', (completed, total) => {
 					reporter({
-						completed,
-						total
+						progress: completed,
+						fileSize: total
 					});
 				})
 		}
@@ -107,6 +89,5 @@ function downloadGameBetter(downloadUrl, writeStreamFactory, reporter) {
 module.exports = {
 	getLinksForConsole,
 	getDownloadLink,
-    downloadGame,
     downloadGameBetter
 };
