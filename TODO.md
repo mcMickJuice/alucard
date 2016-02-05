@@ -2,6 +2,7 @@
 | Filename | line # | TODO
 |:------|:------:|:------
 | alucardService\alucardDownloadService.js | 47 | move into alucardService
+| app\webApp.js | 117 | pull pinging Pi into separate file
 | models\mongoosePromisified.js | 7 | only connect on construction of model
 | secrets\fileProcessingConfig.js | 1 | consolidate ALL THE CONFIGS!
 

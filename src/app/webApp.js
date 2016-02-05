@@ -10,6 +10,8 @@ var jobService = require('../webAppServices/jobService');
 var postRequest = require('../webService/webClient').postRequest;
 var serviceMessageTypes = require('../enums/serviceMessageTypes');
 var progressType = require('../enums/progressTypes');
+var pingPi = require('../fileTransfer/piMonitor').pingPi;
+var piStatusTypes = require('../enums/piStatusTypes');
 
 app.use(bodyParser.json());
 
@@ -20,7 +22,7 @@ io.on('connection', function(socket) {
     console.log('socket connection made');
 
     socket.emit('server ready');
-})
+});
 
 app.get('/', function (req, res) {
     res.send();
@@ -46,7 +48,7 @@ app.post('/download', function(req, res) {
         .catch(response => {
             res.status(500).send(response)
         })
-})
+});
 
 app.post('/search', function (req, res) {
     var {searchCriteria} = req.body;
@@ -77,7 +79,7 @@ app.get('/jobs/detail/:id', function(req, res) {
         .then(detail => {
             res.status(200).send({detail});
         })
-})
+});
 
 //service update endpoint
 app.post('/download/progress', function(req, res) {
@@ -110,7 +112,19 @@ app.post('/download/error', function(req, res) {
 
     res.status(202).send({error});
     io.emit(serviceMessageTypes.ERROR, error)
-})
+});
+
+//TODO pull pinging Pi into separate file
+function pingPiAndReport() {
+    return pingPi()
+        .then(isPiActive => {
+            console.log('pi status',isPiActive)
+            io.emit(piStatusTypes.PING_STATUS, {isPiActive})
+            setTimeout(pingPiAndReport, 3000);
+        })
+}
+
+pingPiAndReport();
 
 server.listen(webPort, function () {
     var message = `alucard web app launched and listening on port ${webPort}`
