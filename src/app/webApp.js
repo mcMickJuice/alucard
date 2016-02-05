@@ -118,9 +118,8 @@ app.post('/download/error', function(req, res) {
 function pingPiAndReport() {
     return pingPi()
         .then(isPiActive => {
-            console.log('pi status',isPiActive)
             io.emit(piStatusTypes.PING_STATUS, {isPiActive})
-            setTimeout(pingPiAndReport, 3000);
+            setTimeout(pingPiAndReport, 10000);
         })
 }
 

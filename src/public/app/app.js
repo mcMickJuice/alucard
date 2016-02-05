@@ -3,7 +3,8 @@
  */
 var angular = require('angular');
 var searchComponent = require('./components/search/search.component.js');
-var jobsComponent = require('./components/jobs/jobs.component.js')
+var jobsComponent = require('./components/jobs/jobs.component.js');
+var headerComponent = require('./components/header/header.component.js');
 var statusComponent = require('./components/status/status.component.js');
 var romResultDirective = require('./components/search/romResult/romResult.directive.js');
 var jobStateDirective = require('./components/jobs/jobStateItem/jobStateItem.directive.js');
@@ -26,13 +27,16 @@ var deps = [
 angular
     .module('alucardApp', deps)
     .directive('alucardSearch', function () {
-        return searchComponent
+        return searchComponent;
     })
     .directive('alucardJobs', function () {
-        return jobsComponent
+        return jobsComponent;
     })
     .directive('alucardStatus', function () {
-        return statusComponent
+        return statusComponent;
+    })
+    .directive('alucardHeader', function () {
+        return headerComponent;
     })
     .directive('alucardRomResult', romResultDirective)
     .directive('alucardJobState', jobStateDirective)

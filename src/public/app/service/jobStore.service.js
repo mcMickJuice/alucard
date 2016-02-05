@@ -41,9 +41,6 @@ function jobStore(socketService, $rootScope, jobService) {
 
         mutateAction(job);
         $rootScope.$apply();
-
-
-        console.log(job);
     }
 
     function fetchJobs() {

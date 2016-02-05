@@ -1,0 +1,58 @@
+.nav {
+  height: 15%;
+  box-shadow: lightgrey 1px 1px 10px;
+  /*position: fixed; need to adjust body and links if we wanna do this*/
+
+  .image-title {
+    width: 50%;
+    margin: auto;
+    position: relative;
+
+    > .pi-status {
+      position: absolute;
+      z-index: -10;
+      top: 0;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+
+      &.down {
+        background-image: radial-gradient(circle at 50% 100%, rgba(255, 0, 0, 0.62) 31%, rgba(0, 0, 255, 0) 71%);
+      }
+
+      &.up {
+        background-image: radial-gradient(circle at 50% 100%, rgba(66, 229, 90, 0.31) 31%, rgba(0, 0, 255, 0) 71%);
+      }
+
+    }
+
+    > img {
+      display: block;
+      margin: auto;
+      height: 100px;
+      z-index: 100;
+    }
+
+  }
+
+  .links {
+    display: flex;
+    height: 50px;
+
+    > div {
+      flex-grow: 1;
+      line-height: 50px;
+    }
+
+    a {
+      text-decoration: none;
+      display: block;
+      width: 75%;
+      margin: auto;
+    }
+  }
+}
+
+
+
+

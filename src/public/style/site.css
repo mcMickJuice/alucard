@@ -3,40 +3,6 @@
     margin: auto;
 }
 
-.nav {
-    height: 15%;
-    box-shadow: lightgrey 1px 1px 10px;
-    /*position: fixed; need to adjust body and links if we wanna do this*/
-}
-
-.image-title {
-    width: 50%;
-    margin: auto;
-}
-
-.image-title > img {
-    display: block;
-    margin:auto;
-    height: 100px
-}
-
-.links {
-    display: flex;
-    height: 50px;
-}
-
-.links > div {
-    flex-grow: 1;
-    line-height: 50px;
-}
-
-.links a {
-    text-decoration: none;
-    display: block;
-    width: 75%;
-    margin: auto;
-}
-
 /*toastr overrides*/
 .toast-success {
     background-color: #42E55A !important;

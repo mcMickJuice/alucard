@@ -11,20 +11,7 @@
 <body>
     <div class="main" ng-app="alucardApp">
         <div class="nav">
-            <div class="image-title">
-                <img src="./images/Alucard-med.png" alt="Alucard">
-            </div>
-            <div class="links">
-                <div>
-                    <a ui-sref="search">Search</a>
-                </div>
-                <div>
-                    <a ui-sref="jobs">Current Jobs</a>
-                </div>
-                <div>
-                    <a ui-sref="status">Pi Status</a>
-                </div>
-            </div>
+            <alucard-header></alucard-header>
         </div>
         <div class="content">
             <ui-view></ui-view>
