@@ -17,19 +17,7 @@ function jobState() {
 
             vm.getDetail = function() {
                 vm.showDetail({id: vm.item.uuid});
-            }
-
-            //function mapState(rawPhaseName) {
-            //    var stateMap = {
-            //        COMPLETE: 'complete',
-            //        ERROR: 'error',
-            //        DOWNLOADING: 'downloading',
-            //        'FILE_PROCESSING': 'file-processing',
-            //        'FILE_TRANSFER': 'transfer'
-            //    };
-            //
-            //    return stateMap[rawPhaseName];
-            //}
+            };
 
             $scope.$watch(() => vm.item.phase, function(newValue,oldValue) {
                 if(newValue === oldValue) return;

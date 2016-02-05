@@ -1,3 +1,6 @@
+@import "../../component.less";
+
+
 .job-state-detail {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.23);
@@ -16,8 +19,29 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
+    .close-container {
+      height: 31px;
+      width: 31px;
+      position: relative;
+      background-color: #BFBFBF;
+      border-radius: 20px;
+      left: 15px;
+      top: 7px;
+
+      .close {
+        font-size: 30px;
+        position: relative;
+        left: 17%;
+        top: 18%;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transform: rotate(45deg);
+      }
+    }
+
     .header {
-      height: 7%;
+      height: 13%;
       display: flex;
       justify-content: space-between;
       > div {
@@ -31,7 +55,7 @@
       padding: 10px;
 
       .row {
-        height: 20%;
+        height: 14%;
         .title {
           font-weight: bolder;
           font-size: 0.9em;

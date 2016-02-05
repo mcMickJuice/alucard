@@ -15,8 +15,7 @@ function jobStateDetailDirective() {
         controller: function(jobStateIconMapper) {
             var vm = this;
 
-            console.log(vm.detail);
-            vm.className = jobStateIconMapper.map(vm.detail.phase);
+            vm.stateClassName = jobStateIconMapper.map(vm.detail.phase);
         }
     }
 }

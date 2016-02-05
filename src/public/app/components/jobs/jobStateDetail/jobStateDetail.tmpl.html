@@ -1,9 +1,13 @@
 <div class="job-state-detail">
     <div class="modal">
         <div class="header">
-            <div ng-click="vm.dismiss()">[Close]</div>
-            <div class="state-icon">
-                <div class="{{vm.className}}"></div>
+            <div ng-click="vm.dismiss()">
+                <div class="close-container">
+                    <div class="close">&#43;</div>
+                </div>
+            </div>
+            <div class="icon">
+                <alucard-state-icon class-name="vm.stateClassName"></alucard-state-icon>
             </div>
         </div>
         <div class="body">
