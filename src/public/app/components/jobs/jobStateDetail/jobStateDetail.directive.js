@@ -1,4 +1,5 @@
 var template = require('./jobStateDetail.tmpl.html');
+require('./jobStateDetail.less');
 
 function jobStateDetailDirective() {
     return {
@@ -14,6 +15,7 @@ function jobStateDetailDirective() {
         controller: function(jobStateIconMapper) {
             var vm = this;
 
+            console.log(vm.detail);
             vm.className = jobStateIconMapper.map(vm.detail.phase);
         }
     }

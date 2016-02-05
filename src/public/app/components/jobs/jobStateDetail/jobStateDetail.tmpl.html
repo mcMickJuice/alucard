@@ -1,11 +1,43 @@
 <div class="job-state-detail">
-    <div class="header">
-        <div ng-click="vm.dismiss()">[Close]</div>
-        <div class="state-icon">
-            <div class="{{vm.className}}"></div>
+    <div class="modal">
+        <div class="header">
+            <div ng-click="vm.dismiss()">[Close]</div>
+            <div class="state-icon">
+                <div class="{{vm.className}}"></div>
+            </div>
         </div>
-    </div>
-    <div class="body">
-        {{vm.detail}}
+        <div class="body">
+            <div class="row">
+                <div class="title">Title</div>
+                <div class="description">{{vm.detail.gameTitle}}</div>
+            </div>
+            <div class="row">
+                <div class="title">Job Start Date</div>
+                <div class="description">{{vm.detail.createdTime}}</div>
+            </div>
+            <div class="row">
+                <div class="title">Last Updated</div>
+                <div class="description">{{vm.detail.lastUpdated}}</div>
+            </div>
+            <div class="error" ng-show="vm.detail.errorDetail">
+                <div>
+                    ERROR
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="title">Last Phase</div>
+                        <div class="description">{{vm.detail.errorDetail.lastPhase}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">Error Message</div>
+                        <div class="description">{{vm.detail.errorDetail.errorMessage}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">CallStack</div>
+                        <div class="description">{{vm.detail.errorDetail.callStack}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
