@@ -13,7 +13,7 @@ function searchCtrl(romService, notificationService) {
         var console = vm.console;
         var country = vm.country;
 
-        if(!text) {
+        if (!text) {
             //if text is empty (or any other criteria) dont do search
             return;
         }
@@ -29,15 +29,35 @@ function searchCtrl(romService, notificationService) {
             })
     }
 
-    vm.downloadGame = function(rom) {
+    var queuedDownload = null;
+
+    vm.confirm = function () {
+        var rom = queuedDownload;
+        queuedDownload = null;
+        vm.showDialog = false;
+        downloadGame(rom);
+    };
+
+    vm.cancel = function () {
+        queuedDownload = null;
+        vm.showDialog = false;
+    };
+
+    function downloadGame (rom) {
         romService.downloadGame(rom)
             .then(status => {
-                if(status.isSuccessful){
+                if (status.isSuccessful) {
                     notificationService.success(rom.title, 'Download Started');
                 } else {
                     notificationService.error(status.error, 'Error Queueing Download');
                 }
             });
+    }
+
+    vm.queueDownload = function(rom) {
+        queuedDownload = rom;
+        vm.itemToDownload = rom;
+        vm.showDialog = true;
     }
 }
 

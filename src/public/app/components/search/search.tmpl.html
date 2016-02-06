@@ -4,7 +4,13 @@
             No Results
         </div>
         <div ng-repeat="game in vm.results">
-            <alucard-rom-result click="vm.downloadGame(item)" item="game" />
+            <alucard-rom-result click="vm.queueDownload(item)" item="game" />
+        </div>
+        <div ng-if="vm.showDialog">
+            <alucard-dialog item="vm.itemToDownload"
+                            confirm="vm.confirm()"
+                            cancel="vm.cancel()">
+            </alucard-dialog>
         </div>
     </div>
     <div class="search-container">

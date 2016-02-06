@@ -1,0 +1,42 @@
+.dialog {
+  position: fixed;
+  top: 20%;
+  bottom: 20%;
+  left: 5%;
+  right: 5%;
+
+  background-color: #E6DEDF;
+  border-radius: 5px;
+  border: 1px solid black;
+
+  .title {
+    font-size: larger;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bolder;
+  }
+
+  .game-title {
+    text-align: center;
+  }
+
+  .buttons {
+    div {
+      width: 70%;
+      margin: 10% auto;
+      border-radius: 5px;
+      padding: 20px 10px;
+      color: white;
+      text-align: center;
+      font-weight: bolder;
+      font-size: 1.2em;
+      &.confirmation {
+        background-color: #42E55A;
+      }
+
+      &.cancel {
+        background-color: #fd1744;
+      }
+    }
+  }
+}

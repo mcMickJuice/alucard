@@ -11,6 +11,7 @@ var jobStateDirective = require('./components/jobs/jobStateItem/jobStateItem.dir
 var jobProgressDirective = require('./components/jobs/progressBar/jobProgress.directive.js');
 var jobStateDetailDirective = require('./components/jobs/jobStateDetail/jobStateDetail.directive.js');
 var jobStateIconDirective = require('./components/jobs/jobStateIcon/jobStateIcon.directive.js');
+var dialogDirective = require('./components/search/dialog/dialog.directive.js');
 var appInit = require('./appInit.js');
 
 //service and 3rd party
@@ -43,6 +44,7 @@ angular
     .directive('alucardProgressBar', jobProgressDirective)
     .directive('alucardJobDetail', jobStateDetailDirective)
     .directive('alucardStateIcon', jobStateIconDirective)
+    .directive('alucardDialog', dialogDirective)
     .config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
