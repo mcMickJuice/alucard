@@ -14,7 +14,6 @@ function pingPi() {
 
     //wait 3 seconds
     socket.setTimeout(3000, () => {
-        console.log('unable to make connection');
         closeConnection(false);
     });
 

@@ -14,7 +14,8 @@ function searchCtrl(romService, notificationService) {
         var country = vm.country;
 
         if (!text) {
-            //if text is empty (or any other criteria) dont do search
+            //if text is empty (or any other criteria) dont do search and reset results
+            vm.results = [];
             return;
         }
 
@@ -29,6 +30,13 @@ function searchCtrl(romService, notificationService) {
             })
     }
 
+    vm.queueDownload = function(rom) {
+        queuedDownload = rom;
+        vm.itemToDownload = rom;
+        vm.showDialog = true;
+    }
+
+    /* Confirm download - no, i dont want to use ui bootstrap just to get their modal widget*/
     var queuedDownload = null;
 
     vm.confirm = function () {
@@ -54,11 +62,7 @@ function searchCtrl(romService, notificationService) {
             });
     }
 
-    vm.queueDownload = function(rom) {
-        queuedDownload = rom;
-        vm.itemToDownload = rom;
-        vm.showDialog = true;
-    }
+    /*end confirm download */
 }
 
 module.exports = searchCtrl;
