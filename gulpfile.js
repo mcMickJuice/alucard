@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var runSequence = require('run-sequence');
 var babel = require('gulp-babel');
 var todo = require('gulp-todo');
 var del = require('del');
@@ -41,7 +41,7 @@ gulp.task('webpack', shell.task([
 //        })
 //})
 
-gulp.task('move-static',['clean-static', 'webpack'], function() {
+gulp.task('move-static', function() {
 	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])
 		.pipe(gulp.dest(destination + '/public'))
 });
@@ -82,7 +82,11 @@ gulp.task('watch-lint', ['lint'], function() {
 	gulp.watch(allJs, ['lint']);
 });
 
-gulp.task('default', ['generate-todo','build'], function() {
+gulp.task('default', function(cb) {
 	gulp.watch(jsSourceGlob, ['build']);
 	gulp.watch(staticGlob, ['move-static']);
+
+	runSequence('clean',
+		['generate-todo','build', 'babelify', 'webpack'],
+	cb);
 });
