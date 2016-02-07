@@ -1,4 +1,5 @@
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var thirdParty = '/(node_modules|bower_components)/';
 
@@ -8,10 +9,14 @@ var babelSettings = {
 };
 
 module.exports = {
-    entry: './src/public/app/app.js',
+    entry: [
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/dev-server',
+        './src/public/app/app.js'
+        ],
     output: {
         path: path.resolve(__dirname, 'dist/public'),
-        publicPath: '/dist/public/',
+        publicPath: '/',
         filename: 'bundle.js'
     },
     resolve: {
@@ -27,5 +32,14 @@ module.exports = {
             {test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text'}
         ]
     },
-    devtool: '#inline-source-map'
+    plugins: [
+      new HtmlWebpackPlugin({
+          template: './src/public/index.html'
+      })
+    ],
+    devServer: {
+        contentBase: 'dist/public',
+        hot: true
+    },
+    devtool: 'cheap-eval-source-map'
 }

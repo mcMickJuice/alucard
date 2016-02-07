@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
 var babel = require('gulp-babel');
 var todo = require('gulp-todo');
@@ -24,11 +25,11 @@ gulp.task('clean-static', function() {
 	return del(destination + public);
 });
 
-gulp.task('webpack', shell.task([
-	'webpack'
-]));
+//gulp.task('webpack', shell.task([
+//	'webpack'
+//]));
 
-//gulp.task('webpack-dev-server', function(cb) {
+//gulp.task('webpack', function(cb) {
 //    var config = require('./webpack.config.js');
 //    var devConfig = Object.create(config);
 //
@@ -87,6 +88,6 @@ gulp.task('default', function(cb) {
 	gulp.watch(staticGlob, ['move-static']);
 
 	runSequence('clean',
-		['generate-todo','build', 'babelify', 'webpack'],
+		['generate-todo','build', 'babelify'],
 	cb);
 });
