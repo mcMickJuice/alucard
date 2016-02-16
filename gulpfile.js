@@ -9,12 +9,17 @@ var plumber = require('gulp-plumber');
 var shell = require('gulp-shell');
 var webpack = require('webpack');
 var WebPackDevServer = require('webpack-dev-server');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 var jsSourceGlob = './src/!(public)/*.js';
 var staticGlob = './src/public/**';
 var allJs = './src/**/*.js';
 var destination = './dist';
 var public = '/public';
+var path = require('path');
+var DeepMerge = require('deep-merge');
+var fs = require('fs');
 
 gulp.task('clean', function() {
 	//clear out all distribution folder
@@ -29,18 +34,125 @@ gulp.task('clean-static', function() {
 //	'webpack'
 //]));
 
-//gulp.task('webpack', function(cb) {
-//    var config = require('./webpack.config.js');
-//    var devConfig = Object.create(config);
-//
-//    new WebPackDevServer(webpack(devConfig), {})
-//        .listen(8080, 'localhost', function(err) {
-//            if(err) throw new gutil.PluginError('webpack-dev-server', err);
-//
-//            gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
-//            cb();
-//        })
-//})
+/*Webpack settings*/
+var deepMerge = DeepMerge(function(target, source, key) {
+	if(target instanceof Array){
+		return [].concat(target,source);
+	}
+
+	return source;
+})
+var thirdParty = '/(node_modules|bower_components)/';
+
+var babelSettings = {
+	cacheDirectory: true,
+	presets: ['es2015']
+};
+
+var baseWebpackConfig = {
+	module: {
+		loaders: [
+			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings},
+		]
+	}
+};
+
+function config(overrides) {
+	return deepMerge(baseWebpackConfig, overrides || {});
+}
+
+var frontEndConfig = config(
+	{
+		entry: [
+			'webpack-dev-server/client?http://localhost:3000',
+			'webpack/hot/only-dev-server',
+			'./src/public/app/app.js'
+		],
+		output: {
+			path: path.join(__dirname, 'static/build'),
+			publicPath: 'http://localhost:3000/build',
+			filename: 'frontend.js'
+		},
+		resolve: {
+			alias: {
+				toastr_css: __dirname + "/node_modules/angular-toastr/dist/angular-toastr.min.css"
+			}
+		},
+		module: {
+			loaders: [
+				{test: /\.css$/, exclude: thirdParty,loader: 'style!css'},
+				{test: /\.less$/, exclude: thirdParty, loader: 'style!css!less'},
+				{test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text'}
+			]
+		},
+		plugins: [
+			//new HtmlWebpackPlugin({
+			//	template: './src/public/index.html'
+			//}),
+			new webpack.HotModuleReplacementPlugin({quiet: true})
+		]
+	}
+);
+
+//backend
+var nodeModules = fs.readdirSync('node_modules')
+	.filter(function(x) {
+		return ['bin'].indexOf(x) === -1;
+	});
+
+var backendConfig = config({
+	entry: [
+		'webpack/hot/signal.js',
+		'./src/app/main.js'
+	],
+	target: 'node',
+	output: {
+		path: path.join(__dirname, 'build'),
+		filename: 'backend.js'
+	},
+	node: {
+		__dirname: true,
+		__filename: true
+	},
+	externals: [
+		function(context, request, callback) {
+			var pathStart = request.split('/')[0];
+			if(nodeModules.indexOf(pathStart) >= 0 && request != 'webpack/hot/signal.js') {
+				return callback(null, "commonjs " + request);
+			}
+
+			callback();
+		}
+	],
+	recordsPath: path.join(__dirname, 'build/_records'),
+	plugins: [
+		new webpack.IgnorePlugin(/.(css|less|tmpl.html)$/),
+		new webpack.HotModuleReplacementPlugin({quiet: true})
+	]
+});
+
+function onBuild(done) {
+	return function(err, stats) {
+		if(err) {
+			console.log('Error', err);
+		}
+		else {
+			console.log(stats.toString());
+		}
+
+		if(done) {
+			done();
+		}
+	}
+}
+
+gulp.task('frontend-build', function(done) {
+	webpack(frontEndConfig).run(onBuild(done));
+});
+
+gulp.task('backend-build', function(done) {
+	webpack(backendConfig).run(onBuild(done));
+});
 
 gulp.task('move-static', function() {
 	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])

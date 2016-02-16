@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var path = require('path');
+var http = require('http');
+var socketio = require('socket.io');
 var bodyParser = require('body-parser');
 var {webPort, servicePort, hostAddress} = require('../secrets/config');
 var alucardLogger = require('../logging/alucardLogger');
@@ -15,10 +16,17 @@ var piStatusTypes = require('../enums/piStatusTypes');
 
 app.use(bodyParser.json());
 
-app.use(express.static('../public'));
-//'authentication' step required
+app.use(express.static('../static'));
+var server = http.createServer(app);
+var io = socketio(server);
 
-io.on('connection', function(socket) {
+
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('something broke!!!');
+});
+
+io.on('connection', function (socket) {
     console.log('socket connection made');
 
     socket.emit('server ready');
@@ -35,7 +43,7 @@ app.get('/health', function (req, res) {
     res.status(200).send(obj);
 });
 
-app.post('/download', function(req, res) {
+app.post('/download', function (req, res) {
     var address = `${hostAddress}:${servicePort}/download`;
     var romId = req.body.romId;
     var options = {
@@ -72,7 +80,7 @@ app.get('/jobs', function (req, res) {
         })
 });
 
-app.get('/jobs/detail/:id', function(req, res) {
+app.get('/jobs/detail/:id', function (req, res) {
     var id = req.params.id;
 
     jobService.getJobDetail(id)
@@ -82,15 +90,15 @@ app.get('/jobs/detail/:id', function(req, res) {
 });
 
 //service update endpoint
-app.post('/download/progress', function(req, res) {
+app.post('/download/progress', function (req, res) {
     var progressInfo = req.body.progressInfo;
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
 
-    if(progressInfo.progressType === progressType.STATE_CHANGE){
+    if (progressInfo.progressType === progressType.STATE_CHANGE) {
         io.emit(serviceMessageTypes.STATE_CHANGE, progressInfo);
-    } else if(progressInfo.progressType === progressType.TRANSFER_PROGRESS){
+    } else if (progressInfo.progressType === progressType.TRANSFER_PROGRESS) {
         io.emit(serviceMessageTypes.FILE_PROGRESS, progressInfo)
-    }else {
+    } else {
         //unknown progress type, bad service!
         res.status(400).send({error: 'unknown progress type!'});
         return;
@@ -100,14 +108,14 @@ app.post('/download/progress', function(req, res) {
 
 });
 
-app.post('/download/complete', function(req, res) {
+app.post('/download/complete', function (req, res) {
     var downloadInfo = req.body.downloadInfo;
     //uuid, gameTitle, consoleName
     res.status(202).send({downloadInfo});
     io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
 });
 
-app.post('/download/error', function(req, res) {
+app.post('/download/error', function (req, res) {
     var error = req.body.error;
 
     res.status(202).send({error});
@@ -125,8 +133,18 @@ function pingPiAndReport() {
 
 pingPiAndReport();
 
-server.listen(webPort, function () {
-    var message = `alucard web app launched and listening on port ${webPort}`
-    console.log(message);
-    alucardLogger.info(message)
-});
+//server.listen(webPort, function () {
+//    var message = `alucard web app launched and listening on port ${webPort}`
+//    console.log(message);
+//    alucardLogger.info(message)
+//});
+
+function startServer(port) {
+    server.listen(port, function () {
+        var message = `alucard web app launched and listening on port ${port}`
+        console.log(message);
+        alucardLogger.info(message)
+    });
+}
+
+module.exports = {startServer};

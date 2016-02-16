@@ -1,0 +1,18 @@
+.main {
+    max-width: 700px;
+    margin: auto;
+}
+
+/*toastr overrides*/
+.toast-success {
+    background-color: #42E55A !important;
+}
+.toast-error {
+    background-color: #fd1744 !important;
+}
+.toast-info {
+    background-color: #28c8df !important;
+}
+.toast-warning {
+    background-color: #F89406 !important;
+}
