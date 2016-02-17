@@ -15,8 +15,8 @@ var pingPi = require('../fileTransfer/piMonitor').pingPi;
 var piStatusTypes = require('../enums/piStatusTypes');
 
 app.use(bodyParser.json());
-
-app.use(express.static('../static'));
+console.log('where am i running?',__dirname);
+app.use(express.static(path.resolve(__dirname, '../static')));
 var server = http.createServer(app);
 var io = socketio(server);
 

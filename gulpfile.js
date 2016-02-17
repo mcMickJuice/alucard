@@ -6,10 +6,10 @@ var todo = require('gulp-todo');
 var del = require('del');
 var eslint = require('gulp-eslint');
 var plumber = require('gulp-plumber');
-var shell = require('gulp-shell');
 var webpack = require('webpack');
+var nodemon = require('nodemon');
 var WebPackDevServer = require('webpack-dev-server');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+//var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 var jsSourceGlob = './src/!(public)/*.js';
@@ -30,10 +30,6 @@ gulp.task('clean-static', function() {
 	return del(destination + public);
 });
 
-//gulp.task('webpack', shell.task([
-//	'webpack'
-//]));
-
 /*Webpack settings*/
 var deepMerge = DeepMerge(function(target, source, key) {
 	if(target instanceof Array){
@@ -52,7 +48,7 @@ var babelSettings = {
 var baseWebpackConfig = {
 	module: {
 		loaders: [
-			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings},
+			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings}
 		]
 	}
 };
@@ -64,18 +60,18 @@ function config(overrides) {
 var frontEndConfig = config(
 	{
 		entry: [
+			//tell webpack to run "inline", i.e. monitor changes in webpack-dev-server, which is running on port 3000
 			'webpack-dev-server/client?http://localhost:3000',
-			'webpack/hot/only-dev-server',
 			'./src/public/app/app.js'
 		],
 		output: {
-			path: path.join(__dirname, 'static/build'),
-			publicPath: 'http://localhost:3000/build',
-			filename: 'frontend.js'
+			path: path.join(__dirname, 'static/build'), //path where file is placed when packed
+			publicPath: 'http://localhost:3333/build', //path where this file is available if requested
+			filename: 'frontend.js' //name of output file
 		},
 		resolve: {
 			alias: {
-				toastr_css: __dirname + "/node_modules/angular-toastr/dist/angular-toastr.min.css"
+				toastr_css: path.join(__dirname,"node_modules/angular-toastr/dist/angular-toastr.min.css")
 			}
 		},
 		module: {
@@ -84,13 +80,7 @@ var frontEndConfig = config(
 				{test: /\.less$/, exclude: thirdParty, loader: 'style!css!less'},
 				{test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text'}
 			]
-		},
-		plugins: [
-			//new HtmlWebpackPlugin({
-			//	template: './src/public/index.html'
-			//}),
-			new webpack.HotModuleReplacementPlugin({quiet: true})
-		]
+		}
 	}
 );
 
@@ -111,7 +101,7 @@ var backendConfig = config({
 		filename: 'backend.js'
 	},
 	node: {
-		__dirname: true,
+		__dirname: false,
 		__filename: true
 	},
 	externals: [
@@ -150,8 +140,33 @@ gulp.task('frontend-build', function(done) {
 	webpack(frontEndConfig).run(onBuild(done));
 });
 
+gulp.task('frontend-watch', function(){
+	new WebPackDevServer(webpack(frontEndConfig), {
+		publicPath: frontEndConfig.output.publicPath,
+	}).listen(3000, 'localhost', function(err, result) {
+		if(err) {
+			console.log(err);
+		}
+		else {
+			console.log('webpack dev server listening at localhost:3000');
+		}
+	})
+});
+
 gulp.task('backend-build', function(done) {
 	webpack(backendConfig).run(onBuild(done));
+});
+
+gulp.task('backend-watch', function(done) {
+	var firedDone = false;
+	webpack(backendConfig).watch(100, function(err, stats) {
+		if(!firedDone) {
+			firedDone = true;
+			done();
+		}
+
+		nodemon.restart();
+	})
 });
 
 gulp.task('move-static', function() {
@@ -173,9 +188,8 @@ gulp.task('babelify', ['lint'] , function() {
 		.pipe(gulp.dest(destination));
 });
 
-gulp.task('build', ['babelify', 'move-static'], function() {
-
-});
+gulp.task('build', ['frontend-build', 'backend-build']);
+gulp.task('watch', ['frontend-watch', 'backend-watch']);
 
 gulp.task('lint', function() {
     //TODO this needs to be improved. subsequent tasks still execute
@@ -193,6 +207,23 @@ gulp.task('lint', function() {
 
 gulp.task('watch-lint', ['lint'], function() {
 	gulp.watch(allJs, ['lint']);
+});
+
+gulp.task('run', ['frontend-watch', 'backend-watch'], function() {
+	nodemon({
+		execMap: {
+			js: 'node'
+		},
+		script: path.resolve(__dirname, 'build/backend'),
+		ignore: ['*'],
+		watch: ['foo/'],
+		ext: 'noop'
+	}).on('restart', function() {
+		console.log('Patched!');
+	});
+
+	console.log('frontendconfig', frontEndConfig);
+	console.log('backendconfig', backendConfig);
 });
 
 gulp.task('default', function(cb) {
