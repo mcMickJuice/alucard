@@ -38,6 +38,7 @@
     "nodemon": "^1.8.1",
     "rewire": "^2.5.1",
     "run-sequence": "^1.1.5",
+    "source-map-support": "^0.4.0",
     "style-loader": "^0.13.0",
     "text-loader": "0.0.1",
     "webpack": "^1.12.11",

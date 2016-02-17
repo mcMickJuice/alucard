@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
 var babel = require('gulp-babel');
 var todo = require('gulp-todo');
@@ -9,7 +8,9 @@ var plumber = require('gulp-plumber');
 var webpack = require('webpack');
 var nodemon = require('nodemon');
 var WebPackDevServer = require('webpack-dev-server');
-//var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+var DeepMerge = require('deep-merge');
+var fs = require('fs');
 
 
 var jsSourceGlob = './src/!(public)/*.js';
@@ -17,9 +18,7 @@ var staticGlob = './src/public/**';
 var allJs = './src/**/*.js';
 var destination = './dist';
 var public = '/public';
-var path = require('path');
-var DeepMerge = require('deep-merge');
-var fs = require('fs');
+
 
 gulp.task('clean', function() {
 	//clear out all distribution folder
@@ -50,6 +49,11 @@ var baseWebpackConfig = {
 		loaders: [
 			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings}
 		]
+	},
+	debug: true,
+	devtool: 'source-map',
+	devServer: {
+		stats: 'errors-only'
 	}
 };
 
@@ -90,7 +94,7 @@ var nodeModules = fs.readdirSync('node_modules')
 		return ['bin'].indexOf(x) === -1;
 	});
 
-var backendConfig = config({
+var webBackendConfig = config({
 	entry: [
 		'webpack/hot/signal.js',
 		'./src/app/main.js'
@@ -117,6 +121,8 @@ var backendConfig = config({
 	recordsPath: path.join(__dirname, 'build/_records'),
 	plugins: [
 		new webpack.IgnorePlugin(/.(css|less|tmpl.html)$/),
+		new webpack.BannerPlugin('require("source-map-support").install();',
+			{ raw: true, entryOnly: false }),
 		new webpack.HotModuleReplacementPlugin({quiet: true})
 	]
 });
@@ -127,7 +133,7 @@ function onBuild(done) {
 			console.log('Error', err);
 		}
 		else {
-			console.log(stats.toString());
+			console.log('Webpack finished!')
 		}
 
 		if(done) {
@@ -143,6 +149,7 @@ gulp.task('frontend-build', function(done) {
 gulp.task('frontend-watch', function(){
 	new WebPackDevServer(webpack(frontEndConfig), {
 		publicPath: frontEndConfig.output.publicPath,
+		stats: 'errors-only'
 	}).listen(3000, 'localhost', function(err, result) {
 		if(err) {
 			console.log(err);
@@ -154,12 +161,12 @@ gulp.task('frontend-watch', function(){
 });
 
 gulp.task('backend-build', function(done) {
-	webpack(backendConfig).run(onBuild(done));
+	webpack(webBackendConfig).run(onBuild(done));
 });
 
 gulp.task('backend-watch', function(done) {
 	var firedDone = false;
-	webpack(backendConfig).watch(100, function(err, stats) {
+	webpack(webBackendConfig).watch(100, function(err, stats) {
 		if(!firedDone) {
 			firedDone = true;
 			done();
@@ -168,6 +175,19 @@ gulp.task('backend-watch', function(done) {
 		nodemon.restart();
 	})
 });
+
+function onBundleFinished(bundleName) {
+	return function bundleFinishedCallback(err, stats) {
+		if(err) {
+			console.log(err);
+			return;
+		}
+
+		console.log(bundleName + ' bundle has finished');
+	}
+}
+
+
 
 gulp.task('move-static', function() {
 	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])
@@ -178,14 +198,6 @@ gulp.task('generate-todo', function() {
 	return gulp.src(jsSourceGlob)
 		.pipe(todo())
 		.pipe(gulp.dest('./'));
-});
-
-gulp.task('babelify', ['lint'] , function() {
-	return gulp.src(jsSourceGlob)
-		.pipe(babel({
-			presets: ['es2015']
-		}))
-		.pipe(gulp.dest(destination));
 });
 
 gulp.task('build', ['frontend-build', 'backend-build']);
@@ -221,16 +233,4 @@ gulp.task('run', ['frontend-watch', 'backend-watch'], function() {
 	}).on('restart', function() {
 		console.log('Patched!');
 	});
-
-	console.log('frontendconfig', frontEndConfig);
-	console.log('backendconfig', backendConfig);
-});
-
-gulp.task('default', function(cb) {
-	gulp.watch(jsSourceGlob, ['build']);
-	gulp.watch(staticGlob, ['move-static']);
-
-	runSequence('clean',
-		['generate-todo','build', 'babelify'],
-	cb);
 });
