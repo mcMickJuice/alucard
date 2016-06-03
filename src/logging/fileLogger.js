@@ -1,5 +1,5 @@
 var fs = require('fs');
-var config = require('../secrets/config');
+var {baseOutputDir, logFileDir} = require('../config');
 var path = require('path');
 var levels = require('./logConfig').levels;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectory;
@@ -10,7 +10,7 @@ function errLog(err) {
 }
 
 function log(message, level){
-    var logPath = `${config.baseOutputDir}/${config.logFileDir}`;
+    var logPath = `${baseOutputDir}/${logFileDir}`;
     ensureDirectory(logPath, err => {
         if(err) {
             errLog(err);
