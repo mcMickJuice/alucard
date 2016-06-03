@@ -13,10 +13,6 @@ module.exports = {
 		]
 	},
 	debug: true,
-	//devtool: 'source-map',
-	// devServer: {
-	// 	stats: 'errors-only'
-	// }
     entry: './src/seedScripts/seedScript.js',
 	target: 'node',
 	output: {

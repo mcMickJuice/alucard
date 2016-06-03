@@ -5,7 +5,7 @@ function parseHtmlAndMap(htmlText, selector, mapper) {
 	var items = $(selector);
 
 	var mappedItems= [];
-	//cheerio map returns index as keys...
+	//cheerio map returns index as keys...thats why map is not used here?
 	items.each((idx, item) => {
 		var $item = $(item);
 		var mapped = mapper($item);

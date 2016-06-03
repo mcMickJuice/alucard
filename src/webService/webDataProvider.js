@@ -1,4 +1,4 @@
-var parser = require('./../utility/htmlParser').parseHtmlAndMap;
+var {parseHtmlAndMap} = require('./../utility/htmlParser');
 var webClient = require('./webClient');
 var {romRequestConfig: {cookieString, 
 	downloadLinkSelector, 
@@ -25,7 +25,7 @@ function getLinksForConsole(consoleObj) {
 			}
 		}
 
-		return parser(html, gameListLinkSelector, mapLink);
+		return parseHtmlAndMap(html, gameListLinkSelector, mapLink);
 		})
 }
 var requiredHeaders = {

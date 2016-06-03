@@ -6,7 +6,7 @@ console.log('starting seed')
 seedConsoleInfo(dbName)
     .then(() => {
         console.log('console Info seeded')
-        seedGameLinks(dbName)})
+        return seedGameLinks(dbName)})
     .then(() => console.log('Game links seeded'))
     .catch(err => {
         console.log('Error occurred', err)

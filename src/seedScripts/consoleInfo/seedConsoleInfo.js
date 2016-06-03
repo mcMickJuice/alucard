@@ -6,7 +6,6 @@ var consoleInfo = require('./seedConsoleData.js').consoleData;
 var Q = require('q');
 
 function seedConsoleInfo(databaseName) {
-    console.log('in seed consoleInfo')
     var dbConnection;
     var connectionPromise = (dbClient.getDbConnection(databaseName))
     .then(db => {
