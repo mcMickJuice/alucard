@@ -10,13 +10,13 @@ function errLog(err) {
 }
 
 function log(message, level){
-    var logPath = `${baseOutputDir}/${logFileDir}`;
+    var logPath = path.join(baseOutputDir, logFileDir);
     ensureDirectory(logPath, err => {
         if(err) {
             errLog(err);
         }
         var env = process.env.NODE_ENV;
-        var filePath = path.resolve(logPath, `log-${env}.txt`);
+        var filePath = path.join(logPath, `log-${env}.txt`);
 
         message = `${level} - ${Date()}: ${message}\r\n`;
         fs.appendFile(filePath,message, 'utf8', function(err) {

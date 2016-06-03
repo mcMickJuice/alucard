@@ -4,13 +4,13 @@ var dbClient = require('../../data/dbClient');
 var dbRepo = require('../../data/dbRepository');
 var webDataProvider = require('../webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
-var databaseName = require('../../secrets/dbConfig').dbName;
+var {dbConfig: {dbName}} = require('../../Config');
 
 
-function insertAllGameLinksForConsoles(dbName) {
+function insertAllGameLinksForConsoles(databaseName) {
     var dbConnection;
     
-	return dbClient.getDbConnection(dbName)
+	return dbClient.getDbConnection(databaseName)
 	.then(db => {
     //save off dbConnection for disposal        
 		return dbConnection = db;
@@ -42,7 +42,7 @@ function insertLinksForConsole(db, consoleObj) {
 		})
 }
 
-insertAllGameLinksForConsoles(databaseName)
+insertAllGameLinksForConsoles(dbName)
     .then(() => console.log('done inserting game links'))
     .catch(err => console.log(err.stack));
 //module.exports = insertAllGameLinksForConsoles

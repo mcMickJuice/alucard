@@ -1,7 +1,7 @@
 var postRequest = require('../webService/webClient').postRequest;
-var config = require('../secrets/config');
+var {hostAddress, webPort} = require('../config');
 
-var webAddress = `${config.hostAddress}:${config.webPort}`;
+var webAddress = `${hostAddress}:${webPort}`;
 var routes = {
     progress: '/download/progress',
     error: '/download/error',
