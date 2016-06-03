@@ -4,8 +4,6 @@
   "description": "Video game rom mover and web app",
   "main": "./dist/index.js",
   "scripts": {
-    "seed-console-info": "node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
-    "seed-rom-info": "node ./dist/initializationScripts/romInfo/insertGameLinks",
     "seed-database": "babel-node ./src/seedScripts/seedScript.js",
     "run-service": "gulp backend-build&&set PORT=666&&node ./dist/backend.js",
     "run-web": "gulp build&&node ./dist/app/webApp.js"
