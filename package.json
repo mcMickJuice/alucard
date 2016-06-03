@@ -4,12 +4,11 @@
   "description": "Video game rom mover and web app",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=spec0/jasmine.json",
     "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
     "seedRomInfo": "gulp clean && gulp build && node ./dist/initializationScripts/romInfo/insertGameLinks",
     "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo",
-    "alucard-service": "set PORT=666&&node ./dist/app/serviceApp.js",
-    "alucard-web": "gulp build&&node ./dist/app/webApp.js"
+    "run-service": "gulp backend-build&&set PORT=666&&node ./dist/backend.js",
+    "run-web": "gulp build&&node ./dist/app/webApp.js"
   },
   "author": "mcMickJuice",
   "license": "ISC",
@@ -53,7 +52,7 @@
     "body-parser": "^1.14.2",
     "cheerio": "^0.19.0",
     "express": "^4.13.3",
-    "lodash": "^3.10.1",
+    "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
     "moment": "^2.11.1",
     "mongodb": "^2.1.2",
