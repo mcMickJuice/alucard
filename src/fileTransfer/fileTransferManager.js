@@ -1,5 +1,5 @@
 var moveFile = require('./fileTransfer').moveFile;
-var piDestinationRoot = require('../secrets/fileProcessingConfig').basePiPath;
+var {fileProcessingConfig: {basePiPath}} = require('../config');
 var Q = require('q');
 var path = require('path');
 
@@ -16,12 +16,13 @@ function moveFileToPi(localPath, consolePath, reporter) {
     }
 
     var fileName = path.parse(localPath).base;
-    var destinationPath = `${piDestinationRoot}${consolePath}/${fileName}`;
+    var destinationPath = path.join(basePiPath,consolePath, fileName);
     moveFile(localPath, destinationPath, reporter, onCompletion);
 
     return deferred.promise;
 }
 
+////TODO add these features
 //function moveFileToBackup(tempPath, destinationPath) {
 //    throw new Error(`${moveFileToBackup} not yet implemented`);
 //}

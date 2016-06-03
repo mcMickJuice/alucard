@@ -8,5 +8,10 @@ module.exports = {
     dbConfig: {
         dbAddress: process.env.DB_ADDRESS || 'localhost:67000',
         dbName: process.env.DB_NAME || 'alucard'     
+    },
+    fileProcessingConfig: {
+        basePiPath: process.env.PI_PATH || 'c://pi', //TODO
+        sshPort: '', //TODO update to actual port
+        piIpAddress: '' //TODO update to actual IP
     }
 }

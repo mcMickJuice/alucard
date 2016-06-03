@@ -90,9 +90,6 @@ function queueDownload(romId, onFinish, onProgress, onError) {
         });
 }
 
-//queueDownload('569154f399784608393116fe')
-//.then(() => console.log('download complete'));
-
 module.exports = {
     queueDownload
 };

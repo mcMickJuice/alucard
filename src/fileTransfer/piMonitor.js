@@ -1,13 +1,13 @@
 var net = require('net');
 var Q = require('q');
-var piConfig = require('../secrets/fileProcessingConfig');
+var {fileProcessingConfig: {sshPort, piIpAddress}} = require('../config');
 
 function pingPi() {
     var deferred = Q.defer();
 
     var socket = net.connect({
-        port: piConfig.sshPort,
-        host: piConfig.piIpAddress
+        port: sshPort,
+        host: piIpAddress
     }, () => {
         closeConnection(true);
     });
