@@ -6,6 +6,7 @@ var consoleInfo = require('./seedConsoleData.js').consoleData;
 var Q = require('q');
 
 function seedConsoleInfo(databaseName) {
+    console.log('in seed consoleInfo')
     var dbConnection;
     var connectionPromise = (dbClient.getDbConnection(databaseName))
     .then(db => {
@@ -16,13 +17,6 @@ function seedConsoleInfo(databaseName) {
         .spread(dbRepo.insertMany)
         .then(() => dbConnection.close());
 }
-
-seedConsoleInfo(dbName)
-.catch(err => console.log(err.stack))
-.finally(function() {
-	console.log('exiting!')
-	process.exit()
-});
 
 module.exports = seedConsoleInfo
 

@@ -17,15 +17,13 @@ function insertAllGameLinksForConsoles(databaseName) {
 	})
     .then(() => {
         return dbRepo.getCollection(dbConnection, consoleCollectionKey)
-           .then(consoles => {
+    })
+    .then(consoles => {
+        console.log(consoles)
                return Q.all(consoles.map(c => {
                    return insertLinksForConsole(dbConnection,c);
                }))
            })
-           .catch(err => {
-               console.log(err.stack)
-           })
-    })
     .finally(() => {
         dbConnection.close()
     })
@@ -42,7 +40,4 @@ function insertLinksForConsole(db, consoleObj) {
 		})
 }
 
-// insertAllGameLinksForConsoles(dbName)
-//     .then(() => console.log('done inserting game links'))
-//     .catch(err => console.log(err.stack));
 module.exports = insertAllGameLinksForConsoles
