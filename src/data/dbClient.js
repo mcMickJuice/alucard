@@ -4,8 +4,8 @@ var {dbConfig: {dbAddress}} = require('../config');
 
 function getDbConnection(databaseName) {
     var deferred = Q.defer();
-    var url = `${dbAddress}${databaseName}`;
-
+    var url = `mongodb://${dbAddress}/${databaseName}`;
+	console.log('mongo url', url)
 	MongoClient.connect(url, function(err, db) {
 		if(err) {
 			deferred.reject(err);

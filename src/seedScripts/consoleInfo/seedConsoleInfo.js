@@ -24,4 +24,6 @@ seedConsoleInfo(dbName)
 	process.exit()
 });
 
+module.exports = seedConsoleInfo
+
 

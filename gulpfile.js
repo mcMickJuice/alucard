@@ -52,9 +52,9 @@ var baseWebpackConfig = {
 	},
 	debug: true,
 	devtool: 'source-map',
-	devServer: {
-		stats: 'errors-only'
-	}
+	// devServer: {
+	// 	stats: 'errors-only'
+	// }
 };
 
 function config(overrides) {
@@ -126,6 +126,22 @@ var webBackendConfig = config({
 		new webpack.HotModuleReplacementPlugin({quiet: true})
 	]
 });
+
+var seedScriptConfig = config({
+	entry: './src/seedScripts/seedScript.js',
+	target: 'node',
+	output: {
+		path: path.join(__dirname, 'dist/seedScripts'),
+		filename: 'seedScript.js'
+	},
+	module: {
+		preLoaders: [{test: /\.json$/, loader: 'json'}]
+	}
+})
+
+gulp.task('build-seed-scripts', function(done) {
+	webpack(seedScriptConfig).run(onBuild(done))
+})
 
 function onBuild(done) {
 	return function(err) {

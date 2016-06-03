@@ -2,9 +2,9 @@
 var Q = require('q');
 var dbClient = require('../../data/dbClient');
 var dbRepo = require('../../data/dbRepository');
-var webDataProvider = require('../webService/webDataProvider');
+var webDataProvider = require('../../webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
-var {dbConfig: {dbName}} = require('../../Config');
+// var {dbConfig: {dbName}} = require('../../config');
 
 
 function insertAllGameLinksForConsoles(databaseName) {
@@ -42,7 +42,7 @@ function insertLinksForConsole(db, consoleObj) {
 		})
 }
 
-insertAllGameLinksForConsoles(dbName)
-    .then(() => console.log('done inserting game links'))
-    .catch(err => console.log(err.stack));
-//module.exports = insertAllGameLinksForConsoles
+// insertAllGameLinksForConsoles(dbName)
+//     .then(() => console.log('done inserting game links'))
+//     .catch(err => console.log(err.stack));
+module.exports = insertAllGameLinksForConsoles

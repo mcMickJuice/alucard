@@ -1,9 +1,10 @@
 var parser = require('./../utility/htmlParser').parseHtmlAndMap;
 var webClient = require('./webClient');
-var romRequestConfig = require('./../secrets/romRequestConfig');
+var {romRequestConfig: {cookieString, 
+	downloadLinkSelector, 
+	gameListLinkSelector, 
+	userAgent}} = require('./../config');
 var Q = require('q');
-
-var {cookieString, downloadLinkSelector, gameListLinkSelector, userAgent} = romRequestConfig;
 
 function getLinksForConsole(consoleObj) {
 	var consoleName = consoleObj.console;

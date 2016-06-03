@@ -4,9 +4,9 @@
   "description": "Video game rom mover and web app",
   "main": "./dist/index.js",
   "scripts": {
-    "seedConsoleInfo": "gulp clean && gulp build && node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
-    "seedRomInfo": "gulp clean && gulp build && node ./dist/initializationScripts/romInfo/insertGameLinks",
-    "seedDatabase": "npm seedConsoleInfo && npm seedRomInfo",
+    "seed-console-info": "node ./dist/initializationScripts/consoleInfo/seedConsoleInfo",
+    "seed-rom-info": "node ./dist/initializationScripts/romInfo/insertGameLinks",
+    "seed-database": "gulp clean&&gulp build-seed-scripts&&node ./dist/seedScripts/seedScript",
     "run-service": "gulp backend-build&&set PORT=666&&node ./dist/backend.js",
     "run-web": "gulp build&&node ./dist/app/webApp.js"
   },
@@ -14,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel": "^6.3.26",
+    "babel-cli": "^6.9.0",
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
@@ -31,6 +32,7 @@
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.8.1",
     "jasmine": "^2.4.1",
+    "json-loader": "^0.5.4",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "mocha": "^2.3.4",
@@ -58,7 +60,7 @@
     "mongodb": "^2.1.2",
     "mongoose": "^4.3.4",
     "q": "^1.4.1",
-    "request": "^2.67.0",
+    "request": "^2.65.0",
     "socket.io": "^1.4.4",
     "socket.io-client": "^1.4.4",
     "ssh2": "^0.4.13",
