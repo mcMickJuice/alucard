@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
-var babel = require('gulp-babel');
+// var runSequence = require('run-sequence');
+// var babel = require('gulp-babel');
 var todo = require('gulp-todo');
 var del = require('del');
 var eslint = require('gulp-eslint');
@@ -52,9 +52,9 @@ var baseWebpackConfig = {
 	},
 	debug: true,
 	devtool: 'source-map',
-	devServer: {
-		stats: 'errors-only'
-	}
+	// devServer: {
+	// 	stats: 'errors-only'
+	// }
 };
 
 function config(overrides) {
@@ -69,13 +69,13 @@ var frontEndConfig = config(
 			'./src/public/app/app.js'
 		],
 		output: {
-			path: path.join(__dirname, 'static/build'), //path where file is placed when packed
-			publicPath: 'http://localhost:3333/build', //path where this file is available if requested
+			path: path.join(__dirname, 'static/dist'), //path where file is placed when packed
+			publicPath: 'http://localhost:3333/dist', //path where this file is available if requested
 			filename: 'frontend.js' //name of output file
 		},
 		resolve: {
 			alias: {
-				toastr_css: path.join(__dirname,"node_modules/angular-toastr/dist/angular-toastr.min.css")
+				toastr_css: path.join(__dirname,'node_modules/angular-toastr/dist/angular-toastr.min.css')
 			}
 		},
 		module: {
@@ -101,7 +101,7 @@ var webBackendConfig = config({
 	],
 	target: 'node',
 	output: {
-		path: path.join(__dirname, 'build'),
+		path: path.join(__dirname, 'dist'),
 		filename: 'backend.js'
 	},
 	node: {
@@ -112,13 +112,13 @@ var webBackendConfig = config({
 		function(context, request, callback) {
 			var pathStart = request.split('/')[0];
 			if(nodeModules.indexOf(pathStart) >= 0 && request != 'webpack/hot/signal.js') {
-				return callback(null, "commonjs " + request);
+				return callback(null, 'commonjs ' + request);
 			}
 
 			callback();
 		}
 	],
-	recordsPath: path.join(__dirname, 'build/_records'),
+	recordsPath: path.join(__dirname, 'dist/_records'),
 	plugins: [
 		new webpack.IgnorePlugin(/.(css|less|tmpl.html)$/),
 		new webpack.BannerPlugin('require("source-map-support").install();',
@@ -128,7 +128,7 @@ var webBackendConfig = config({
 });
 
 function onBuild(done) {
-	return function(err, stats) {
+	return function(err) {
 		if(err) {
 			console.log('Error', err);
 		}
@@ -150,7 +150,7 @@ gulp.task('frontend-watch', function(){
 	new WebPackDevServer(webpack(frontEndConfig), {
 		publicPath: frontEndConfig.output.publicPath,
 		stats: 'errors-only'
-	}).listen(3000, 'localhost', function(err, result) {
+	}).listen(3000, 'localhost', function(err) {
 		if(err) {
 			console.log(err);
 		}
@@ -166,7 +166,7 @@ gulp.task('backend-build', function(done) {
 
 gulp.task('backend-watch', function(done) {
 	var firedDone = false;
-	webpack(webBackendConfig).watch(100, function(err, stats) {
+	webpack(webBackendConfig).watch(100, function() {
 		if(!firedDone) {
 			firedDone = true;
 			done();
@@ -175,19 +175,6 @@ gulp.task('backend-watch', function(done) {
 		nodemon.restart();
 	})
 });
-
-function onBundleFinished(bundleName) {
-	return function bundleFinishedCallback(err, stats) {
-		if(err) {
-			console.log(err);
-			return;
-		}
-
-		console.log(bundleName + ' bundle has finished');
-	}
-}
-
-
 
 gulp.task('move-static', function() {
 	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])
@@ -226,7 +213,7 @@ gulp.task('run', ['frontend-watch', 'backend-watch'], function() {
 		execMap: {
 			js: 'node'
 		},
-		script: path.resolve(__dirname, 'build/backend'),
+		script: path.resolve(__dirname, 'dist/backend'),
 		ignore: ['*'],
 		watch: ['foo/'],
 		ext: 'noop'

@@ -1,14 +1,15 @@
-var config = require('../secrets/config');
+var {baseOutputDir, romFileDir} = require('../config');
 var download = require('../webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
+var path = require('path');
 
 function downloadGame(downloadUrl, romInfo, onProgress) {
     //bad dirty bad!
     var outputPath;
     function writeStreamFactory(fileName) {
-        var romDir = `${config.baseOutputDir}/${config.romFileDir}/${romInfo.consoleName}`;
-        outputPath = `${romDir}/${fileName}`;
+        var romDir = path.join(baseOutputDir, romFileDir, romInfo.consoleName);
+        outputPath = path.join(romDir, fileName);
 
         return createWriteStream(romDir, outputPath);
     }

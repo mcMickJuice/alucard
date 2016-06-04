@@ -1,9 +1,10 @@
-var parser = require('./../utility/htmlParser').parseHtmlAndMap;
+var {parseHtmlAndMap} = require('./../utility/htmlParser');
 var webClient = require('./webClient');
-var romRequestConfig = require('./../secrets/romRequestConfig');
+var {romRequestConfig: {cookieString, 
+	downloadLinkSelector, 
+	gameListLinkSelector, 
+	userAgent}} = require('./../config');
 var Q = require('q');
-
-var {cookieString, downloadLinkSelector, gameListLinkSelector, userAgent} = romRequestConfig;
 
 function getLinksForConsole(consoleObj) {
 	var consoleName = consoleObj.console;
@@ -24,7 +25,7 @@ function getLinksForConsole(consoleObj) {
 			}
 		}
 
-		return parser(html, gameListLinkSelector, mapLink);
+		return parseHtmlAndMap(html, gameListLinkSelector, mapLink);
 		})
 }
 var requiredHeaders = {

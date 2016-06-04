@@ -1,5 +1,5 @@
 var fs = require('fs');
-var config = require('../secrets/config');
+var {baseOutputDir, logFileDir} = require('../config');
 var path = require('path');
 var levels = require('./logConfig').levels;
 var ensureDirectory = require('../utility/fileSystemHelpers').ensureDirectory;
@@ -10,13 +10,13 @@ function errLog(err) {
 }
 
 function log(message, level){
-    var logPath = `${config.baseOutputDir}/${config.logFileDir}`;
+    var logPath = path.join(baseOutputDir, logFileDir);
     ensureDirectory(logPath, err => {
         if(err) {
             errLog(err);
         }
         var env = process.env.NODE_ENV;
-        var filePath = path.resolve(logPath, `log-${env}.txt`);
+        var filePath = path.join(logPath, `log-${env}.txt`);
 
         message = `${level} - ${Date()}: ${message}\r\n`;
         fs.appendFile(filePath,message, 'utf8', function(err) {

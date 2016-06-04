@@ -1,16 +1,14 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| app\webApp.js | 125 | pull pinging Pi into separate file
 | alucardService\alucardDownloadService.js | 47 | move into alucardService
-| models\mongoosePromisified.js | 7 | only connect on construction of model
-| secrets\fileProcessingConfig.js | 1 | consolidate ALL THE CONFIGS!
+| app\webApp.js | 124 | pull pinging Pi into separate file
+| models\mongoosePromisified.js | 6 | only connect on construction of model
 
 ### FIXMEs
 | Filename | line # | FIXME
 |:------|:------:|:------
 | alucardService\alucardDownloadService.js | 83 | clone this?
 | logging\alucardLogger.js | 6 | none of these log methods have a callback and therefore they are fire and forget?
-| models\mongoosePromisified.js | 8 | this opens up a connection immediately when imported.
-| utility\asyncTools.js | 4 | This can't be tested so I'm not sure if it works
+| models\mongoosePromisified.js | 7 | this opens up a connection immediately when imported.
 | utility\stringifyStream.js | 22 | this doesnt work. It needs to break it up into an array of objects
