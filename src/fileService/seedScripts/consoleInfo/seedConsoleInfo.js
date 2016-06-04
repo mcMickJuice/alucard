@@ -1,5 +1,5 @@
-var dbClient = require('./../../data/dbClient');
-var dbRepo = require('./../../data/dbRepository');
+var dbClient = require('./../../../common/data/dbClient');
+var dbRepo = require('./../../../common/data/dbRepository');
 var {dbConfig: {dbName}} = require('../../../common/config');
 var consoleKey = 'consoles';
 var consoleInfo = require('./seedConsoleData.js').consoleData;

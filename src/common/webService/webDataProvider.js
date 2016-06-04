@@ -3,7 +3,7 @@ var webClient = require('./webClient');
 var {romRequestConfig: {cookieString, 
 	downloadLinkSelector, 
 	gameListLinkSelector, 
-	userAgent}} = require('./../common/config');
+	userAgent}} = require('../config');
 var Q = require('q');
 
 function getLinksForConsole(consoleObj) {

@@ -1,10 +1,9 @@
 //var getLinksForConsole = require('../../webDataProvider').getLinksForConsole;
 var Q = require('q');
-var dbClient = require('../../data/dbClient');
-var dbRepo = require('../../data/dbRepository');
-var webDataProvider = require('../../webService/webDataProvider');
+var dbClient = require('../../../common/data/dbClient');
+var dbRepo = require('../../../common/data/dbRepository');
+var webDataProvider = require('../../../common/webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
-// var {dbConfig: {dbName}} = require('../../config');
 
 
 function insertAllGameLinksForConsoles(databaseName) {

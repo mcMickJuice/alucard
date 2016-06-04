@@ -8,6 +8,7 @@ var babelSettings = {
 module.exports = {
 	module: {
 		loaders: [
+			{test: /\.json$/, loader: 'json'},
 			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings}
 		]
 	},

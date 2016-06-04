@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var Q = require('q');
-var {dbConfig: {dbAddress}} = require('../common/config');
+var {dbConfig: {dbAddress}} = require('../config');
 
 function getDbConnection(databaseName) {
     var deferred = Q.defer();
