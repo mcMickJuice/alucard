@@ -1,3 +1,4 @@
 var app = require('./webApp.js');
+var {webPort} = require('../common/config')
 
-app.startServer(3333);
+app.startServer(webPort);

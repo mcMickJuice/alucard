@@ -65,7 +65,7 @@ var frontEndConfig = config(
 	{
 		entry: [
 			//tell webpack to run "inline", i.e. monitor changes in webpack-dev-server, which is running on port 3000
-			'webpack-dev-server/client?http://localhost:3000',
+			//'webpack-dev-server/client?http://localhost:3000',
 			'./src/web/public/app/app.js'
 		],
 		output: {
