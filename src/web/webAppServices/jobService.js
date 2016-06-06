@@ -1,4 +1,4 @@
-var Job = require('./JobState');
+var Job = require('../../common/models/JobState');
 var moment = require('moment');
 
 var timeWindow = moment().startOf('day').add(-1, 'days');

@@ -1,4 +1,4 @@
-var Rom = require('./Rom');
+var Rom = require('../../common/models/Rom');
 
 function searchRoms(searchCriteria) {
     //build up query
