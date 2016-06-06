@@ -1,4 +1,4 @@
-var AuthToken = require('../models/AuthToken');
+var AuthToken = require('./AuthToken');
 
 
 function createAuthToken() {
