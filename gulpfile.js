@@ -97,7 +97,7 @@ var nodeModules = fs.readdirSync('node_modules')
 var webBackendConfig = config({
 	entry: [
 		'webpack/hot/signal.js',
-		'./src/app/main.js'
+		'./src/app/webApp.js'
 	],
 	target: 'node',
 	output: {

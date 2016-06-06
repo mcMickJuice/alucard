@@ -4,7 +4,7 @@ var path = require('path');
 var http = require('http');
 var socketio = require('socket.io');
 var bodyParser = require('body-parser');
-var {servicePort, hostAddress} = require('../common/config');
+var {webPort, servicePort, hostAddress} = require('../common/config');
 var alucardLogger = require('../common/logging/alucardLogger');
 var romSearchService = require('../web/webAppServices/romSearchService');
 var jobService = require('../web/webAppServices/jobService');
@@ -12,7 +12,7 @@ var {postRequest} = require('../common/webService/webClient');
 var serviceMessageTypes = require('../common/enums/serviceMessageTypes');
 var progressType = require('../common/enums/progressTypes');
 var piStatusTypes = require('../common/enums/piStatusTypes');
-var {pingPi}= require('../fileService/fileTransfer/piMonitor');
+var {pingPi} = require('../fileService/fileTransfer/piMonitor');
 
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, './public')));
@@ -20,7 +20,7 @@ var server = http.createServer(app);
 var io = socketio(server);
 
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('something broke!!!');
 });
@@ -47,7 +47,7 @@ app.post('/download', function (req, res) {
     var romId = req.body.romId;
     var options = {
         url: address,
-        body: {romId}
+        body: { romId }
     };
 
     postRequest(options)
@@ -61,21 +61,21 @@ app.post('/search', function (req, res) {
     var {searchCriteria} = req.body;
     romSearchService.searchRoms(searchCriteria)
         .then(roms => {
-            res.send({results: roms});
+            res.send({ results: roms });
         })
 });
 
 app.get('/jobs/current', function (req, res) {
     jobService.getCurrentJobStates()
         .then(jobs => {
-            res.status(200).send({jobs})
+            res.status(200).send({ jobs })
         })
 });
 
 app.get('/jobs', function (req, res) {
     jobService.getAllJobStates()
         .then(jobs => {
-            res.status(200).send({jobs});
+            res.status(200).send({ jobs });
         })
 });
 
@@ -84,7 +84,7 @@ app.get('/jobs/detail/:id', function (req, res) {
 
     jobService.getJobDetail(id)
         .then(detail => {
-            res.status(200).send({detail});
+            res.status(200).send({ detail });
         })
 });
 
@@ -99,25 +99,25 @@ app.post('/download/progress', function (req, res) {
         io.emit(serviceMessageTypes.FILE_PROGRESS, progressInfo)
     } else {
         //unknown progress type, bad service!
-        res.status(400).send({error: 'unknown progress type!'});
+        res.status(400).send({ error: 'unknown progress type!' });
         return;
     }
 
-    res.status(202).send({progressInfo});
+    res.status(202).send({ progressInfo });
 
 });
 
 app.post('/download/complete', function (req, res) {
     var downloadInfo = req.body.downloadInfo;
     //uuid, gameTitle, consoleName
-    res.status(202).send({downloadInfo});
+    res.status(202).send({ downloadInfo });
     io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
 });
 
 app.post('/download/error', function (req, res) {
     var error = req.body.error;
 
-    res.status(202).send({error});
+    res.status(202).send({ error });
     io.emit(serviceMessageTypes.ERROR, error)
 });
 
@@ -125,21 +125,17 @@ app.post('/download/error', function (req, res) {
 function pingPiAndReport() {
     return pingPi()
         .then(isPiActive => {
-            io.emit(piStatusTypes.PING_STATUS, {isPiActive})
+            io.emit(piStatusTypes.PING_STATUS, { isPiActive })
             setTimeout(pingPiAndReport, 10000);
         })
         .catch(err => {
-            console.log('error with pi',err)
+            console.log('error with pi', err)
         })
 }
 
-function startServer(port) {
-    server.listen(port, function () {
-        var message = `alucard web app launched and listening on port ${port}`
-        console.log(message);
-        alucardLogger.info(message)
-        pingPiAndReport();
-    });
-}
-
-module.exports = {startServer};
+server.listen(webPort, function () {
+    var message = `alucard web app launched and listening on port ${webPort}`
+    console.log(message);
+    alucardLogger.info(message)
+    pingPiAndReport();
+});

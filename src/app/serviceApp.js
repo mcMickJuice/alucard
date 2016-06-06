@@ -6,15 +6,6 @@ var port = require('../common/config').servicePort;
 
 app.use(bodyParser.json());
 
-function authorizeServiceRequest(req, res, next) {
-
-
-
-    next();
-}
-
-app.use(authorizeServiceRequest);
-
 app.use(function(err,req,res,next) {
     console.log(err.stack);
 
