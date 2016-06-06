@@ -1,5 +1,5 @@
 //register listeners with socket for app wide notifications
-var messageTypes = require('.././serviceMessageTypes');
+var messageTypes = require('../../../common/enums/serviceMessageTypes');
 
 function appInit(toastr, socketService) {
     socketService.on(messageTypes.ERROR, downloadInfo => {
