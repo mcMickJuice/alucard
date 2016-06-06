@@ -134,7 +134,7 @@ function pingPiAndReport() {
 }
 
 server.listen(webPort, function () {
-    var message = `alucard web app launched and listening on port ${webPort}`
+    var message = `Alucard Web App launched and listening on port ${webPort}`
     console.log(message);
     alucardLogger.info(message)
     pingPiAndReport();
