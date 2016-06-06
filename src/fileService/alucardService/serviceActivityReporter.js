@@ -1,5 +1,5 @@
-var postRequest = require('./webClient').postRequest;
-var {hostAddress, webPort} = require('../common/config');
+var postRequest = require('../../common/webService/webClient').postRequest;
+var {hostAddress, webPort} = require('../../common/config');
 
 var webAddress = `${hostAddress}:${webPort}`;
 var routes = {

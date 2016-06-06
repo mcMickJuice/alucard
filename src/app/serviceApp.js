@@ -1,7 +1,7 @@
 var app = require('express')();
 var bodyParser = require('body-parser');
-var downloadService = require('././alucardDownloadService');
-var reporter = require('./serviceActivityReporter');
+var downloadService = require('../fileService/alucardService/alucardDownloadService');
+var reporter = require('../fileService/alucardService/serviceActivityReporter');
 var port = require('../common/config').servicePort;
 
 app.use(bodyParser.json());

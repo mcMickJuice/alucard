@@ -1,5 +1,5 @@
-var moveFile = require('./fileTransfer').moveFile;
-var {fileProcessingConfig: {basePiPath}} = require('../common/config');
+var {moveFile} = require('./fileTransfer');
+var {fileProcessingConfig: {basePiPath}} = require('../../common/config');
 var Q = require('q');
 var path = require('path');
 

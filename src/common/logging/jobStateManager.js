@@ -1,5 +1,5 @@
 var JobState = require('../models/JobState');
-var logger = require('alucardLogger');
+var logger = require('../logging/alucardLogger');
 var Q = require('q');
 var phase = require('../enums/filePhaseType');
 

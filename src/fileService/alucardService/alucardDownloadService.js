@@ -1,14 +1,14 @@
-var keyGen = require('./../utility/keyGenerator');
-var Rom = require('././Rom');
-var jobStateManager = require('././jobStateManager');
-var webDataProvider = require('./webDataProvider');
-var downloadGame = require('././downloadManager').downloadGame;
-var romHost = require('./../secrets/romRequestConfig').romHost;
+var keyGen = require('../../common/utility/keyGenerator');
+var Rom = require('../../common/models/Rom');
+var jobStateManager = require('../../common/logging/jobStateManager');
+var webDataProvider = require('../../common/webService/webDataProvider');
+var downloadGame = require('../download/downloadManager').downloadGame;
+var {romRequestConfig: {romHost}} = require('../../common/config');
 var Q = require('q');
-var fileProcessor = require('././fileProcessManager');
-var fileTransferManager = require('././fileTransferManager');
-var progressTypes  = require('./progressTypes');
-var phase = require('./filePhaseType');
+var fileProcessor = require('../fileProcessing/fileProcessManager');
+var fileTransferManager = require('../fileTransfer/fileTransferManager');
+var progressTypes  = require('../../common/enums/progressTypes');
+var phase = require('../../common/enums/filePhaseType');
 
 var stateChange = progressTypes.STATE_CHANGE;
 var fileProcess = progressTypes.TRANSFER_PROGRESS;

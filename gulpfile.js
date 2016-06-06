@@ -20,19 +20,19 @@ var destination = './dist';
 var public = '/public';
 
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
 	//clear out all distribution folder
 	return del(destination);
 });
 
-gulp.task('clean-static', function() {
+gulp.task('clean-static', function () {
 	return del(destination + public);
 });
 
 /*Webpack settings*/
-var deepMerge = DeepMerge(function(target, source, key) {
-	if(target instanceof Array){
-		return [].concat(target,source);
+var deepMerge = DeepMerge(function (target, source, key) {
+	if (target instanceof Array) {
+		return [].concat(target, source);
 	}
 
 	return source;
@@ -47,7 +47,7 @@ var babelSettings = {
 var baseWebpackConfig = {
 	module: {
 		loaders: [
-			{test: /\.js$/, exclude: thirdParty ,loader: 'babel', query: babelSettings}
+			{ test: /\.js$/, exclude: thirdParty, loader: 'babel', query: babelSettings }
 		]
 	},
 	debug: true,
@@ -75,14 +75,14 @@ var frontEndConfig = config(
 		},
 		resolve: {
 			alias: {
-				toastr_css: path.join(__dirname,'node_modules/angular-toastr/dist/angular-toastr.min.css')
+				toastr_css: path.join(__dirname, 'node_modules/angular-toastr/dist/angular-toastr.min.css')
 			}
 		},
 		module: {
 			loaders: [
-				{test: /\.css$/, exclude: thirdParty,loader: 'style!css'},
-				{test: /\.less$/, exclude: thirdParty, loader: 'style!css!less'},
-				{test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text'}
+				{ test: /\.css$/, exclude: thirdParty, loader: 'style!css' },
+				{ test: /\.less$/, exclude: thirdParty, loader: 'style!css!less' },
+				{ test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text' }
 			]
 		}
 	}
@@ -90,9 +90,41 @@ var frontEndConfig = config(
 
 //backend
 var nodeModules = fs.readdirSync('node_modules')
-	.filter(function(x) {
+	.filter(function (x) {
 		return ['bin'].indexOf(x) === -1;
 	});
+
+var fileServiceConfig = config({
+	entry: [
+		'webpack/hot/signal.js',
+		'./src/app/serviceApp.js'
+	],
+	target: 'node',
+	output: {
+		path: path.join(__dirname, 'dist'),
+		filename: 'fileService.js'
+	},
+	node: {
+		__dirname: false,
+		__filename: true
+	},
+	externals: [
+		function (context, request, callback) {
+			var pathStart = request.split('/')[0];
+			if (nodeModules.indexOf(pathStart) >= 0 && request != 'webpack/hot/signal.js') {
+				return callback(null, 'commonjs ' + request);
+			}
+
+			callback();
+		}
+	],
+	recordsPath: path.join(__dirname, 'dist/_records'),
+	plugins: [
+		new webpack.BannerPlugin('require("source-map-support").install();',
+			{ raw: true, entryOnly: false }),
+		new webpack.HotModuleReplacementPlugin({ quiet: true })
+	]
+})
 
 var webBackendConfig = config({
 	entry: [
@@ -109,9 +141,9 @@ var webBackendConfig = config({
 		__filename: true
 	},
 	externals: [
-		function(context, request, callback) {
+		function (context, request, callback) {
 			var pathStart = request.split('/')[0];
-			if(nodeModules.indexOf(pathStart) >= 0 && request != 'webpack/hot/signal.js') {
+			if (nodeModules.indexOf(pathStart) >= 0 && request != 'webpack/hot/signal.js') {
 				return callback(null, 'commonjs ' + request);
 			}
 
@@ -123,35 +155,35 @@ var webBackendConfig = config({
 		new webpack.IgnorePlugin(/.(css|less|tmpl.html)$/),
 		new webpack.BannerPlugin('require("source-map-support").install();',
 			{ raw: true, entryOnly: false }),
-		new webpack.HotModuleReplacementPlugin({quiet: true})
+		new webpack.HotModuleReplacementPlugin({ quiet: true })
 	]
 });
 
 function onBuild(done) {
-	return function(err) {
-		if(err) {
+	return function (err) {
+		if (err) {
 			console.log('Error', err);
 		}
 		else {
 			console.log('Webpack finished!')
 		}
 
-		if(done) {
+		if (done) {
 			done();
 		}
 	}
 }
 
-gulp.task('frontend-build', function(done) {
+gulp.task('frontend-build', function (done) {
 	webpack(frontEndConfig).run(onBuild(done));
 });
 
-gulp.task('frontend-watch', function(){
+gulp.task('frontend-watch', function () {
 	new WebPackDevServer(webpack(frontEndConfig), {
 		publicPath: frontEndConfig.output.publicPath,
 		stats: 'errors-only'
-	}).listen(3000, 'localhost', function(err) {
-		if(err) {
+	}).listen(3000, 'localhost', function (err) {
+		if (err) {
 			console.log(err);
 		}
 		else {
@@ -160,14 +192,14 @@ gulp.task('frontend-watch', function(){
 	})
 });
 
-gulp.task('backend-build', function(done) {
+gulp.task('web-backend-build', function (done) {
 	webpack(webBackendConfig).run(onBuild(done));
 });
 
-gulp.task('backend-watch', function(done) {
+gulp.task('web-backend-watch', function (done) {
 	var firedDone = false;
-	webpack(webBackendConfig).watch(100, function() {
-		if(!firedDone) {
+	webpack(webBackendConfig).watch(100, function () {
+		if (!firedDone) {
 			firedDone = true;
 			done();
 		}
@@ -176,20 +208,24 @@ gulp.task('backend-watch', function(done) {
 	})
 });
 
-gulp.task('move-static', function() {
+gulp.task('file-service-build', function (done) {
+	webpack(fileServiceConfig).run(onBuild(done))
+})
+
+gulp.task('move-static', function () {
 	return gulp.src([staticGlob, '!./src/web/public/**/*.js', '!./src/web/public/app/**/*'])
 		.pipe(gulp.dest(destination + '/public'))
 });
 
-gulp.task('generate-todo', function() {
+gulp.task('generate-todo', function () {
 	return gulp.src(jsSourceGlob)
 		.pipe(todo())
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('build', ['frontend-build', 'backend-build', 'move-static']);
+gulp.task('build', ['frontend-build', 'web-backend-build', 'move-static']);
 
-gulp.task('lint', function() {
+gulp.task('lint', function () {
     //TODO this needs to be improved. subsequent tasks still execute
     function errorHandler(err) {
         console.log('failure in pipe', err);
@@ -203,11 +239,11 @@ gulp.task('lint', function() {
 		.pipe(eslint.failAfterError());
 });
 
-gulp.task('watch-lint', ['lint'], function() {
+gulp.task('watch-lint', ['lint'], function () {
 	gulp.watch(allJs, ['lint']);
 });
 
-gulp.task('watch', ['frontend-watch', 'backend-watch', 'move-static'], function() {
+gulp.task('watch', ['frontend-watch', 'web-backend-watch', 'move-static'], function () {
 	nodemon({
 		execMap: {
 			js: 'node'
@@ -216,7 +252,7 @@ gulp.task('watch', ['frontend-watch', 'backend-watch', 'move-static'], function(
 		ignore: ['*'],
 		watch: ['foo/'],
 		ext: 'noop'
-	}).on('restart', function() {
+	}).on('restart', function () {
 		console.log('Patched!');
 	});
 });
