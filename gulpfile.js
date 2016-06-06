@@ -70,7 +70,7 @@ var frontEndConfig = config(
 		],
 		output: {
 			path: path.join(__dirname, 'dist', 'public'), //path where file is placed when packed
-			publicPath: 'http://localhost:3333/dist', //path where this file is available if requested
+			publicPath: 'http://localhost:3333/', //path where this file is available if requested
 			filename: 'frontend.js' //name of output file
 		},
 		resolve: {
@@ -188,7 +188,6 @@ gulp.task('generate-todo', function() {
 });
 
 gulp.task('build', ['frontend-build', 'backend-build', 'move-static']);
-gulp.task('watch', ['frontend-watch', 'backend-watch']);
 
 gulp.task('lint', function() {
     //TODO this needs to be improved. subsequent tasks still execute
@@ -208,7 +207,7 @@ gulp.task('watch-lint', ['lint'], function() {
 	gulp.watch(allJs, ['lint']);
 });
 
-gulp.task('run', ['frontend-watch', 'backend-watch'], function() {
+gulp.task('watch', ['frontend-watch', 'backend-watch', 'move-static'], function() {
 	nodemon({
 		execMap: {
 			js: 'node'

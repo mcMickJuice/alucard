@@ -6,7 +6,8 @@
   "scripts": {
     "seed-database": "babel-node ./src/fileService/seedScripts/seedScript.js",
     "run-service": "gulp backend-build&&set PORT=666&&node ./dist/backend.js",
-    "run-web": "gulp build&&node ./dist/backend.js"
+    "watch-web": "gulp clean&&gulp watch",
+    "build-web": "gulp clean&&gulp build"
   },
   "author": "mcMickJuice",
   "license": "ISC",

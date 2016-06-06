@@ -15,7 +15,7 @@ var piStatusTypes = require('../common/enums/piStatusTypes');
 var {pingPi}= require('../fileService/fileTransfer/piMonitor');
 
 app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, '../static')));
+app.use(express.static(path.resolve(__dirname, './public')));
 var server = http.createServer(app);
 var io = socketio(server);
 
@@ -132,12 +132,6 @@ function pingPiAndReport() {
             console.log('error with pi',err)
         })
 }
-
-//server.listen(webPort, function () {
-//    var message = `alucard web app launched and listening on port ${webPort}`
-//    console.log(message);
-//    alucardLogger.info(message)
-//});
 
 function startServer(port) {
     server.listen(port, function () {

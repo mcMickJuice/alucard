@@ -1,7 +1,7 @@
 module.exports = {
     hostAddress: process.env.HOST || 'http://localhost',
     webPort: process.env.PORT || 3333,
-    servicePort: process.env.PORT || 666,
+    servicePort: process.env.SERVICE_PORT || 666,
     baseOutputDir: process.env.OUTPUT_DIR || 'c://temp/alucard',
     romFileDir: process.env.ROM_DIR || 'roms',
     logFileDir: process.env.LOG_DIR || 'logs',
