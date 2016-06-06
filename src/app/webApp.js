@@ -128,9 +128,10 @@ function pingPiAndReport() {
             io.emit(piStatusTypes.PING_STATUS, {isPiActive})
             setTimeout(pingPiAndReport, 10000);
         })
+        .catch(err => {
+            console.log('error with pi',err)
+        })
 }
-
-pingPiAndReport();
 
 //server.listen(webPort, function () {
 //    var message = `alucard web app launched and listening on port ${webPort}`
@@ -143,6 +144,7 @@ function startServer(port) {
         var message = `alucard web app launched and listening on port ${port}`
         console.log(message);
         alucardLogger.info(message)
+        pingPiAndReport();
     });
 }
 

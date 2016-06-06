@@ -1,7 +1,7 @@
 module.exports = {
-    hostAddress: process.env.HOST || 'localhost',
-    webPort: process.env.PORT || 6778,
-    servicePort: process.env.PORT || 6777,
+    hostAddress: process.env.HOST || 'http://localhost',
+    webPort: process.env.PORT || 3333,
+    servicePort: process.env.PORT || 666,
     baseOutputDir: process.env.OUTPUT_DIR || 'c://temp/alucard',
     romFileDir: process.env.ROM_DIR || 'roms',
     logFileDir: process.env.LOG_DIR || 'logs',
@@ -10,14 +10,16 @@ module.exports = {
         dbName: process.env.DB_NAME || 'alucard'     
     },
     fileProcessingConfig: {
-        basePiPath: process.env.PI_PATH || 'c://pi', //TODO
-        sshPort: '', //TODO update to actual port
-        piIpAddress: '' //TODO update to actual IP
+        basePiPath: process.env.PI_PATH || '/home/pi/RetroPie/roms/',
+        sshPort: '22',
+        piIpAddress: process.env.PI_IP_ADDRESS || '192.168.1.177',
+        piPassword: process.env.PI_PW,
+        piUsername: process.env.PI_USER
     },
     romRequestConfig: {
-        cookieString: '', 
-        downloadLinkSelector: '', 
-        gameListLinkSelector: '.gamelist', 
-        userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+        cookieString: 'downloadcaptcha= 1; refexception= 1', 
+        downloadLinkSelector: '#download-link', 
+        gameListLinkSelector: 'a.index.gamelist', 
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
     }
 }
