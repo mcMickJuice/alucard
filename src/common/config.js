@@ -17,6 +17,7 @@ module.exports = {
         piUsername: process.env.PI_USER
     },
     romRequestConfig: {
+        romHost: '',
         cookieString: 'downloadcaptcha= 1; refexception= 1', 
         downloadLinkSelector: '#download-link', 
         gameListLinkSelector: 'a.index.gamelist', 

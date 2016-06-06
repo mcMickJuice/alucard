@@ -208,9 +208,7 @@ gulp.task('web-backend-watch', function (done) {
 	})
 });
 
-gulp.task('file-service-build', function (done) {
-	webpack(fileServiceConfig).run(onBuild(done))
-})
+
 
 gulp.task('move-static', function () {
 	return gulp.src([staticGlob, '!./src/web/public/**/*.js', '!./src/web/public/app/**/*'])
@@ -223,7 +221,11 @@ gulp.task('generate-todo', function () {
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('build', ['frontend-build', 'web-backend-build', 'move-static']);
+gulp.task('build-web', ['frontend-build', 'web-backend-build', 'move-static']);
+
+gulp.task('build-file-service', function (done) {
+	webpack(fileServiceConfig).run(onBuild(done))
+})
 
 gulp.task('lint', function () {
     //TODO this needs to be improved. subsequent tasks still execute
