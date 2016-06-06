@@ -45,7 +45,7 @@ function getDownloadLink(gameUrl) {
 
 	return webClient.getRequestBody(requestObj)
     .then(html => {
-        var link = parser(html,downloadLinkSelector, mapLink)[0];
+        var link = parseHtmlAndMap(html,downloadLinkSelector, mapLink)[0];
         return link;
     });
 }

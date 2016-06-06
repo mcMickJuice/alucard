@@ -15,7 +15,7 @@ function log(message, level){
         if(err) {
             errLog(err);
         }
-        var env = process.env.NODE_ENV;
+        var env = process.env.NODE_ENV || 'development';
         var filePath = path.join(logPath, `log-${env}.txt`);
 
         message = `${level} - ${Date()}: ${message}\r\n`;

@@ -17,7 +17,7 @@ module.exports = {
         piUsername: process.env.PI_USER
     },
     romRequestConfig: {
-        romHost: '',
+        romHost: 'http://www.emuparadise.me',
         cookieString: 'downloadcaptcha= 1; refexception= 1', 
         downloadLinkSelector: '#download-link', 
         gameListLinkSelector: 'a.index.gamelist', 
