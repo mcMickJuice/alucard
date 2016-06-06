@@ -14,7 +14,7 @@ var fs = require('fs');
 
 
 var jsSourceGlob = './src/!(public)/*.js';
-var staticGlob = './src/public/**';
+var staticGlob = './src/web/public/**';
 var allJs = './src/**/*.js';
 var destination = './dist';
 var public = '/public';
@@ -66,10 +66,10 @@ var frontEndConfig = config(
 		entry: [
 			//tell webpack to run "inline", i.e. monitor changes in webpack-dev-server, which is running on port 3000
 			'webpack-dev-server/client?http://localhost:3000',
-			'./src/public/app/app.js'
+			'./src/web/public/app/app.js'
 		],
 		output: {
-			path: path.join(__dirname, 'static/dist'), //path where file is placed when packed
+			path: path.join(__dirname, 'dist', 'public'), //path where file is placed when packed
 			publicPath: 'http://localhost:3333/dist', //path where this file is available if requested
 			filename: 'frontend.js' //name of output file
 		},
@@ -177,7 +177,7 @@ gulp.task('backend-watch', function(done) {
 });
 
 gulp.task('move-static', function() {
-	return gulp.src([staticGlob, '!./src/public/**/*.js', '!./src/public/app/**/*'])
+	return gulp.src([staticGlob, '!./src/web/public/**/*.js', '!./src/web/public/app/**/*'])
 		.pipe(gulp.dest(destination + '/public'))
 });
 
@@ -187,7 +187,7 @@ gulp.task('generate-todo', function() {
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('build', ['frontend-build', 'backend-build']);
+gulp.task('build', ['frontend-build', 'backend-build', 'move-static']);
 gulp.task('watch', ['frontend-watch', 'backend-watch']);
 
 gulp.task('lint', function() {
