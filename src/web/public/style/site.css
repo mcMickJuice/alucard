@@ -3,6 +3,10 @@
     margin: auto;
 }
 
+.content {
+        margin-top: 10px;
+}
+
 /*toastr overrides*/
 .toast-success {
     background-color: #42E55A !important;
