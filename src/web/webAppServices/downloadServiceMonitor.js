@@ -15,13 +15,11 @@ function pingService(callback,interval) {
 }
 
 function requestServiceStatus (callback) {
-    var url = `${hostAddress}:${servicePort}`; 
-    console.log(url)
+    var url = `${hostAddress}:${servicePort}/ping`; 
 
     request.get(url)
         .on('response', function(err, res) {
         if(err){
-            console.log('an error occurred in ping', err);
             callback(false, err);
             return
         }
