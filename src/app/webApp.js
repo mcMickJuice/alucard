@@ -12,7 +12,7 @@ var {postRequest} = require('../common/webService/webClient');
 var serviceMessageTypes = require('../common/enums/serviceMessageTypes');
 var progressType = require('../common/enums/progressTypes');
 var piStatusTypes = require('../common/enums/piStatusTypes');
-var {pingPi} = require('../fileService/fileTransfer/piMonitor');
+var {pingService} = require('../web/webAppServices/downloadServiceMonitor')
 
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, './public')));
@@ -122,20 +122,17 @@ app.post('/download/error', function (req, res) {
 });
 
 //TODO pull pinging Pi into separate file
-function pingPiAndReport() {
-    return pingPi()
-        .then(isPiActive => {
-            io.emit(piStatusTypes.PING_STATUS, { isPiActive })
-            setTimeout(pingPiAndReport, 10000);
-        })
-        .catch(err => {
-            console.log('error with pi', err)
-        })
+function pingServiceAndReport() {
+    function onServiceResponse(isUp, info) {
+        io.emit(piStatusTypes.PING_STATUS, {isUp});
+    }
+
+    pingService(onServiceResponse, 10000);
 }
 
 server.listen(webPort, function () {
     var message = `Alucard Web App launched and listening on port ${webPort}`
     console.log(message);
     alucardLogger.info(message)
-    pingPiAndReport();
+    pingServiceAndReport();
 });
