@@ -22,6 +22,8 @@ function moveFileToPi(localPath, consolePath, reporter) {
     return deferred.promise;
 }
 
+//TODO move File, pingable, storeStatus, currentRoms, piUpStatus
+
 ////TODO add these features
 //function moveFileToBackup(tempPath, destinationPath) {
 //    throw new Error(`${moveFileToBackup} not yet implemented`);
