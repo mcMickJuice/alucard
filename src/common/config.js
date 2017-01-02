@@ -12,7 +12,7 @@ module.exports = {
     fileProcessingConfig: {
         basePiPath: process.env.PI_PATH || '/home/pi/RetroPie/roms/',
         sshPort: '22',
-        piIpAddress: process.env.PI_IP_ADDRESS || '192.168.1.177',
+        piIpAddress: process.env.PI_IP_ADDRESS,
         piPassword: process.env.PI_PW,
         piUsername: process.env.PI_USER
     },

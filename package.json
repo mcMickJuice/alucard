@@ -10,7 +10,8 @@
     "run-all": "npm run build-all&&concurrent \"node dist/backend\" \"node dist/fileService\"",
     "debug-web": "babel-node --debug ./src/app/webApp.js",
     "run-web": "set NODE_ENV=development&&node web-dev-server.js",
-    "run-web-alucard": "set NODE_ENV=development&&set MOUNT_PATH=/alucard&&node web-dev-server.js"
+    "run-web-alucard": "set NODE_ENV=development&&set MOUNT_PATH=/alucard&&node web-dev-server.js",
+    "run-service": "set NODE_ENV=development&&set PI_IP_ADDRESS=192.168.1.21&&set PI_PW=MJHouse2016!?&&set PI_USER=pi&&set PORT=666&&node service-dev-server.js"
   },
   "author": "mcMickJuice",
   "license": "ISC",

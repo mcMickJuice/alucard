@@ -16,23 +16,16 @@ function moveFileToPi(localPath, consolePath, reporter) {
     }
 
     var fileName = path.parse(localPath).base;
-    var destinationPath = path.join(basePiPath,consolePath, fileName);
+
+    //ensure forward slashes so that file copy to linux works correctly
+    //TODO have this detail be in the moveFile/fileTransfer implementation
+    //should be file system agnostic
+    var destinationPath = basePiPath + consolePath + '/' + fileName; 
     moveFile(localPath, destinationPath, reporter, onCompletion);
 
     return deferred.promise;
 }
 
-////TODO add these features
-//function moveFileToBackup(tempPath, destinationPath) {
-//    throw new Error(`${moveFileToBackup} not yet implemented`);
-//}
-//
-//function removeFileFromPi(consolePath, file) {
-//    throw new Error(`${removeFileFromPi} not yet implemented`);
-//}
-
 module.exports = {
     moveFileToPi
-    //moveFileToBackup,
-    //removeFileFromPi
 }

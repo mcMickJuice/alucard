@@ -14,7 +14,7 @@ function romService($http, buildApiUrl) {
 
     function downloadGame(rom) {
         var romId = rom._id;
-        var url = buildApiUrl(download);
+        var url = buildApiUrl('download');
         return $http.post(url, {romId})
             .then(() => {
                 //TODO notify
