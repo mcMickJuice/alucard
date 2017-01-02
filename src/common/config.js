@@ -1,17 +1,18 @@
 module.exports = {
-    hostAddress: process.env.HOST || 'http://localhost',
-    webPort: process.env.PORT || 3333,
-    servicePort: process.env.SERVICE_PORT || 666,
-    baseOutputDir: process.env.OUTPUT_DIR || 'c://temp/alucard',
-    romFileDir: process.env.ROM_DIR || 'roms',
-    logFileDir: process.env.LOG_DIR || 'logs',
+    hostAddress: process.env.HOST,
+    webPort: process.env.PORT,
+    servicePort: process.env.SERVICE_PORT,
+    serviceMount: process.env.SERVICE_MOUNT,
+    baseOutputDir: process.env.OUTPUT_DIR,
+    romFileDir: process.env.ROM_DIR,
+    logFileDir: process.env.LOG_DIR,
     dbConfig: {
-        dbAddress: process.env.DB_ADDRESS || '192.168.33.10:27017',
-        dbName: process.env.DB_NAME || 'alucard'     
+        dbAddress: process.env.DB_ADDRESS,
+        dbName: process.env.DB_NAME   
     },
     fileProcessingConfig: {
-        basePiPath: process.env.PI_PATH || '/home/pi/RetroPie/roms/',
-        sshPort: '22',
+        basePiPath: process.env.PI_PATH,
+        sshPort: process.env.SSH_PORT,
         piIpAddress: process.env.PI_IP_ADDRESS,
         piPassword: process.env.PI_PW,
         piUsername: process.env.PI_USER

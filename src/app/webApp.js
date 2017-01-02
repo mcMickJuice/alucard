@@ -155,8 +155,6 @@ var staticPath = path.resolve(__dirname, '../web/static');
 console.log(staticPath);
 app.use(express.static(staticPath))
 
-
-
 if(process.env.NODE_ENV === 'development') {
     webpackMiddleware(app);
 } 

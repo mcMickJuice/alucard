@@ -4,7 +4,7 @@ var path = require('path');
 // var http = require('http');
 // var socketio = require('socket.io');
 var bodyParser = require('body-parser');
-var {webPort, servicePort, hostAddress} = require('../common/config');
+var {webPort, servicePort, hostAddress, serviceMount} = require('../common/config');
 // var alucardLogger = require('../common/logging/alucardLogger');
 var romSearchService = require('../web/webAppServices/romSearchService');
 var jobService = require('../web/webAppServices/jobService');
@@ -45,7 +45,8 @@ router.get('/health', function (req, res) {
 });
 
 router.post('/download', function (req, res) {
-    var address = `${hostAddress}:${servicePort}/download`;
+    var address = `${hostAddress}:${servicePort}${serviceMount}/download`;
+    console.log(address)
     var romId = req.body.romId;
     var options = {
         url: address,

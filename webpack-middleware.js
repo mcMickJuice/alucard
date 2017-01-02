@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     app.use(webpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath,
-        // quiet: true,
+        quiet: true,
         stats: { colors: true }
     }))
 }
