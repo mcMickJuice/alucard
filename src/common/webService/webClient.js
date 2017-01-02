@@ -1,12 +1,8 @@
 var request = require('request')
 var Q = require('q');
 var bhttp = require('bhttp');
-//var proxyAddress = require('./secrets/config').proxyAddress;
 
 function getRequestBody(options) {
-
-    //options.proxy = proxyAddress;
-
     var deferred = Q.defer();
 
     request(options, function (err, res, body) {
