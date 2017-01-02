@@ -1,7 +1,8 @@
-function romService($http) {
+function romService($http, buildApiUrl) {
     function searchGame(searchCriteria) {
         //TODO put endpoint in configuration
-        return $http.post('http://localhost:3333/search', {searchCriteria})
+    var url = buildApiUrl('search');
+        return $http.post(url, {searchCriteria})
             .then(({data}) => {
                 return data.results || [];
             })
@@ -13,8 +14,8 @@ function romService($http) {
 
     function downloadGame(rom) {
         var romId = rom._id;
-
-        return $http.post('http://localhost:3333/download', {romId})
+        var url = buildApiUrl(download);
+        return $http.post(url, {romId})
             .then(() => {
                 //TODO notify
                 return {isSuccessful: true};

@@ -1,6 +1,3 @@
-/**
- * Created by MJ on 1/15/2016.
- */
 var angular = require('angular');
 var searchComponent = require('./components/search/search.component.js');
 var jobsComponent = require('./components/jobs/jobs.component.js');
@@ -67,4 +64,12 @@ angular
                 template: '<alucard-status></alucard-status>'
             })
     })
+    .value('baseApiUrl', '/alucard/api/') //grab from injected variable?
+    .service('buildApiUrl', function(baseApiUrl) {
+        function buildUrl(path) {
+            return baseApiUrl + path;
+        }
+
+        return buildUrl;
+    }) 
     .run(appInit);

@@ -141,11 +141,12 @@
 // });
 
 var express = require('express');
-var webAppRouter = require('../web/app')
+var apiRouter = require('../web/app')
 var {webPort} = require('../common/config');
 var bodyParser = require('body-parser');
 var webpackMiddleware = require('../../webpack-middleware');
 var path = require('path');
+var mountPath = '/alucard' //come from config
 
 var app = express();
 
@@ -158,12 +159,11 @@ app.use(express.static(staticPath))
 
 if(process.env.NODE_ENV === 'development') {
     webpackMiddleware(app);
-    app.use('/', webAppRouter);
-} else {
-    app.use('/alucard', webAppRouter)
-}
+} 
 
-app.get('/', (req, res) => {
+app.use(mountPath + '/api', apiRouter)
+
+app.get(mountPath, (req, res) => {
     var indexPath = path.resolve(__dirname,'../web/index.html');
     res.sendFile(indexPath)
 })
