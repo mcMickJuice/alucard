@@ -128,7 +128,6 @@ var fileServiceConfig = config({
 
 var webBackendConfig = config({
 	entry: [
-		'webpack/hot/signal.js',
 		'./src/app/webApp.js'
 	],
 	target: 'node',

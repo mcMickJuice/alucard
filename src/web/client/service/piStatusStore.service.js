@@ -1,4 +1,4 @@
-var {PING_STATUS} = require('../../../../common/enums/piStatusTypes');
+var {PING_STATUS} = require('../../../common/enums/piStatusTypes');
 
 function piStatusStore($rootScope,socketService){
     socketService.on(PING_STATUS, ({isPiActive}) => {

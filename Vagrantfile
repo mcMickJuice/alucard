@@ -17,8 +17,6 @@ Vagrant.configure(2) do |config|
   # config.vm.provision "docker", images: ["mongo", "davidkelley/riemann", "davidkelley/riemann-dash"]
   config.vm.provision "docker" do |d|
     d.run "mongo", args: "-p 27017:27017", name: "mongodb"
-    # d.run "davidkelley/riemann", args: "-p 5555:5555 -p 5555:5555/udp -p 5556:5556", name: "riemann"
-    # d.run "davidkelley/riemann-dash", args: "-p 4567:4567", name: "riemann-dash"
   end
 
 

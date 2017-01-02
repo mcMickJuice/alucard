@@ -1,6 +1,6 @@
 var angular = require('angular');
 var toastr = require('angular-toastr');
-require('toastr_css');
+require('style!css!toastr_css');
 
 /* eslint-disable */
 var ngAnimate = require('angular-animate');

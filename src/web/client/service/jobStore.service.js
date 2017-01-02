@@ -1,4 +1,4 @@
-var serviceMessageTypes = require('../../../../common/enums/serviceMessageTypes');
+var serviceMessageTypes = require('../../../common/enums/serviceMessageTypes');
 var _ = require('lodash');
 
 function jobStore(socketService, $rootScope, jobService) {
