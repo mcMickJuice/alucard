@@ -18,7 +18,6 @@ function insertAllGameLinksForConsoles(databaseName) {
         return dbRepo.getCollection(dbConnection, consoleCollectionKey)
     })
     .then(consoles => {
-        console.log(consoles)
                return Q.all(consoles.map(c => {
                    return insertLinksForConsole(dbConnection,c);
                }))

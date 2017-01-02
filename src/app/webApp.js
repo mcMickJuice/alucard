@@ -157,23 +157,15 @@ app.use(express.static(staticPath))
 
 
 if(process.env.NODE_ENV === 'development') {
-    //use webpack hot
-
-    //
-    console.log('webpack middleware')
     webpackMiddleware(app);
-app.use('/*', webAppRouter);
-    
+    app.use('/', webAppRouter);
 } else {
     app.use('/alucard', webAppRouter)
 }
 
 app.get('/', (req, res) => {
     var indexPath = path.resolve(__dirname,'../web/index.html');
-    console.log('request to index', req.path)
     res.sendFile(indexPath)
 })
-
-//mount on alucard route for hosting
 
 app.listen(webPort, () => console.log(`Web app listening on ${webPort}`));
