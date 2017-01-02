@@ -64,10 +64,10 @@ angular
                 template: '<alucard-status></alucard-status>'
             })
     })
-    .value('baseApiUrl', '/alucard/api/') //grab from injected variable?
-    .service('buildApiUrl', function(baseApiUrl) {
+    .value('baseUrl', window._alucardBaseUrl) //injected in index.pug template
+    .service('buildApiUrl', function(baseUrl) {
         function buildUrl(path) {
-            return baseApiUrl + path;
+            return `${baseUrl}/api/${path}`;
         }
 
         return buildUrl;

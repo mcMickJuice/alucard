@@ -9,7 +9,8 @@
     "build-all": "gulp clean&&gulp build-web&&gulp build-file-service",
     "run-all": "npm run build-all&&concurrent \"node dist/backend\" \"node dist/fileService\"",
     "debug-web": "babel-node --debug ./src/app/webApp.js",
-    "run-web": "set NODE_ENV=development&&node web-dev-server.js"
+    "run-web": "set NODE_ENV=development&&node web-dev-server.js",
+    "run-web-alucard": "set NODE_ENV=development&&set MOUNT_PATH=/alucard&&node web-dev-server.js"
   },
   "author": "mcMickJuice",
   "license": "ISC",
@@ -59,6 +60,7 @@
     "moment": "^2.11.1",
     "mongodb": "^2.1.2",
     "mongoose": "^4.3.4",
+    "pug": "^2.0.0-beta6",
     "q": "^1.4.1",
     "request": "^2.65.0",
     "socket.io": "^1.4.4",
