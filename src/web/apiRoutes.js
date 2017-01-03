@@ -12,7 +12,7 @@ var {postRequest} = require('../common/webService/webClient');
 var serviceMessageTypes = require('../common/enums/serviceMessageTypes');
 var progressType = require('../common/enums/progressTypes');
 var piStatusTypes = require('../common/enums/piStatusTypes');
-var {pingPi} = require('../fileService/fileTransfer/piMonitor');
+// var {pingPi} = require('../fileService/fileTransfer/piMonitor');
 
 // app.use(bodyParser.json());
 // app.use(express.static(path.resolve(__dirname, './public')));

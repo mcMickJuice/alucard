@@ -1,8 +1,8 @@
 //var getLinksForConsole = require('../../webDataProvider').getLinksForConsole;
 var Q = require('q');
-var dbClient = require('../../../common/data/dbClient');
-var dbRepo = require('../../../common/data/dbRepository');
-var webDataProvider = require('../../../common/webService/webDataProvider');
+var dbClient = require('../../common/data/dbClient');
+var dbRepo = require('../../common/data/dbRepository');
+var webDataProvider = require('../../common/webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
 
 

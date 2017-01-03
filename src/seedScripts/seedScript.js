@@ -1,6 +1,6 @@
 var seedConsoleInfo = require('./consoleInfo/seedConsoleInfo');
 var seedGameLinks = require('./romInfo/seedGameLinks');
-var {dbConfig: {dbName}} = require('../../common/config');
+var {dbConfig: {dbName}} = require('../common/config');
 
 console.log('starting seed')
 seedConsoleInfo(dbName)

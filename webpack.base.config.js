@@ -14,7 +14,7 @@ var config = {
 			'./src/web/client/app.js'
 		],
     output: {
-        path: path.join(__dirname, 'dist', 'public'), //path where file is placed when packed
+        path: path.join(__dirname, 'dist', 'web'), //path where file is placed when packed
 		publicPath: "/", //path where this file is available if requested
         filename: 'bundle.js' //name of output file
     },

@@ -4,13 +4,10 @@
   "description": "Video game rom mover and web app",
   "main": "./dist/index.js",
   "scripts": {
-    "seed-database": "babel-node ./src/fileService/seedScripts/seedScript.js",
-    "build-web": "gulp clean&&gulp build-web",
-    "build-all": "gulp clean&&gulp build-web&&gulp build-file-service",
-    "run-all": "npm run build-all&&concurrent \"node dist/backend\" \"node dist/fileService\"",
-    "debug-web": "babel-node --debug ./src/app/webApp.js",
     "run-web": "set NODE_ENV=development&&set DB_ADDRESS=192.168.33.10:27017&&node web-dev-server.js",
-    "run-service": "set NODE_ENV=development&&set DB_ADDRESS=192.168.33.10:27017&&node service-dev-server.js"
+    "run-service": "set NODE_ENV=development&&set DB_ADDRESS=192.168.33.10:27017&&node service-dev-server.js",
+    "bundle-client-prod": "set NODE_ENV=production&&webpack --config webpack-prod.config.js",
+    "build-web": "npm run bundle-client-prod&&gulp bundle-common&&gulp bundle-web"
   },
   "author": "mcMickJuice",
   "license": "ISC",

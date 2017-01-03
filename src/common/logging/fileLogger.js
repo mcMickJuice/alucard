@@ -1,5 +1,5 @@
 var fs = require('fs');
-var {baseOutputDir, logFileDir} = require('../../common/config');
+// var {baseOutputDir, logFileDir} = require('../../common/config');
 var path = require('path');
 var levels = require('./logConfig').levels;
 var {ensureDirectory} = require('../utility/fileSystemHelpers');
@@ -10,7 +10,8 @@ function errLog(err) {
 }
 
 function log(message, level){
-    var logPath = path.join(baseOutputDir, logFileDir);
+    // var logPath = path.join(baseOutputDir, logFileDir);
+    var logPath = process.cwd();
     ensureDirectory(logPath, err => {
         if(err) {
             errLog(err);
