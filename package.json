@@ -7,7 +7,8 @@
     "run-web": "set NODE_ENV=development&&set DB_ADDRESS=192.168.33.10:27017&&node web-dev-server.js",
     "run-service": "set NODE_ENV=development&&set DB_ADDRESS=192.168.33.10:27017&&node service-dev-server.js",
     "bundle-client-prod": "set NODE_ENV=production&&webpack --config webpack-prod.config.js",
-    "build-web": "npm run bundle-client-prod&&gulp bundle-common&&gulp bundle-web"
+    "build-web": "npm run bundle-client-prod&&gulp bundle-web",
+    "build-service": "gulp bundle-service"
   },
   "author": "mcMickJuice",
   "license": "ISC",

@@ -6,6 +6,10 @@ mongoose.Promise = Promise;
 //TODO only connect on construction of model
 //FIXME this opens up a connection immediately when imported.
 var dbAddr = `${dbAddress}/${dbName}`;
-mongoose.connect(dbAddr);
+mongoose.connect(dbAddr)
+.catch(err => {
+    console.log('err in mongoose promisified bootstrap')
+    console.error(err);
+});
 
 module.exports = mongoose;

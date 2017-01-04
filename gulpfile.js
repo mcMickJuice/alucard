@@ -50,42 +50,34 @@ gulp.task('move-static', function () {
 
 //each one needs common and package.json
 
-var distPath = './dist'
 var commonPath = './src/common/**/*'
 
 gulp.task('bundle-common', function() {
 	return gulp.src([commonPath])
-		.pipe(gulp.dest('./dist/common'))
+		.pipe(gulp.dest('./dist-web/common'))
 })
 
 gulp.task('bundle-web', function() {
-	//each one needs common, webpack bundle is already in dist/web
+	gulp.src([commonPath])
+		.pipe(gulp.dest('./dist-web/common'))
 
-	// gulp.src([commonPath])
-	// 	.pipe(gulp.dest('./dist/web/common'))
+	gulp.src(['./src/seedScripts/**/*', './src/seedScripts/.env'])
+		.pipe(gulp.dest('./dist-web/seedScripts'))
 
-	return gulp.src(['./src/web/**/*', '!./src/web/client/**/*', './package.json', './deploy/web.config'])
-		.pipe(gulp.dest('./dist/web'));
+	gulp.src(['./package.json'])
+		.pipe(gulp.dest('./dist-web'))
+
+	return gulp.src(['./src/web/**/*', '!./src/web/client/**/*', './src/web/**/.env'])
+		.pipe(gulp.dest('./dist-web/web'));
 })
 
-gulp.task('bundle-seed-scripts', function() {
+gulp.task('bundle-service', function() {
+	gulp.src([commonPath])
+		.pipe(gulp.dest('./dist-service/common'))
 
+	gulp.src(['./package.json'])
+		.pipe(gulp.dest('./dist-service'));
+
+	return gulp.src(['./src/fileService/**/*', './src/fileService/**/.env'])
+		.pipe(gulp.dest('./dist-service/fileService'));
 })
-
-gulp.task('bundle-file-service', function() {
-
-})
-
-// gulp.task('watch', ['frontend-watch', 'web-backend-watch', 'move-static'], function () {
-// 	nodemon({
-// 		execMap: {
-// 			js: 'node'
-// 		},
-// 		script: path.resolve(__dirname, 'dist/backend'),
-// 		ignore: ['*'],
-// 		watch: ['foo/'],
-// 		ext: 'noop'
-// 	}).on('restart', function () {
-// 		console.log('Patched!');
-// 	});
-// });

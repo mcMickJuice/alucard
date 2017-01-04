@@ -42,7 +42,7 @@ angular
     .directive('alucardJobDetail', jobStateDetailDirective)
     .directive('alucardStateIcon', jobStateIconDirective)
     .directive('alucardDialog', dialogDirective)
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
 
@@ -63,9 +63,10 @@ angular
                 url: '/status',
                 template: '<alucard-status></alucard-status>'
             })
-    })
-    .value('baseUrl', window._alucardBaseUrl) //injected in index.pug template
-    .service('buildApiUrl', function(baseUrl) {
+    }])
+    // .value('baseUrl', window._alucardBaseUrl) //injected in index.pug template
+    .service('buildApiUrl', function() {
+        var baseUrl = ''
         function buildUrl(path) {
             return `${baseUrl}/api/${path}`;
         }

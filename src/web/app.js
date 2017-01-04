@@ -6,7 +6,6 @@ var express = require('express');
 var apiRouter = require('./apiRoutes')
 var {webPort} = require('../common/config');
 var bodyParser = require('body-parser');
-var webpackMiddleware = require('../../webpack-middleware');
 var mountPath = process.env.MOUNT_PATH //come from config
 
 var app = express();
@@ -16,6 +15,7 @@ var staticPath = path.resolve(__dirname, './static');
 app.use(express.static(staticPath))
 
 if(process.env.NODE_ENV === 'development') {
+    var webpackMiddleware = require('../../webpack-middleware');
     webpackMiddleware(app);
 } 
 

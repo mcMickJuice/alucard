@@ -1,3 +1,7 @@
+var dotenv = require('dotenv')
+var path = require('path');
+dotenv.config({path: path.resolve(__dirname,'./.env')})
+
 var seedConsoleInfo = require('./consoleInfo/seedConsoleInfo');
 var seedGameLinks = require('./romInfo/seedGameLinks');
 var {dbConfig: {dbName}} = require('../common/config');
