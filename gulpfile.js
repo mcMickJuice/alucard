@@ -13,9 +13,9 @@ var destination = './dist';
 var public = '/public';
 
 
-gulp.task('clean', function () {
+gulp.task('clean-web', function () {
 	//clear out all distribution folder
-	return del(destination);
+	return del('./dist-web');
 });
 
 gulp.task('generate-todo', function () {
@@ -57,7 +57,7 @@ gulp.task('bundle-common', function() {
 		.pipe(gulp.dest('./dist-web/common'))
 })
 
-gulp.task('bundle-web', function() {
+gulp.task('bundle-web', ['clean-web'], function() {
 	gulp.src([commonPath])
 		.pipe(gulp.dest('./dist-web/common'))
 
