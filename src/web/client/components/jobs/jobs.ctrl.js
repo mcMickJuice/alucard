@@ -1,3 +1,4 @@
+JobsController.$inject = ['jobStoreService']
 function JobsController(jobStoreService) {
     var vm = this;
     vm.jobs = jobStoreService.getJobs();

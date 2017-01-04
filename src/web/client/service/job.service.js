@@ -1,3 +1,4 @@
+jobService.$inject = ['$http', 'buildApiUrl']
 function jobService($http, buildApiUrl) {
     var routes = {
         recentJobs: 'jobs/current',

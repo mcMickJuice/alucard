@@ -1,12 +1,13 @@
-var _ = require('lodash')
+var debounce = require('lodash.debounce')
 
+searchCtrl.$inject = ['romService', 'notificationService']
 function searchCtrl(romService, notificationService) {
     var vm = this;
     vm.onTextChange = function () {
         debouncedSearchGames();
     };
 
-    var debouncedSearchGames = _.debounce(searchGames, 1000)
+    var debouncedSearchGames = debounce(searchGames, 1000)
 
     function searchGames() {
         var text = vm.text;

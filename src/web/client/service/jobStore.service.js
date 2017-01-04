@@ -1,6 +1,9 @@
 var serviceMessageTypes = require('../../../common/enums/serviceMessageTypes');
-var _ = require('lodash');
+//TODO npm install just throttle and find
+var throttle = require('lodash.throttle');
+var find = require('lodash.find');
 
+jobStore.$inject = ['socketService', '$rootScope', 'jobService']
 function jobStore(socketService, $rootScope, jobService) {
     var currentJobs = [];
 
@@ -18,7 +21,7 @@ function jobStore(socketService, $rootScope, jobService) {
         }
     }
 
-    var throttledUpdateProgress = _.throttle(progressInfo => {
+    var throttledUpdateProgress = throttle(progressInfo => {
         var mapper = updateProgressMapper(progressInfo);
 
         mutateWithProgress(mapper, progressInfo.uuid);
@@ -33,7 +36,7 @@ function jobStore(socketService, $rootScope, jobService) {
     });
 
     function mutateWithProgress(mutateAction, uuid) {
-        var job = _.find(currentJobs, job => {
+        var job = find(currentJobs, job => {
             return job.uuid === uuid;
         });
 

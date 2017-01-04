@@ -1,5 +1,5 @@
 
-
+notificationService.$inject = ['toastr']
 function notificationService(toastr) {
     function success(message, title) {
         toastr.success(message, title);

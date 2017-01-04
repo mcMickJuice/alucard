@@ -1,6 +1,13 @@
 var template = require('./jobStateDetail.tmpl.html');
 require('./jobStateDetail.less');
 
+controller.$inject = ['jobStateIconMapper']
+function controller (jobStateIconMapper) {
+            var vm = this;
+
+            vm.stateClassName = jobStateIconMapper.map(vm.detail.phase);
+        }
+
 function jobStateDetailDirective() {
     return {
         scope: {
@@ -12,11 +19,7 @@ function jobStateDetailDirective() {
         restrict: 'E',
         bindToController: true,
         controllerAs: 'vm',
-        controller: function(jobStateIconMapper) {
-            var vm = this;
-
-            vm.stateClassName = jobStateIconMapper.map(vm.detail.phase);
-        }
+        controller: controller
     }
 }
 

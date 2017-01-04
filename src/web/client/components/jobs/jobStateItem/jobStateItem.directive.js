@@ -1,18 +1,8 @@
 var template = require('./jobStateItem.tmpl.html');
 require('./jobStateItem.less');
 
-function jobState() {
-    return {
-        template,
-        replace: true,
-        restrict: 'E',
-        scope: {
-            item: '=',
-            showDetail: '&' //param name id
-        },
-        bindToController: true,
-        controllerAs: 'vm',
-        controller: function ($scope, jobStateIconMapper) {
+controller.$inject = ['$scope', 'jobStateIconMapper']
+function controller ($scope, jobStateIconMapper) {
             var vm = this;
 
             vm.getDetail = function() {
@@ -27,6 +17,19 @@ function jobState() {
 
             vm.className = jobStateIconMapper.map(vm.item.phase);
         }
+
+function jobState() {
+    return {
+        template,
+        replace: true,
+        restrict: 'E',
+        scope: {
+            item: '=',
+            showDetail: '&' //param name id
+        },
+        bindToController: true,
+        controllerAs: 'vm',
+        controller: controller
     }
 }
 

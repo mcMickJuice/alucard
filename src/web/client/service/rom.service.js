@@ -1,3 +1,4 @@
+romService.$inject = ['$http', 'buildApiUrl']
 function romService($http, buildApiUrl) {
     function searchGame(searchCriteria) {
         //TODO put endpoint in configuration

@@ -9,6 +9,23 @@
 var template = require('./jobProgress.tmpl.html');
 require('./jobProgress.less');
 
+controller.$inject = ['$scope']
+function controller($scope) {
+    var vm = this;
+
+    function calcPercentage(progress, fileSize) {
+        var pct = (progress / fileSize * 1.0) * 100;
+        return `${pct}%`;
+    }
+
+    $scope.$watch(() => vm.progress.progress, (newValue) => {
+        //if(newValue === oldValue)
+
+        vm.widthPct = calcPercentage(newValue, vm.progress.fileSize);
+        console.log(vm.widthPct);
+    })
+}
+
 function jobProgress() {
     return {
         template,
@@ -19,21 +36,7 @@ function jobProgress() {
         },
         bindToController: true,
         controllerAs: 'vm',
-        controller: function($scope) {
-            var vm = this;
-
-            function calcPercentage(progress, fileSize){
-                var pct = (progress / fileSize * 1.0) * 100;
-                return `${pct}%`;
-            }
-
-            $scope.$watch(() => vm.progress.progress, (newValue) => {
-                //if(newValue === oldValue)
-
-                vm.widthPct = calcPercentage(newValue, vm.progress.fileSize);
-                console.log(vm.widthPct);
-            })
-        }
+        controller: controller
     }
 }
 
