@@ -4,7 +4,7 @@ var path = require('path');
 // var http = require('http');
 // var socketio = require('socket.io');
 var bodyParser = require('body-parser');
-var {webPort, servicePort, hostAddress, serviceMount} = require('../common/config');
+var {webPort, servicePort, hostAddress} = require('../common/config');
 // var alucardLogger = require('../common/logging/alucardLogger');
 var romSearchService = require('../web/webAppServices/romSearchService');
 var jobService = require('../web/webAppServices/jobService');
@@ -14,16 +14,9 @@ var progressType = require('../common/enums/progressTypes');
 var piStatusTypes = require('../common/enums/piStatusTypes');
 // var {pingPi} = require('../fileService/fileTransfer/piMonitor');
 
-// app.use(bodyParser.json());
-// app.use(express.static(path.resolve(__dirname, './public')));
 // var server = http.createServer(app);
 // var io = socketio(server);
 
-
-// app.use(function (err, req, res, next) {
-//     console.error(err.stack);
-//     res.status(500).send('something broke!!!');
-// });
 
 // io.on('connection', function (socket) {
 //     console.log('socket connection made');
@@ -33,10 +26,6 @@ var piStatusTypes = require('../common/enums/piStatusTypes');
 
 var router = express.Router();
 
-// router.get('/', function (req, res) {
-//     res.send();
-// });
-
 router.get('/health', function (req, res) {
     var obj = {
         status: 'Healthy'
@@ -45,7 +34,7 @@ router.get('/health', function (req, res) {
 });
 
 router.post('/download', function (req, res) {
-    var address = `${hostAddress}:${servicePort}${serviceMount}/download`;
+    var address = `${hostAddress}:${servicePort}/download`;
     console.log(address)
     var romId = req.body.romId;
     var options = {
@@ -94,6 +83,7 @@ router.get('/jobs/detail/:id', function (req, res) {
 //service update endpoint
 router.post('/download/progress', function (req, res) {
     var progressInfo = req.body.progressInfo;
+    console.log('progress', progressInfo)
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
 
     if (progressInfo.progressType === progressType.STATE_CHANGE) {
@@ -112,6 +102,8 @@ router.post('/download/progress', function (req, res) {
 
 router.post('/download/complete', function (req, res) {
     var downloadInfo = req.body.downloadInfo;
+    console.log('complete', downloadInfo)
+    
     //uuid, gameTitle, consoleName
     res.status(202).send({ downloadInfo });
     io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
@@ -119,6 +111,8 @@ router.post('/download/complete', function (req, res) {
 
 router.post('/download/error', function (req, res) {
     var error = req.body.error;
+    console.log('error', error)
+    
 
     res.status(202).send({ error });
     io.emit(serviceMessageTypes.ERROR, error)

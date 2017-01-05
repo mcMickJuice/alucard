@@ -54,9 +54,9 @@ angular
                 url: '/jobs',
                 template: '<alucard-jobs></alucard-jobs>',
                 resolve: {
-                    fetchJobsTask: function (jobStoreService) {
+                    fetchJobsTask: ['jobStoreService',function (jobStoreService) {
                         return jobStoreService.fetchJobs();
-                    }
+                    }]
                 }
             })
             .state('status', {

@@ -1,16 +1,6 @@
 var express = require('express');
-// var bodyParser = require('body-parser');
 var downloadService = require('../fileService/alucardService/alucardDownloadService');
 var reporter = require('../fileService/alucardService/serviceActivityReporter');
-// var port = require('../common/config').servicePort;
-
-// app.use(bodyParser.json());
-
-// app.use(function(err,req,res,next) {
-//     console.log(err.stack);
-
-//     next();
-// })
 
 var router = express.Router();
 
@@ -41,6 +31,3 @@ router.post('/download', function(req, res) {
 });
 
 module.exports = router;
-
-// app.listen(port, () => console.log(`Alucard Service launched and listening on port ${port}`));
-
