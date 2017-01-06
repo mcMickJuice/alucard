@@ -4,7 +4,7 @@ var thirdParty = '/(node_modules|bower_components)/';
 
 var babelSettings = {
 	cacheDirectory: true,
-	presets: ['es2015', 'stage-0']
+	presets: ['es2015']
 };
 
 var clientCode = path.resolve(__dirname, './src/web/client')
