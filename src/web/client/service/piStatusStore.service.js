@@ -1,9 +1,7 @@
-var {PING_STATUS} = require('../../../common/enums/piStatusTypes');
+piStatusStore.$inject = ['$rootScope', 'socketService', 'piStatusTypes']
 
-piStatusStore.$inject = ['$rootScope', 'socketService']
-
-function piStatusStore($rootScope,socketService){
-    socketService.on(PING_STATUS, ({isPiActive}) => {
+function piStatusStore($rootScope,socketService, piStatusTypes){
+    socketService.on(piStatusTypes.PING_STATUS, ({isPiActive}) => {
         if(subscriptions.length === 0) return;
 
         subscriptions.forEach(sub => {

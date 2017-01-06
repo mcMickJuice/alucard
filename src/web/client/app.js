@@ -10,6 +10,9 @@ var jobStateDetailDirective = require('./components/jobs/jobStateDetail/jobState
 var jobStateIconDirective = require('./components/jobs/jobStateIcon/jobStateIcon.directive.js');
 var dialogDirective = require('./components/search/dialog/dialog.directive.js');
 var appInit = require('./appInit.js');
+var serviceMessageTypes = require('../../common/enums/serviceMessageTypes');
+var piStatusTypes = require('../../common/enums/piStatusTypes');
+
 
 //service and 3rd party
 /*eslint-disable */
@@ -64,6 +67,8 @@ angular
                 template: '<alucard-status></alucard-status>'
             })
     }])
+    .value('serviceMessageTypes', serviceMessageTypes)
+    .value('piStatusTypes', piStatusTypes)
     // .value('baseUrl', window._alucardBaseUrl) //injected in index.pug template
     .service('buildApiUrl', function() {
         var baseUrl = ''
