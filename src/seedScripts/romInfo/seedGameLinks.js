@@ -1,8 +1,8 @@
 //var getLinksForConsole = require('../../webDataProvider').getLinksForConsole;
 var Q = require('q');
-var dbClient = require('../../common/data/dbClient');
-var dbRepo = require('../../common/data/dbRepository');
-var webDataProvider = require('../../common/webService/webDataProvider');
+var dbClient = require('alucard-common/data/dbClient');
+var dbRepo = require('alucard-common/data/dbRepository');
+var webDataProvider = require('alucard-common/webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
 var {dbAddress} = require('../config')
 

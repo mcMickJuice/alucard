@@ -1,5 +1,5 @@
-var dbClient = require('../../common/data/dbClient');
-var dbRepo = require('../../common/data/dbRepository');
+var dbClient = require('alucard-common/data/dbClient');
+var dbRepo = require('alucard-common/data/dbRepository');
 var consoleKey = 'consoles';
 var consoleInfo = require('./seedConsoleData.js').consoleData;
 var Q = require('q');

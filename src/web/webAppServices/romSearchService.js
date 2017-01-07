@@ -1,4 +1,4 @@
-var Rom = require('../../common/models/Rom');
+var Rom = require('alucard-common/models/Rom');
 
 function searchRoms(searchCriteria) {
     //build up query

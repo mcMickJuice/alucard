@@ -1,7 +1,6 @@
 var fileLogger = require('./fileLogger');
-var dbLogger = require('./dbLogger');
 
-var loggers = [fileLogger, dbLogger];
+var loggers = [fileLogger];
 
 //FIXME none of these log methods have a callback and therefore they are fire and forget?
 //OR will they be synchronous? Doubtful...

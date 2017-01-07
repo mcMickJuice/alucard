@@ -1,6 +1,6 @@
 var {baseOutputDir, romFileDir} = require('../config');
-var download = require('../../common/webService/webDataProvider').downloadGame;
-var ensureDirectory = require('../../common/utility/fileSystemHelpers').ensureDirectoryPromise;
+var download = require('alucard-common/webService/webDataProvider').downloadGame;
+var ensureDirectory = require('alucard-common/utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');
 var path = require('path');
 

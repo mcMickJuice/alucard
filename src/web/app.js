@@ -6,7 +6,7 @@ var express = require('express');
 var apiRouter = require('./apiRoutes')
 var {port, dbAddress, dbName} = require('./config')
 var bodyParser = require('body-parser');
-var mongoose = require('../common/models/mongoosePromisified');
+var mongoose = require('alucard-common/models/mongoosePromisified');
 
 mongoose.init(dbAddress, dbName);
 
