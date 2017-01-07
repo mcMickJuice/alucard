@@ -221,3 +221,6 @@ FakesAssemblies/
 #build output files
 build-output/
 dist-*/
+
+#log files
+log-*
