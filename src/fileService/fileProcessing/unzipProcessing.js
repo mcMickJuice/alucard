@@ -2,6 +2,7 @@ var unzip = require('unzip');
 var fs = require('fs');
 var path = require('path');
 var Q = require('q');
+var {listCreatedFiles} = require('./util')
 
 //unzip Process reporting isn't working. Can't get full file size...also it might not matter. Might only need this for
 //psx processing
@@ -35,27 +36,7 @@ function unzipFileContentsToTemp(filePath) {
     return deferred.promise;
 }
 
-function listCreatedFiles(extractFolder) {
-    var deferred = Q.defer();
 
-    fs.readdir(extractFolder, function(err, fileList) {
-        if(err) {
-            deferred.reject(err);
-            return;
-        }
-
-        if(fileList.length === 0){
-            deferred.reject(new Error('Extract file list is empty! No files to process!'));
-            return;
-        }
-
-        var files = fileList.map(fileName => path.resolve(extractFolder, fileName));
-
-        deferred.resolve(files);
-    });
-
-    return deferred.promise;
-}
 
 module.exports = {
     process: unzipFile

@@ -1,7 +1,6 @@
 var noop = require('./noopProcessing');
 var unzip = require('./unzipProcessing');
-//var rar = require('./rarProcessing');
-
+var _7zip = require('./7zipProcessing');
 /*
 Strategy Contract:
 -method name process
@@ -15,5 +14,5 @@ module.exports = {
     'snes': noop,
     'megadrive': noop,
     'n64': unzip,
-    'psx': noop
+    'psx': _7zip
 }

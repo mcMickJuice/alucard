@@ -38,6 +38,7 @@
     "webpack-merge": "^2.2.0"
   },
   "dependencies": {
+    "7zip": "0.0.6",
     "alucard-common": "^1.0.0",
     "angular": "1.4.8",
     "angular-animate": "1.4.8",
