@@ -1,6 +1,4 @@
-var webpack = require('webpack')
 var path = require('path');
-var thirdParty = '/(node_modules|bower_components)/';
 
 var babelSettings = {
 	cacheDirectory: true,
@@ -14,7 +12,7 @@ var config = {
 			'./src/web/client/app.js'
 		],
     output: {
-        path: path.join(__dirname, 'dist-web/web/static'), //path where file is placed when packed
+        path: path.join(__dirname, 'dist-web/static'), //path where file is placed when packed
 		publicPath: "/", //path where this file is available if requested
         filename: 'bundle.js' //name of output file
     },

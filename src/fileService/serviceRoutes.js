@@ -1,6 +1,6 @@
 var express = require('express');
-var downloadService = require('../fileService/alucardService/alucardDownloadService');
-var reporter = require('../fileService/alucardService/serviceActivityReporter');
+var downloadService = require('./alucardService/alucardDownloadService');
+var reporter = require('./alucardService/serviceActivityReporter');
 
 var router = express.Router();
 

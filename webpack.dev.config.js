@@ -1,5 +1,3 @@
-var webpack = require('webpack')
-var path = require('path')
 var merge = require('webpack-merge')
 var baseConfig = require('./webpack.base.config')
 
@@ -26,7 +24,7 @@ var config =
 		// 		{ test: /\.tmpl.html$/, exclude: thirdParty, loader: 'text' }
 		// 	]
 		// },
-	        devtool: 'source-map',
+	        devtool: 'source-map'
 	}
 
 module.exports = merge(baseConfig, config);
