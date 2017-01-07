@@ -1,6 +1,6 @@
 var net = require('net');
 var Q = require('q');
-var {fileProcessingConfig: {sshPort, piIpAddress}} = require('../../common/config');
+var {sshPort, piIpAddress} = require('../config');
 
 function pingPi() {
     var deferred = Q.defer();

@@ -1,5 +1,4 @@
 var fs = require('fs');
-// var {baseOutputDir, logFileDir} = require('../../common/config');
 var path = require('path');
 var levels = require('./logConfig').levels;
 var {ensureDirectory} = require('../utility/fileSystemHelpers');

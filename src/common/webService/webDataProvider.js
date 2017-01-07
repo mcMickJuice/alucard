@@ -1,10 +1,12 @@
 var {parseHtmlAndMap} = require('./../utility/htmlParser');
 var webClient = require('./webClient');
-var {romRequestConfig: {cookieString, 
-	downloadLinkSelector, 
-	gameListLinkSelector, 
-	userAgent}} = require('../config');
 var Q = require('q');
+
+   var cookieString= 'downloadcaptcha= 1; refexception= 1';
+   var downloadLinkSelector= '#download-link';
+   var gameListLinkSelector= 'a.index.gamelist';
+   var userAgent= 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36';
+
 
 function getLinksForConsole(consoleObj) {
 	var consoleName = consoleObj.console;
@@ -80,7 +82,6 @@ function downloadGame(downloadUrl, writeStreamFactory, reporter) {
 		}
 
 		resp.pipe(writeStream);
-        //return resp;
 	});
 
 	return deferred.promise;

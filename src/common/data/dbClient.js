@@ -1,8 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var Q = require('q');
-var {dbConfig: {dbAddress}} = require('../config');
 
-function getDbConnection(databaseName) {
+function getDbConnection(dbAddress,databaseName) {
     var deferred = Q.defer();
     var url = `mongodb://${dbAddress}/${databaseName}`;
 	MongoClient.connect(url, function(err, db) {

@@ -1,17 +1,16 @@
 var express = require('express');
-var app = express();
-var path = require('path');
+// var app = express();
+// var path = require('path');
 // var http = require('http');
 // var socketio = require('socket.io');
-var bodyParser = require('body-parser');
-var {webPort, servicePort, hostAddress} = require('../common/config');
+var {servicePort, hostAddress} = require('./config');
 // var alucardLogger = require('../common/logging/alucardLogger');
 var romSearchService = require('../web/webAppServices/romSearchService');
 var jobService = require('../web/webAppServices/jobService');
 var {postRequest} = require('../common/webService/webClient');
-var serviceMessageTypes = require('../common/enums/serviceMessageTypes');
-var progressType = require('../common/enums/progressTypes');
-var piStatusTypes = require('../common/enums/piStatusTypes');
+// var serviceMessageTypes = require('../common/enums/serviceMessageTypes');
+// var progressType = require('../common/enums/progressTypes');
+// var piStatusTypes = require('../common/enums/piStatusTypes');
 // var {pingPi} = require('../fileService/fileTransfer/piMonitor');
 
 // var server = http.createServer(app);
@@ -35,7 +34,6 @@ router.get('/health', function (req, res) {
 
 router.post('/download', function (req, res) {
     var address = `${hostAddress}:${servicePort}/download`;
-    console.log(address)
     var romId = req.body.romId;
     var options = {
         url: address,
@@ -86,15 +84,15 @@ router.post('/download/progress', function (req, res) {
     console.log('progress', progressInfo)
     //jobId/uuid, progressType (phase Change, download Update, transfer Update)
 
-    if (progressInfo.progressType === progressType.STATE_CHANGE) {
-        io.emit(serviceMessageTypes.STATE_CHANGE, progressInfo);
-    } else if (progressInfo.progressType === progressType.TRANSFER_PROGRESS) {
-        io.emit(serviceMessageTypes.FILE_PROGRESS, progressInfo)
-    } else {
-        //unknown progress type, bad service!
-        res.status(400).send({ error: 'unknown progress type!' });
-        return;
-    }
+    // if (progressInfo.progressType === progressType.STATE_CHANGE) {
+    //     io.emit(serviceMessageTypes.STATE_CHANGE, progressInfo);
+    // } else if (progressInfo.progressType === progressType.TRANSFER_PROGRESS) {
+    //     io.emit(serviceMessageTypes.FILE_PROGRESS, progressInfo)
+    // } else {
+    //     //unknown progress type, bad service!
+    //     res.status(400).send({ error: 'unknown progress type!' });
+    //     return;
+    // }
 
     res.status(202).send({ progressInfo });
 
@@ -106,7 +104,7 @@ router.post('/download/complete', function (req, res) {
     
     //uuid, gameTitle, consoleName
     res.status(202).send({ downloadInfo });
-    io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
+    // io.emit(serviceMessageTypes.COMPLETE, downloadInfo);
 });
 
 router.post('/download/error', function (req, res) {
@@ -115,7 +113,7 @@ router.post('/download/error', function (req, res) {
     
 
     res.status(202).send({ error });
-    io.emit(serviceMessageTypes.ERROR, error)
+    // io.emit(serviceMessageTypes.ERROR, error)
 });
 
 //TODO pull pinging Pi into separate file

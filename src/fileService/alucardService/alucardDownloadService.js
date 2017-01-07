@@ -3,13 +3,13 @@ var Rom = require('../../common/models/Rom');
 var jobStateManager = require('../../common/logging/jobStateManager');
 var webDataProvider = require('../../common/webService/webDataProvider');
 var {downloadGame} = require('../download/downloadManager');
-var {romRequestConfig: {romHost}} = require('../../common/config');
 var Q = require('q');
 var fileProcessor = require('../fileProcessing/fileProcessManager');
 var fileTransferManager = require('../fileTransfer/fileTransferManager');
 var progressTypes  = require('../../common/enums/progressTypes');
 var phase = require('../../common/enums/filePhaseType');
 
+var romHost = 'http://www.emuparadise.me';
 var stateChange = progressTypes.STATE_CHANGE;
 var fileProcess = progressTypes.TRANSFER_PROGRESS;
 
@@ -79,6 +79,7 @@ function queueDownload(romId, onFinish, onProgress, onError) {
             return Q.all([jobStatePromise, progressPromise, finishPromise]);
         })
         .catch(err => {
+            console.log(err.stack)
             jobStateManager.error(err, uuid);
             //FIXME clone this?
             downloadInfo.error = err.message;

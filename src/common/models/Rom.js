@@ -1,4 +1,4 @@
-var mongoose = require('./mongoosePromisified');
+var {mongoose} = require('./mongoosePromisified');
 
 var Schema = mongoose.Schema;
 

@@ -1,4 +1,4 @@
-var {baseOutputDir, romFileDir} = require('../../common/config');
+var {baseOutputDir, romFileDir} = require('../config');
 var download = require('../../common/webService/webDataProvider').downloadGame;
 var ensureDirectory = require('../../common/utility/fileSystemHelpers').ensureDirectoryPromise;
 var fs = require('fs');

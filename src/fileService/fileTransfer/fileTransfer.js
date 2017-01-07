@@ -1,9 +1,9 @@
 var Client = require('ssh2').Client;
-var {fileProcessingConfig: {
+var {
     piIpAddress,
     piPassword,
     piUsername
-}} = require('../../common/config')
+} = require('../config')
 
 function moveFile(localFilePath, remoteFilePath, onProgress, cb) {
     var client = new Client();

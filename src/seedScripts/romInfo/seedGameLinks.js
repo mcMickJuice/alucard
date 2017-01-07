@@ -4,12 +4,12 @@ var dbClient = require('../../common/data/dbClient');
 var dbRepo = require('../../common/data/dbRepository');
 var webDataProvider = require('../../common/webService/webDataProvider');
 var consoleCollectionKey = 'consoles';
-
+var {dbAddress} = require('../config')
 
 function insertAllGameLinksForConsoles(databaseName) {
     var dbConnection;
     
-	return dbClient.getDbConnection(databaseName)
+	return dbClient.getDbConnection(dbAddress,databaseName)
 	.then(db => {
     //save off dbConnection for disposal        
 		return dbConnection = db;

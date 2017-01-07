@@ -4,9 +4,11 @@ dotenv.config({path: path.resolve(__dirname, './.env')});
 
 var express = require('express');
 var apiRouter = require('./apiRoutes')
-var {webPort} = require('../common/config');
+var {port, dbAddress, dbName} = require('./config')
 var bodyParser = require('body-parser');
-var mountPath = process.env.MOUNT_PATH //come from config
+var mongoose = require('../common/models/mongoosePromisified');
+
+mongoose.init(dbAddress, dbName);
 
 var app = express();
 
@@ -22,11 +24,10 @@ if(process.env.NODE_ENV === 'development') {
 app.set('views', path.resolve(__dirname,'./views'));
 app.set('view engine', 'pug');
 
-var apiMouthPath = mountPath || '';
-app.use(apiMouthPath + '/api', apiRouter)
+app.use('/api', apiRouter)
 
-app.get(mountPath || '/', (req, res) => {
-    res.render('index', {baseUrl: apiMouthPath})
+app.get('/', (req, res) => {
+    res.render('index')
 })
 
-app.listen(webPort, () => console.log(`Web app listening on ${webPort} for mountPath ${mountPath || '/'}`));
+app.listen(port, () => console.log(`Web app listening on ${port}`));
