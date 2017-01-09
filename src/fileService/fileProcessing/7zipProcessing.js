@@ -2,7 +2,6 @@ var spawn = require('child_process').spawn;
 var _7Zip = require('7zip')['7z'];
 var path = require('path')
 var Q = require('q')
-var fs = require('fs')
 var {listCreatedFiles} = require('./util')
 
 function unzipFile(filePath) {
